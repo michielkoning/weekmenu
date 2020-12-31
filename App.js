@@ -3,12 +3,20 @@ import { Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import WeekMenuTab from "./views/WeekMenuTab";
+import WeeklyMenuTab from "./views/WeeklyMenuTab";
 
 function SettingsScreen() {
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <Text>Settings!</Text>
+    </View>
+  );
+}
+
+function RecipesTab() {
+  return (
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <Text>MIjn recepten!</Text>
     </View>
   );
 }
@@ -25,6 +33,8 @@ export default function App() {
 
             if (route.name === "Home") {
               iconName = "restaurant-outline";
+            } else if (route.name === "Recipes") {
+              iconName = "book-outline";
             } else if (route.name === "Settings") {
               iconName = "settings-outline";
             }
@@ -38,8 +48,21 @@ export default function App() {
           inactiveTintColor: "gray",
         }}
       >
-        <Tab.Screen name="Home" component={WeekMenuTab} />
-        <Tab.Screen name="Settings" component={SettingsScreen} />
+        <Tab.Screen
+          name="Home"
+          options={{ title: "Weekmenu" }}
+          component={WeeklyMenuTab}
+        />
+        <Tab.Screen
+          name="Recipes"
+          options={{ title: "Mijn recepten" }}
+          component={RecipesTab}
+        />
+        <Tab.Screen
+          name="Settings"
+          options={{ title: "Instellingen" }}
+          component={SettingsScreen}
+        />
       </Tab.Navigator>
     </NavigationContainer>
   );

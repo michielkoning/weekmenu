@@ -9,7 +9,6 @@ import {
 } from "react-native";
 import Constants from "expo-constants";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import { createStackNavigator } from "@react-navigation/stack";
 import { useNavigation } from "@react-navigation/native";
 
 const colors = ["#FFC393", "#CAE0A5", "#F7E36A", "#F8AAAE"];
@@ -17,34 +16,30 @@ const colors = ["#FFC393", "#CAE0A5", "#F7E36A", "#F8AAAE"];
 const DATA = [
   {
     day: "Za",
-    title: "Main",
-    tags: ["Pizza", "Burger", "Risotto"],
+    title: "Bloemkoolsoufflé",
+    tags: ["Vegetarisch"],
   },
   {
     day: "Zo",
-    title: "Sides",
-    tags: ["French Fries", "Onion Rings", "Fried Shrimps"],
+    title: "Courgettelasagne",
+    tags: ["Vegetarisch"],
   },
   {
     day: "Ma",
-    title: "Drinks",
-    tags: ["Water", "Coke", "Beer"],
+    title: "Gevulde bolcourgette",
+    tags: ["Vegetarisch"],
   },
   {
     day: "Di",
-    title: "Desserts",
-    tags: ["Cheese Cake", "Ice Cream"],
+    title: "Kerriekokos paksoi",
+    tags: ["Vegetarisch", "Rijst"],
+  },
+  {
+    day: "Wo",
+    title: "Zalmlasagne",
+    tags: ["Vis", "Pasta"],
   },
 ];
-
-function DetailsScreen({ route, navigation }) {
-  const { title } = route.params;
-  return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>{title}</Text>
-    </View>
-  );
-}
 
 const Item = ({ day, title, tags, index }) => {
   const navigation = useNavigation();
@@ -77,7 +72,7 @@ const Item = ({ day, title, tags, index }) => {
   );
 };
 
-const WeekMenuTab = () => {
+const WeeklyMenuList = () => {
   const renderItem = ({ item, index }) => (
     <Item title={item.title} day={item.day} tags={item.tags} index={index} />
   );
@@ -131,22 +126,4 @@ const styles = StyleSheet.create({
   },
 });
 
-const HomeStack = createStackNavigator();
-function HomeStackScreen() {
-  return (
-    <HomeStack.Navigator>
-      <HomeStack.Screen
-        name="Home"
-        component={WeekMenuTab}
-        options={{ title: "Overzicht" }}
-      />
-      <HomeStack.Screen
-        name="Details"
-        component={DetailsScreen}
-        options={{ title: "Recept" }}
-      />
-    </HomeStack.Navigator>
-  );
-}
-
-export default HomeStackScreen;
+export default WeeklyMenuList;
