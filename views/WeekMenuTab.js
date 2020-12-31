@@ -9,6 +9,8 @@ import {
 } from "react-native";
 import Constants from "expo-constants";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { createStackNavigator } from "@react-navigation/stack";
+import { useNavigation } from "@react-navigation/native";
 
 const colors = ["#FFC393", "#CAE0A5", "#F7E36A", "#F8AAAE"];
 
@@ -35,8 +37,22 @@ const DATA = [
   },
 ];
 
+function DetailsScreen({ route, navigation }) {
+  const { title } = route.params;
+  return (
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <Text>{title}</Text>
+    </View>
+  );
+}
+
 const Item = ({ day, title, tags, index }) => {
-  const onPress = () => {};
+  const navigation = useNavigation();
+  const onPress = () =>
+    navigation.navigate("Details", {
+      title,
+    });
+
   return (
     <TouchableOpacity onPress={onPress} style={styles.item}>
       <View style={{ ...styles.day, backgroundColor: colors[index % 4] }}>
@@ -115,4 +131,22 @@ const styles = StyleSheet.create({
   },
 });
 
-export default WeekMenuTab;
+const HomeStack = createStackNavigator();
+function HomeStackScreen() {
+  return (
+    <HomeStack.Navigator>
+      <HomeStack.Screen
+        name="Home"
+        component={WeekMenuTab}
+        options={{ title: "Overzicht" }}
+      />
+      <HomeStack.Screen
+        name="Details"
+        component={DetailsScreen}
+        options={{ title: "Recept" }}
+      />
+    </HomeStack.Navigator>
+  );
+}
+
+export default HomeStackScreen;
