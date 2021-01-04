@@ -1,9 +1,11 @@
-import * as React from "react";
+import React, {useState} from "react";
 import { Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import WeeklyMenuTab from "./views/WeeklyMenuTab";
+import RecipesList from "./views/Recipes/RecipesList";
+import SearchBar from "./components/SearchBar";
 
 function SettingsScreen() {
   return (
@@ -14,9 +16,28 @@ function SettingsScreen() {
 }
 
 function RecipesTab() {
+
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleReset = () => {
+    setSearchTerm('')
+  }
+
+ const handleSubmit = () => {
+    // const where = {
+    //   search: searchTerm,
+    // };
+    // setWhere(where);
+  };
+
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>MIjn recepten!</Text>
+      <SearchBar
+        onSubmit={handleSubmit}
+        searchTerm={searchTerm}
+        onChangeSearchTerm={(newSearchTerm) => setSearchTerm(newSearchTerm)}
+      />
+      <Text>{ searchTerm }</Text>
     </View>
   );
 }
@@ -56,7 +77,7 @@ export default function App() {
         <Tab.Screen
           name="Recipes"
           options={{ title: "Mijn recepten" }}
-          component={RecipesTab}
+          component={RecipesList}
         />
         <Tab.Screen
           name="Settings"

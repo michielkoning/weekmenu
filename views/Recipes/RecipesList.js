@@ -1,4 +1,5 @@
-import * as React from "react";
+import React, { useState } from "react";
+import SearchBar from "./../../components/SearchBar";
 import {
   StyleSheet,
   Text,
@@ -12,10 +13,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
 import useRecipes from "./../../hooks/useRecipes";
 
-const colors = ["#FFC393", "#CAE0A5", "#F7E36A", "#F8AAAE"];
-
 const Item = ({ day, title, tags, index }) => {
-
   const navigation = useNavigation();
   const onPress = () =>
     navigation.navigate("Details", {
@@ -24,9 +22,6 @@ const Item = ({ day, title, tags, index }) => {
 
   return (
     <TouchableOpacity onPress={onPress} style={styles.item}>
-      <View style={{ ...styles.day, backgroundColor: colors[index % 4] }}>
-        <Text style={styles.dayText}>{day}</Text>
-      </View>
       <View style={styles.text}>
         <View style={{ flexDirection: "row" }}>
           <Text style={styles.title}>{title}</Text>
@@ -46,14 +41,34 @@ const Item = ({ day, title, tags, index }) => {
   );
 };
 
-const WeeklyMenuList = () => {
-  const [recipes] = useRecipes();
+const RecipesTab = () => {
+  const [recipes, filterRecipes] = useRecipes();
+  const [searchTerm, setSearchTerm] = useState("");
+
+
+  const updateSearch = (term) => {
+    filterRecipes(term)
+    setSearchTerm(term)
+  }
+
+  const handleSubmit = () => {
+    // const where = {
+    //   search: searchTerm,
+    // };
+    // setWhere(where);
+  };
 
   const renderItem = ({ item, index }) => (
     <Item title={item.title} day={item.day} tags={item.tags} index={index} />
   );
+
   return (
     <SafeAreaView style={styles.container}>
+      <SearchBar
+        onSubmit={handleSubmit}
+        searchTerm={searchTerm}
+        onChangeSearchTerm={(newSearchTerm) => updateSearch(newSearchTerm)}
+      />
       <FlatList
         data={recipes}
         keyExtractor={(item, index) => item.title + index}
@@ -102,4 +117,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default WeeklyMenuList;
+export default RecipesTab;
