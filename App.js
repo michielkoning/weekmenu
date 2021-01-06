@@ -39,6 +39,7 @@ export default function App() {
         tabBarOptions={{
           activeTintColor: "tomato",
           inactiveTintColor: "gray",
+          labelPosition: "below-icon",
         }}
       >
         <Tab.Screen
