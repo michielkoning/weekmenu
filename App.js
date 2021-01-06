@@ -1,43 +1,15 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import WeeklyMenuTab from "./views/WeeklyMenuTab";
-import RecipesList from "./views/Recipes/RecipesList";
-import SearchBar from "./components/SearchBar";
+import WeeklyMenuTab from "./views/WeeklyMenu/WeeklyMenuTab";
+import RecipesTab from "./views/Recipes/RecipesTab";
 
 function SettingsScreen() {
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <Text>Settings!</Text>
-    </View>
-  );
-}
-
-function RecipesTab() {
-
-  const [searchTerm, setSearchTerm] = useState("");
-
-  const handleReset = () => {
-    setSearchTerm('')
-  }
-
- const handleSubmit = () => {
-    // const where = {
-    //   search: searchTerm,
-    // };
-    // setWhere(where);
-  };
-
-  return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <SearchBar
-        onSubmit={handleSubmit}
-        searchTerm={searchTerm}
-        onChangeSearchTerm={(newSearchTerm) => setSearchTerm(newSearchTerm)}
-      />
-      <Text>{ searchTerm }</Text>
     </View>
   );
 }
@@ -52,7 +24,7 @@ export default function App() {
           tabBarIcon: ({ focused, color, size }) => {
             let iconName;
 
-            if (route.name === "Home") {
+            if (route.name === "WeeklyMenu") {
               iconName = "restaurant-outline";
             } else if (route.name === "Recipes") {
               iconName = "book-outline";
@@ -70,14 +42,14 @@ export default function App() {
         }}
       >
         <Tab.Screen
-          name="Home"
+          name="WeeklyMenu"
           options={{ title: "Weekmenu" }}
           component={WeeklyMenuTab}
         />
         <Tab.Screen
           name="Recipes"
           options={{ title: "Mijn recepten" }}
-          component={RecipesList}
+          component={RecipesTab}
         />
         <Tab.Screen
           name="Settings"

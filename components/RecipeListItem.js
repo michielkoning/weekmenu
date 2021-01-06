@@ -1,38 +1,30 @@
 import * as React from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  SafeAreaView,
-  FlatList,
-  TouchableOpacity,
-} from "react-native";
-import Constants from "expo-constants";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
-import useRecipes from "./../../hooks/useRecipes";
 
 const colors = ["#FFC393", "#CAE0A5", "#F7E36A", "#F8AAAE"];
 
-const Item = ({ day, title, tags, index }) => {
-
+const Item = ({ day, title, tags, index, navigateTo }) => {
   const navigation = useNavigation();
   const onPress = () =>
-    navigation.navigate("Details", {
+    navigation.navigate(navigateTo, {
       title,
     });
 
   return (
     <TouchableOpacity onPress={onPress} style={styles.item}>
-      <View style={{ ...styles.day, backgroundColor: colors[index % 4] }}>
-        <Text style={styles.dayText}>{day}</Text>
-      </View>
+      {day ? (
+        <View style={{ ...styles.day, backgroundColor: colors[index % 4] }}>
+          <Text style={styles.dayText}>{day}</Text>
+        </View>
+      ) : null}
       <View style={styles.text}>
         <View style={{ flexDirection: "row" }}>
           <Text style={styles.title}>{title}</Text>
         </View>
         <View style={{ flexDirection: "row" }}>
-          <Text style={styles.tags}>{tags.join(", ")}</Text>
+          <Text style={styles.tags}>{tags ? tags.join(", ") : ""}</Text>
         </View>
       </View>
       <View style={styles.more}>
@@ -46,29 +38,7 @@ const Item = ({ day, title, tags, index }) => {
   );
 };
 
-const WeeklyMenuList = () => {
-  const [recipes] = useRecipes();
-
-  const renderItem = ({ item, index }) => (
-    <Item title={item.title} day={item.day} tags={item.tags} index={index} />
-  );
-  return (
-    <SafeAreaView style={styles.container}>
-      <FlatList
-        data={recipes}
-        keyExtractor={(item, index) => item.title + index}
-        renderItem={renderItem}
-      />
-    </SafeAreaView>
-  );
-};
-
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: Constants.statusBarHeight,
-    marginHorizontal: 16,
-  },
   item: {
     marginVertical: 8,
     flexDirection: "row",
@@ -102,4 +72,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default WeeklyMenuList;
+export default Item;
