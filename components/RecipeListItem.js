@@ -5,7 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 
 const colors = ["#FFC393", "#CAE0A5", "#F7E36A", "#F8AAAE"];
 
-const Item = ({ day, title, tags, index, navigateTo }) => {
+const Item = ({ day, title, tags, index, navigateTo, onSelect }) => {
   const navigation = useNavigation();
   const onPress = () =>
     navigation.navigate(navigateTo, {
@@ -13,7 +13,7 @@ const Item = ({ day, title, tags, index, navigateTo }) => {
     });
 
   return (
-    <TouchableOpacity onPress={onPress} style={styles.item}>
+    <TouchableOpacity onPress={onSelect} style={styles.item}>
       {day ? (
         <View style={{ ...styles.day, backgroundColor: colors[index % 4] }}>
           <Text style={styles.dayText}>{day}</Text>

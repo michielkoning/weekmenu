@@ -3,9 +3,17 @@ import { StyleSheet, SafeAreaView, FlatList } from "react-native";
 import Constants from "expo-constants";
 import useRecipes from "../../../hooks/useRecipes";
 import RecipeListItem from "../../../components/RecipeListItem";
+import { useNavigation } from "@react-navigation/native";
 
 const WeeklyMenuList = () => {
   const [recipes] = useRecipes();
+  const navigation = useNavigation();
+
+  const onSelect = (item) => {
+    navigation.navigate("WeeklyMenuDetails", {
+      title: item.day,
+    });
+  };
 
   const renderItem = ({ item, index }) => (
     <RecipeListItem
@@ -14,6 +22,7 @@ const WeeklyMenuList = () => {
       tags={item.tags}
       index={index}
       navigateTo="WeeklyMenuDetails"
+      onSelect={() => onSelect(item)}
     />
   );
   return (
