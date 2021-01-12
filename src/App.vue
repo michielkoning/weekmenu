@@ -1,7 +1,6 @@
 <template>
   <div id="nav">
-    {{ posts }}
-    <router-link to="/">Home</router-link> |
+    {{ test }}1 <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link>
   </div>
   <router-view />
@@ -13,9 +12,10 @@ import useRecipes from "@/compositions/recipes";
 
 export default {
   setup() {
-    const { getPosts, createPost, posts } = useRecipes();
+    const { getPosts, createPost, posts, test } = useRecipes();
     getPosts();
     return {
+      test,
       posts,
       createPost,
     };
