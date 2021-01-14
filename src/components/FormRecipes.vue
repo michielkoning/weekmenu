@@ -2,7 +2,7 @@
   <form @submit.prevent="submit">
     <input type="text" v-model="formData.title" />
     <textarea v-model="formData.content" />
-    <button type="submit">Recept toevoegen</button>
+    <button type="submit">Recept {{ id ? "wijzigen" : "toevoegen" }}</button>
     <button type="button" @click="deleteRecipe1" v-if="id">
       Recept verwijderen
     </button>
@@ -12,20 +12,34 @@
 <script>
 import useRecipes from "@/compositions/recipes";
 import { onMounted } from "vue";
+import { useRouter } from "vue-router";
 export default {
   setup(props) {
-    const { createPost, formData, getRecipe, deleteRecipe } = useRecipes();
+    const router = useRouter();
+    const {
+      createPost,
+      formData,
+      getRecipe,
+      updatePost,
+      deleteRecipe,
+    } = useRecipes();
 
     onMounted(() => {
       getRecipe(props.id);
     });
 
-    const submit = () => {
-      createPost(props.id);
+    const submit = async () => {
+      if (props.id) {
+        updatePost(props.id);
+      } else {
+        const id = await createPost();
+        router.push({ name: "recipe", params: { id } });
+      }
     };
 
-    const deleteRecipe1 = () => {
-      deleteRecipe(props.id);
+    const deleteRecipe1 = async () => {
+      await deleteRecipe(props.id);
+      router.push("/");
     };
 
     return {

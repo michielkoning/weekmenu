@@ -1,8 +1,11 @@
-import { ref, reactive } from "vue";
+import { reactive } from "vue";
 import * as fb from "./../firebase";
+import useApi from "./api";
 
 export default () => {
-  const posts = ref([]);
+  const { create, update, getAll, list, remove, get } = useApi(
+    fb.postsCollection
+  );
 
   const formData = reactive({
     title: "",
@@ -11,54 +14,28 @@ export default () => {
   });
 
   const createPost = async () => {
-    try {
-      const post = {
-        createdOn: new Date(),
-        ...formData,
-      };
-      await fb.postsCollection.add(post);
-    } catch (error) {
-      console.error(error);
-    }
+    return create(formData);
+  };
+
+  const updatePost = async (id) => {
+    update(id, formData);
   };
 
   const getPosts = () => {
-    fb.postsCollection.orderBy("createdOn", "desc").onSnapshot((snapshot) => {
-      snapshot.docChanges().forEach((change) => {
-        const { newIndex, oldIndex, doc, type } = change;
-        const post = doc.data();
-        post.id = change.doc.id;
-
-        if (type === "added") {
-          posts.value.splice(newIndex, 0, post);
-          // if we want to handle references we would do it here
-        } else if (type === "modified") {
-          // remove the old one first
-          posts.value.splice(oldIndex, 1);
-          // if we want to handle references we would have to unsubscribe
-          // from old references' listeners and subscribe to the new ones
-          posts.value.splice(newIndex, 0, post);
-        } else if (type === "removed") {
-          posts.value.splice(oldIndex, 1);
-          // if we want to handle references we need to unsubscribe
-          // from old references
-        }
-      });
-    });
+    getAll();
   };
 
   const getRecipe = async (id) => {
-    const response = await fb.postsCollection.doc(id).get();
-    if (response.exists) {
-      const recipe = response.data();
-      formData.title = recipe.title;
-      formData.content = recipe.content;
+    const response = await get(id);
+    if (response) {
+      formData.title = response.title;
+      formData.content = response.content;
     }
   };
 
   const deleteRecipe = async (id) => {
     try {
-      await fb.postsCollection.doc(id).delete();
+      await remove(id);
       return true;
     } catch (error) {
       console.error(error);
@@ -70,8 +47,9 @@ export default () => {
     getRecipe,
     formData,
     createPost,
-    posts,
+    posts: list,
     getPosts,
+    updatePost,
   };
 };
 
