@@ -21,7 +21,7 @@ export default {
     });
 
     const submit = () => {
-      createPost();
+      createPost(props.id);
     };
 
     const deleteRecipe1 = () => {

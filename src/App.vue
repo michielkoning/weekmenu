@@ -6,6 +6,26 @@
   <router-view :key="$route.fullPath" />
 </template>
 
+<script>
+import useRecipes from "@/compositions/recipes";
+import { onMounted, provide } from "vue";
+
+export default {
+  setup() {
+    const { posts, getPosts } = useRecipes();
+    onMounted(() => {
+      getPosts();
+    });
+
+    provide("posts", posts);
+  },
+  props: {
+    id: String,
+    default: null,
+  },
+};
+</script>
+
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

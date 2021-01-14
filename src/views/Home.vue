@@ -2,6 +2,9 @@
   <div class="home">
     <FormRecipes :id="id" />
     <ul>
+      {{
+        posts
+      }}
       <li v-for="post in posts" :key="post.id">
         <div class="day">Za</div>
         <router-link :to="{ name: 'recipe', params: { id: post.id } }">
@@ -13,16 +16,12 @@
 </template>
 
 <script>
-import useRecipes from "@/compositions/recipes";
 import FormRecipes from "@/components/FormRecipes.vue";
-import { onMounted } from "vue";
+import { inject } from "vue";
 
 export default {
   setup() {
-    const { posts, getPosts } = useRecipes();
-    onMounted(() => {
-      getPosts();
-    });
+    const posts = inject("posts");
     return {
       posts,
     };

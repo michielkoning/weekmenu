@@ -23,26 +23,25 @@ export default () => {
   };
 
   const getPosts = () => {
-    // let postsArray = [];
-    // fb.postsCollection.orderBy("createdOn", "desc").onSnapshot((snapshot) => {
-    //   snapshot.forEach((doc) => {
-    //     let post = doc.data();
-    //     post.id = doc.id;
-    //     postsArray.push(post);
-    //   });
-    //   posts.value = postsArray;
-    // });
-
-    // real-time listener
-    fb.postsCollection.orderBy("createdOn", "asc").onSnapshot((snapshot) => {
+    fb.postsCollection.orderBy("createdOn", "desc").onSnapshot((snapshot) => {
       snapshot.docChanges().forEach((change) => {
-        if (change.type === "added") {
-          let post = change.doc.data();
-          post.id = change.doc.id;
-          posts.value.unshift(post);
-        }
-        if (change.type === "removed") {
-          posts.value = posts.value.filter((p) => p.id !== change.doc.id);
+        const { newIndex, oldIndex, doc, type } = change;
+        const post = doc.data();
+        post.id = change.doc.id;
+
+        if (type === "added") {
+          posts.value.splice(newIndex, 0, post);
+          // if we want to handle references we would do it here
+        } else if (type === "modified") {
+          // remove the old one first
+          posts.value.splice(oldIndex, 1);
+          // if we want to handle references we would have to unsubscribe
+          // from old references' listeners and subscribe to the new ones
+          posts.value.splice(newIndex, 0, post);
+        } else if (type === "removed") {
+          posts.value.splice(oldIndex, 1);
+          // if we want to handle references we need to unsubscribe
+          // from old references
         }
       });
     });
@@ -50,7 +49,7 @@ export default () => {
 
   const getRecipe = async (id) => {
     const response = await fb.postsCollection.doc(id).get();
-    if (response.data()) {
+    if (response.exists) {
       const recipe = response.data();
       formData.title = recipe.title;
       formData.content = recipe.content;
@@ -62,7 +61,7 @@ export default () => {
       await fb.postsCollection.doc(id).delete();
       return true;
     } catch (error) {
-      return new Error("error: deleteReceip");
+      console.error(error);
     }
   };
 
