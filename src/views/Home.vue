@@ -1,18 +1,61 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <FormRecipes :id="id" />
+    <ul>
+      <li v-for="post in posts" :key="post.id">
+        <div class="day">Za</div>
+        <router-link :to="{ name: 'recipe', params: { id: post.id } }">
+          {{ post.title }}
+        </router-link>
+      </li>
+    </ul>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
+import useRecipes from "@/compositions/recipes";
+import FormRecipes from "@/components/FormRecipes.vue";
+import { onMounted } from "vue";
 
 export default {
-  name: "Home",
+  setup() {
+    const { posts, getPosts } = useRecipes();
+    onMounted(() => {
+      getPosts();
+    });
+    return {
+      posts,
+    };
+  },
   components: {
-    HelloWorld,
+    FormRecipes,
+  },
+  props: {
+    id: String,
+    default: null,
   },
 };
 </script>
+
+<style lang="postcss" scoped>
+ul {
+  list-style: none outside;
+  margin: 0 0 1em;
+  padding: 0;
+}
+
+li {
+  display: grid;
+  grid-template-columns: 4em auto;
+  grid-gap: 1em;
+  margin-bottom: 0.25em;
+  align-items: center;
+}
+
+.day {
+  display: block;
+  height: 4em;
+  width: 4em;
+  background: #000;
+}
+</style>

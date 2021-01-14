@@ -1,34 +1,16 @@
 <template>
   <div id="nav">
-    {{ posts }}1 <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+    <router-link to="/">Weekmenu</router-link> |
+    <router-link to="/about">Recepten</router-link>
   </div>
-  <router-view />
-  <button @click="createPost">add post</button>
+  <router-view :key="$route.fullPath" />
 </template>
-
-<script>
-import useRecipes from "@/compositions/recipes";
-
-export default {
-  setup() {
-    const { getPosts, createPost, posts } = useRecipes();
-    getPosts();
-    return {
-      posts,
-      createPost,
-    };
-  },
-};
-</script>
 
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
 }
 
 #nav {

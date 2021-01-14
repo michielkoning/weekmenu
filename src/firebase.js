@@ -19,6 +19,8 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 const auth = firebase.auth();
 
+db.enablePersistence();
+
 // collection references
 const usersCollection = db.collection("users");
 const postsCollection = db.collection("posts");
