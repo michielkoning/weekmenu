@@ -1,10 +1,10 @@
 import { reactive } from "vue";
-import * as fb from "./../firebase";
+import * as fb from "../firebase";
 import useApi from "./api";
 
 export default () => {
   const { create, update, getAll, list, remove, get } = useApi(
-    fb.postsCollection
+    fb.weekMenuCollection
   );
 
   const formData = reactive({

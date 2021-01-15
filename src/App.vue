@@ -1,7 +1,7 @@
 <template>
   <div id="nav">
-    <router-link to="/">Weekmenu</router-link> |
-    <router-link to="/about">Recepten</router-link>
+    <router-link to="/weekmenu">Weekmenu</router-link> |
+    <router-link to="/">Recepten</router-link>
   </div>
   <router-view :key="$route.fullPath" />
 </template>
@@ -34,7 +34,7 @@ export default {
 }
 
 #nav {
-  padding: 30px;
+  padding: 30px 0;
 }
 
 #nav a {
@@ -42,7 +42,7 @@ export default {
   color: #2c3e50;
 }
 
-#nav a.router-link-exact-active {
+#nav a.router-link-active {
   color: #42b983;
 }
 </style>

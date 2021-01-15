@@ -1,7 +1,11 @@
 <template>
   <form @submit.prevent="submit">
-    <input type="text" v-model="formData.title" />
-    <textarea v-model="formData.content" />
+    <div>
+      <input type="text" v-model="formData.title" />
+    </div>
+    <div>
+      <textarea v-model="formData.content" />
+    </div>
     <button type="submit">Recept {{ id ? "wijzigen" : "toevoegen" }}</button>
     <button type="button" @click="deleteRecipe1" v-if="id">
       Recept verwijderen
@@ -25,7 +29,7 @@ export default {
     } = useRecipes();
 
     onMounted(() => {
-      getRecipe(props.id);
+      if (props.id) getRecipe(props.id);
     });
 
     const submit = async () => {

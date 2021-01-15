@@ -1,14 +1,14 @@
 <template>
-  <div class="home">
-    <FormRecipes :id="id" />
-    <ul>
+  <div class="page">
+    <ul v-if="posts.length">
       <li v-for="post in posts" :key="post.id">
         <div class="day">Za</div>
-        <router-link :to="{ name: 'recipe', params: { id: post.id } }">
+        <router-link :to="{ name: 'Recipes', params: { id: post.id } }">
           {{ post.title }}
         </router-link>
       </li>
     </ul>
+    <FormRecipes :id="id" />
   </div>
 </template>
 
@@ -34,6 +34,11 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
+.page {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
 ul {
   list-style: none outside;
   margin: 0 0 1em;
@@ -52,6 +57,9 @@ li {
   display: block;
   height: 4em;
   width: 4em;
-  background: #000;
+  background: #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>
