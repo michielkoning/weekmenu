@@ -8,7 +8,7 @@ export default () => {
   );
 
   const formData = reactive({
-    day: "di",
+    day: "",
     recipeId: "",
   });
 
@@ -23,7 +23,7 @@ export default () => {
   const getWeekMenu = () => {
     getAll({
       orderBy: "day",
-      order: "desc",
+      order: "asc",
     });
   };
 

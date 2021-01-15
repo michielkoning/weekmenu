@@ -1,9 +1,11 @@
 <template>
   <div class="page">
     <div>
-      <ul>
+      <ul v-if="weekMenu.length">
         <li v-for="weekMenuItem in weekMenu" :key="weekMenuItem">
-          <div class="day">{{ weekMenuItem.day }}</div>
+          <div class="day">
+            {{ formatDate(weekMenuItem.day) }}
+          </div>
           <router-link
             :to="{
               name: 'WeekMenuSelectRecipe',
@@ -16,7 +18,8 @@
           </router-link>
         </li>
       </ul>
-      <button @click="add">Add</button>
+      <button @click="addWeekMenuItem">Add</button>
+      <button v-if="weekMenu.length" @click="remove">Remove</button>
     </div>
     <router-view />
   </div>
@@ -24,7 +27,9 @@
 
 <script>
 import { inject } from "vue";
-// import useWeekMenu from "@/compositions/weekMenu";
+import useWeekMenu from "@/compositions/weekMenu";
+import { format, add } from "date-fns";
+import { nl } from "date-fns/locale";
 
 export default {
   props: {
@@ -33,12 +38,39 @@ export default {
   },
   setup() {
     const weekMenu = inject("weekMenu");
-    const add = () => {
-      // createWeekMenuItem();
+    const { createWeekMenuItem, formData, deleteWeekMenuItem } = useWeekMenu();
+
+    const convertToDate = (date) => {
+      return new Date(date.seconds * 1000);
+    };
+
+    const formatDate = (date) => {
+      return format(convertToDate(date), "eeeeee", { locale: nl });
+    };
+
+    const addWeekMenuItem = () => {
+      if (weekMenu.value.length) {
+        const lastItem = weekMenu.value[weekMenu.value.length - 1];
+        const date = convertToDate(lastItem.day);
+        formData.day = add(date, {
+          days: 1,
+        });
+      } else {
+        formData.day = new Date();
+      }
+      createWeekMenuItem();
+    };
+
+    const remove = () => {
+      const lastItem = weekMenu.value[weekMenu.value.length - 1];
+      deleteWeekMenuItem(lastItem.id);
     };
 
     return {
-      add,
+      formatDate,
+      remove,
+      formData,
+      addWeekMenuItem,
       weekMenu,
     };
   },
