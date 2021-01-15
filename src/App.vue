@@ -1,9 +1,9 @@
 <template>
   <div id="nav">
-    <router-link to="/weekmenu">Weekmenu</router-link> |
-    <router-link to="/">Recepten</router-link>
+    <router-link :to="{ name: 'WeekMenuHome' }">Weekmenu</router-link> |
+    <router-link :to="{ name: 'RecipesHome' }">Recepten</router-link>
   </div>
-  <router-view :key="$route.fullPath" />
+  <router-view />
 </template>
 
 <script>

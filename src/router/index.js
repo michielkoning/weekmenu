@@ -1,25 +1,49 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Home from "../views/Recipes.vue";
+import RecipesHome from "../views/Recipes/RecipesHome.vue";
 
 const routes = [
   {
-    path: "/:id?",
-    name: "Recipes",
-    component: Home,
+    path: "/",
+    name: "RecipesHome",
+    component: RecipesHome,
     props: true,
+    children: [
+      {
+        path: "toevoegen",
+        name: "RecipeAdd",
+        component: () =>
+          import(
+            /* webpackChunkName: "RecipesDetails" */ "../views/Recipes/RecipeDetails.vue"
+          ),
+        props: true,
+      },
+      {
+        path: ":id",
+        name: "RecipeDetails",
+        component: () =>
+          import(
+            /* webpackChunkName: "RecipesDetails" */ "../views/Recipes/RecipeDetails.vue"
+          ),
+        props: true,
+      },
+    ],
   },
   {
     path: "/weekmenu",
-    name: "WeekMenu",
+    name: "WeekMenuHome",
     component: () =>
-      import(/* webpackChunkName: "WeekMenu" */ "../views/WeekMenu.vue"),
+      import(
+        /* webpackChunkName: "WeekMenu" */ "../views/WeekMenu/WeekMenuHome.vue"
+      ),
     props: true,
     children: [
       {
         path: ":id",
-        name: "WeekMenu2",
+        name: "WeekMenuSelectRecipe",
         component: () =>
-          import(/* webpackChunkName: "WeekMenu2" */ "../views/WeekMenu2.vue"),
+          import(
+            /* webpackChunkName: "WeekMenu2" */ "../views/WeekMenu/WeekMenuSelectRecipe.vue"
+          ),
         props: true,
       },
     ],

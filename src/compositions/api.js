@@ -27,8 +27,14 @@ export default (collection) => {
     }
   };
 
-  const getAll = () => {
-    collection.orderBy("createdOn", "desc").onSnapshot((snapshot) => {
+  const getAll = (params) => {
+    const order = {
+      order: "desc",
+      orderBy: "createdOn",
+      ...params,
+    };
+
+    collection.orderBy(order.orderBy, order.order).onSnapshot((snapshot) => {
       snapshot.docChanges().forEach((change) => {
         const { newIndex, oldIndex, doc, type } = change;
         const post = doc.data();

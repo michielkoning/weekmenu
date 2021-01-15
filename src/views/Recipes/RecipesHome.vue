@@ -1,19 +1,20 @@
 <template>
   <div class="page">
-    <recipes-list @selectRecipe="selectRecipe" />
-    <form-recipes :id="id" />
+    <div>
+      <recipes-list @selectRecipe="selectRecipe" />
+      <router-link :to="{ name: 'RecipeAdd' }">Add</router-link>
+    </div>
+    <router-view :key="$route.fullPath" />
   </div>
 </template>
 
 <script>
-import FormRecipes from "@/components/FormRecipes.vue";
 import RecipesList from "@/components/RecipesList";
 import { useRouter } from "vue-router";
 
 export default {
   components: {
     RecipesList,
-    FormRecipes,
   },
   props: {
     id: String,
@@ -24,7 +25,7 @@ export default {
 
     const selectRecipe = (id) => {
       router.push({
-        name: "Recipes",
+        name: "RecipeDetails",
         params: { id },
       });
     };

@@ -41,13 +41,13 @@ export default {
         updatePost(props.id);
       } else {
         const id = await createPost();
-        router.push({ name: "recipe", params: { id } });
+        router.push({ name: "RecipeDetails", params: { id } });
       }
     };
 
     const deleteRecipe1 = async () => {
       await deleteRecipe(props.id);
-      router.push("/");
+      router.push({ name: "RecipesHome" });
     };
 
     return {

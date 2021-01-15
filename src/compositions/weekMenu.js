@@ -21,7 +21,10 @@ export default () => {
   };
 
   const getWeekMenu = () => {
-    getAll();
+    getAll({
+      orderBy: "day",
+      order: "desc",
+    });
   };
 
   const getWeekMenuItem = async (id) => {

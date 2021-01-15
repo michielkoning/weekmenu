@@ -5,7 +5,10 @@
         <li v-for="weekMenuItem in weekMenu" :key="weekMenuItem">
           <div class="day">{{ weekMenuItem.day }}</div>
           <router-link
-            :to="{ name: 'WeekMenu2', params: { id: weekMenuItem.id } }"
+            :to="{
+              name: 'WeekMenuSelectRecipe',
+              params: { id: weekMenuItem.id },
+            }"
           >
             {{
               weekMenuItem.recipe ? weekMenuItem.recipe : "Voeg een recept toe"
@@ -20,7 +23,7 @@
 </template>
 
 <script>
-import { ref, inject } from "vue";
+import { inject } from "vue";
 // import useWeekMenu from "@/compositions/weekMenu";
 
 export default {
@@ -28,28 +31,14 @@ export default {
     day: String,
     default: null,
   },
-  setup(props) {
+  setup() {
     const weekMenu = inject("weekMenu");
-    // const { createWeekMenuItem } = useWeekMenu();
-    const days = ref([
-      { day: "za", recipe: null },
-      { day: "zo", recipe: null },
-      { day: "ma", recipe: null },
-    ]);
-
     const add = () => {
       // createWeekMenuItem();
     };
 
-    const selectRecipe = (title) => {
-      const day = days.value.find((d) => d.day === props.day);
-      day.recipe = title;
-    };
-
     return {
       add,
-      selectRecipe,
-      days,
       weekMenu,
     };
   },
@@ -84,5 +73,9 @@ li {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.router-link-active::after {
+  content: " >";
 }
 </style>

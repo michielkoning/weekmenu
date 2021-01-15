@@ -22,7 +22,10 @@ export default () => {
   };
 
   const getPosts = () => {
-    getAll();
+    getAll({
+      orderBy: "title",
+      order: "asc",
+    });
   };
 
   const getRecipe = async (id) => {
