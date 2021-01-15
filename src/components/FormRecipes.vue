@@ -1,13 +1,13 @@
 <template>
   <form @submit.prevent="submit">
     <div>
-      <input type="text" v-model="formData.title" />
+      <input v-model="formData.title" type="text" />
     </div>
     <div>
       <textarea v-model="formData.content" />
     </div>
     <button type="submit">Recept {{ id ? "wijzigen" : "toevoegen" }}</button>
-    <button type="button" @click="deleteRecipe1" v-if="id">
+    <button v-if="id" type="button" @click="deleteRecipe1">
       Recept verwijderen
     </button>
   </form>
@@ -18,6 +18,10 @@ import useRecipes from "@/compositions/recipes";
 import { onMounted } from "vue";
 import { useRouter } from "vue-router";
 export default {
+  props: {
+    id: String,
+    default: null,
+  },
   setup(props) {
     const router = useRouter();
     const {
@@ -51,10 +55,6 @@ export default {
       submit,
       formData,
     };
-  },
-  props: {
-    id: String,
-    default: null,
   },
 };
 </script>

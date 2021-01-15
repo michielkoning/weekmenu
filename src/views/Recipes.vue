@@ -9,7 +9,6 @@
 import FormRecipes from "@/components/FormRecipes.vue";
 import RecipesList from "@/components/RecipesList";
 import { useRouter } from "vue-router";
-import { inject } from "vue";
 
 export default {
   components: {
@@ -21,7 +20,6 @@ export default {
     default: null,
   },
   setup() {
-    const posts = inject("posts");
     const router = useRouter();
 
     const selectRecipe = (id) => {
@@ -32,7 +30,6 @@ export default {
     };
 
     return {
-      posts,
       selectRecipe,
     };
   },

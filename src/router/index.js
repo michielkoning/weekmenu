@@ -9,11 +9,20 @@ const routes = [
     props: true,
   },
   {
-    path: "/weekmenu/:day?",
+    path: "/weekmenu",
     name: "WeekMenu",
     component: () =>
       import(/* webpackChunkName: "WeekMenu" */ "../views/WeekMenu.vue"),
     props: true,
+    children: [
+      {
+        path: ":id",
+        name: "WeekMenu2",
+        component: () =>
+          import(/* webpackChunkName: "WeekMenu2" */ "../views/WeekMenu2.vue"),
+        props: true,
+      },
+    ],
   },
 ];
 

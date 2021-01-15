@@ -10,6 +10,7 @@
   "dependencies": {
     "axios": "^0.21.1",
     "core-js": "^3.8.2",
+    "date-fns": "^2.16.1",
     "firebase": "^8.2.2",
     "idb": "^6.0.0",
     "register-service-worker": "^1.7.2",

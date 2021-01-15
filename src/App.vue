@@ -8,20 +8,24 @@
 
 <script>
 import useRecipes from "@/compositions/recipes";
+import useWeekMenu from "@/compositions/weekMenu";
 import { onMounted, provide } from "vue";
 
 export default {
-  setup() {
-    const { posts, getPosts } = useRecipes();
-    onMounted(() => {
-      getPosts();
-    });
-
-    provide("posts", posts);
-  },
   props: {
     id: String,
     default: null,
+  },
+  setup() {
+    const { posts, getPosts } = useRecipes();
+    const { weekMenu, getWeekMenu } = useWeekMenu();
+    onMounted(() => {
+      getPosts();
+      getWeekMenu();
+    });
+
+    provide("posts", posts);
+    provide("weekMenu", weekMenu);
   },
 };
 </script>

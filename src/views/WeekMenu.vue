@@ -1,36 +1,45 @@
 <template>
   <div class="page">
-    <ul>
-      <li v-for="day2 in days" :key="day2">
-        <div class="day">{{ day2.day }}</div>
-        <router-link :to="{ name: 'WeekMenu', params: { day: day2.day } }">
-          {{ day2.recipe ? day2.recipe : "Voeg een recept toe" }}
-        </router-link>
-      </li>
-    </ul>
-    <recipes-list v-if="day" @selectRecipe="selectRecipe" />
+    <div>
+      <ul>
+        <li v-for="weekMenuItem in weekMenu" :key="weekMenuItem">
+          <div class="day">{{ weekMenuItem.day }}</div>
+          <router-link
+            :to="{ name: 'WeekMenu2', params: { id: weekMenuItem.id } }"
+          >
+            {{
+              weekMenuItem.recipe ? weekMenuItem.recipe : "Voeg een recept toe"
+            }}
+          </router-link>
+        </li>
+      </ul>
+      <button @click="add">Add</button>
+    </div>
+    <router-view />
   </div>
 </template>
 
 <script>
-import { inject, ref } from "vue";
-import RecipesList from "@/components/RecipesList";
+import { ref, inject } from "vue";
+// import useWeekMenu from "@/compositions/weekMenu";
 
 export default {
-  components: {
-    RecipesList,
-  },
   props: {
     day: String,
     default: null,
   },
   setup(props) {
+    const weekMenu = inject("weekMenu");
+    // const { createWeekMenuItem } = useWeekMenu();
     const days = ref([
       { day: "za", recipe: null },
       { day: "zo", recipe: null },
       { day: "ma", recipe: null },
     ]);
-    const posts = inject("posts");
+
+    const add = () => {
+      // createWeekMenuItem();
+    };
 
     const selectRecipe = (title) => {
       const day = days.value.find((d) => d.day === props.day);
@@ -38,9 +47,10 @@ export default {
     };
 
     return {
+      add,
       selectRecipe,
       days,
-      posts,
+      weekMenu,
     };
   },
 };

@@ -8,32 +8,31 @@ export default () => {
   );
 
   const formData = reactive({
-    title: "",
-    content: "",
-    tags: [],
+    day: "di",
+    recipeId: "",
   });
 
-  const createPost = async () => {
+  const createWeekMenuItem = async () => {
     return create(formData);
   };
 
-  const updatePost = async (id) => {
-    update(id, formData);
+  const updateWeekMenuItem = async (id, payload) => {
+    update(id, payload);
   };
 
-  const getPosts = () => {
+  const getWeekMenu = () => {
     getAll();
   };
 
-  const getRecipe = async (id) => {
+  const getWeekMenuItem = async (id) => {
     const response = await get(id);
     if (response) {
-      formData.title = response.title;
-      formData.content = response.content;
+      formData.day = response.day;
+      formData.recipeId = response.recipeId;
     }
   };
 
-  const deleteRecipe = async (id) => {
+  const deleteWeekMenuItem = async (id) => {
     try {
       await remove(id);
       return true;
@@ -43,12 +42,12 @@ export default () => {
   };
 
   return {
-    deleteRecipe,
-    getRecipe,
+    deleteWeekMenuItem,
+    getWeekMenu,
     formData,
-    createPost,
-    posts: list,
-    getPosts,
-    updatePost,
+    createWeekMenuItem,
+    weekMenu: list,
+    getWeekMenuItem,
+    updateWeekMenuItem,
   };
 };

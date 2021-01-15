@@ -1,7 +1,7 @@
 <template>
   <ul v-if="posts.length">
     <li v-for="post in posts" :key="post.id">
-      <div class="day">Za</div>
+      <div class="day"></div>
       <button @click="$emit('selectRecipe', post.id)">
         {{ post.title }}
       </button>
@@ -36,6 +36,16 @@ li {
   grid-gap: 1em;
   margin-bottom: 0.25em;
   align-items: center;
+}
+
+button {
+  background: none;
+  text-decoration: underline;
+  text-align: left;
+  border: 0;
+  font-size: 1em;
+  font-family: inherit;
+  padding: 0;
 }
 
 .day {
