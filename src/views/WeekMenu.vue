@@ -8,7 +8,7 @@
         </router-link>
       </li>
     </ul>
-    <recipes-list v-if="day" @selectRecipe="selectDay" />
+    <recipes-list v-if="day" @selectRecipe="selectRecipe" />
   </div>
 </template>
 
@@ -20,6 +20,10 @@ export default {
   components: {
     RecipesList,
   },
+  props: {
+    day: String,
+    default: null,
+  },
   setup(props) {
     const days = ref([
       { day: "za", recipe: null },
@@ -28,21 +32,16 @@ export default {
     ]);
     const posts = inject("posts");
 
-    const selectDay = (title) => {
-      console.log(title);
+    const selectRecipe = (title) => {
       const day = days.value.find((d) => d.day === props.day);
       day.recipe = title;
     };
 
     return {
-      selectDay,
+      selectRecipe,
       days,
       posts,
     };
-  },
-  props: {
-    day: String,
-    default: null,
   },
 };
 </script>
