@@ -1,0 +1,9 @@
+:root {
+  --container-width-xs: 18rem;
+  --container-width-sm: 30rem;
+  --container-width-md: 48rem;
+  --container-width-lg: 64rem;
+  --container-width-xlg: 80rem;
+  --height-navigation-sm: 2em;
+  --gutter: var(--spacing-m);
+}

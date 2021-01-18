@@ -1,0 +1,7 @@
+a {
+  @mixin link;
+
+  &:hover {
+    @mixin link-hover;
+  }
+}

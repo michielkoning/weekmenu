@@ -1,0 +1,19 @@
+@define-mixin link {
+  color: inherit;
+  text-decoration: none;
+  transition: box-shadow 0.1s ease-out;
+  box-shadow: 0 2px 0 0 var(--color-primary);
+}
+
+@define-mixin link-hover {
+  box-shadow: 0 4px 0 0 var(--color-primary);
+}
+
+@define-mixin link-sm {
+  box-shadow: 0 1px 0 0 currentColor;
+
+  &:hover,
+  &:focus {
+    box-shadow: 0 2px 0 0 currentColor;
+  }
+}

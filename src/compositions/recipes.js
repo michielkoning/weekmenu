@@ -1,11 +1,14 @@
 import { reactive } from "vue";
 import * as fb from "./../firebase";
 import useApi from "./api";
+import useWeekMenu from "./weekMenu";
 
 export default () => {
   const { create, update, getAll, list, remove, get } = useApi(
     fb.postsCollection
   );
+
+  const { updateWeekMenuByRecipeChange } = useWeekMenu();
 
   const formData = reactive({
     title: "",
@@ -18,7 +21,12 @@ export default () => {
   };
 
   const updatePost = async (id) => {
-    update(id, formData);
+    await update(id, formData);
+
+    await updateWeekMenuByRecipeChange(id, {
+      id,
+      title: formData.title,
+    });
   };
 
   const getPosts = () => {
@@ -39,6 +47,8 @@ export default () => {
   const deleteRecipe = async (id) => {
     try {
       await remove(id);
+      await updateWeekMenuByRecipeChange(id, null);
+
       return true;
     } catch (error) {
       console.error(error);

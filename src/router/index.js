@@ -4,6 +4,26 @@ import RecipesHome from "../views/Recipes/RecipesHome.vue";
 const routes = [
   {
     path: "/",
+    name: "WeekMenuHome",
+    component: () =>
+      import(
+        /* webpackChunkName: "WeekMenu" */ "../views/WeekMenu/WeekMenuHome.vue"
+      ),
+    props: true,
+    children: [
+      {
+        path: ":id",
+        name: "WeekMenuSelectRecipe",
+        component: () =>
+          import(
+            /* webpackChunkName: "WeekMenu2" */ "../views/WeekMenu/WeekMenuSelectRecipe.vue"
+          ),
+        props: true,
+      },
+    ],
+  },
+  {
+    path: "/recepten",
     name: "RecipesHome",
     component: RecipesHome,
     props: true,
@@ -23,26 +43,6 @@ const routes = [
         component: () =>
           import(
             /* webpackChunkName: "RecipesDetails" */ "../views/Recipes/RecipeDetails.vue"
-          ),
-        props: true,
-      },
-    ],
-  },
-  {
-    path: "/weekmenu",
-    name: "WeekMenuHome",
-    component: () =>
-      import(
-        /* webpackChunkName: "WeekMenu" */ "../views/WeekMenu/WeekMenuHome.vue"
-      ),
-    props: true,
-    children: [
-      {
-        path: ":id",
-        name: "WeekMenuSelectRecipe",
-        component: () =>
-          import(
-            /* webpackChunkName: "WeekMenu2" */ "../views/WeekMenu/WeekMenuSelectRecipe.vue"
           ),
         props: true,
       },

@@ -1,0 +1,31 @@
+table {
+  width: 100%;
+  margin: 0 0 var(--spacing-m);
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+}
+
+th {
+  font-weight: var(--font-weight-bold);
+}
+
+td {
+  vertical-align: top;
+}
+
+th,
+td {
+  padding: var(--spacing-xs);
+  text-align: left;
+
+  @nest thead & {
+    vertical-align: bottom;
+  }
+}
+
+tbody tr:nth-child(2n + 1) {
+  & th,
+  & td {
+    background: var(--color-gray-light);
+  }
+}

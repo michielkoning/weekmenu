@@ -18,9 +18,12 @@ export default {
   },
   setup(props) {
     const { updateWeekMenuItem, formData } = useWeekMenu();
-    const selectRecipe = (recipeId) => {
+    const selectRecipe = ({ id, title }) => {
       updateWeekMenuItem(props.id, {
-        recipe: recipeId,
+        recipe: {
+          id,
+          title,
+        },
       });
     };
 

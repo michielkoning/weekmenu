@@ -29,6 +29,8 @@
     "eslint": "^7.17.0",
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-vue": "^7.4.1",
+    "postcss-mixins": "^6.2.3",
+    "postcss-preset-env": "^6.7.0",
     "prettier": "^2.2.1"
   }
 }

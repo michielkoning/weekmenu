@@ -1,0 +1,24 @@
+.sr-only {
+  @mixin sr-only;
+}
+
+*:focus {
+  outline: 1px dotted var(--color-black);
+}
+
+.visuallyhidden {
+  display: none;
+}
+
+@media screen and (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+@media screen and (inverted-colors: inverted) {
+  img {
+    filter: invert(100%);
+  }
+}

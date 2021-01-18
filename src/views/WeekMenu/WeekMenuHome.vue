@@ -2,21 +2,20 @@
   <div class="page">
     <div>
       <ul v-if="weekMenu.length">
-        <li v-for="weekMenuItem in weekMenu" :key="weekMenuItem">
-          <div class="day">
-            {{ formatDate(weekMenuItem.day) }}
-          </div>
-          <router-link
-            :to="{
-              name: 'WeekMenuSelectRecipe',
-              params: { id: weekMenuItem.id },
-            }"
-          >
-            {{
-              weekMenuItem.recipe ? weekMenuItem.recipe : "Voeg een recept toe"
-            }}
-          </router-link>
-        </li>
+        <list-item
+          v-for="weekMenuItem in weekMenu"
+          :id="formatDate(weekMenuItem.day)"
+          :key="weekMenuItem"
+          icon="vegetarian"
+          :icon-small="true"
+          color="blue"
+          :title="
+            weekMenuItem.recipe
+              ? weekMenuItem.recipe.title
+              : 'voeg een recept toe'
+          "
+          @selectItem="$emit('selectRecipe', post)"
+        />
       </ul>
       <button @click="addWeekMenuItem">Add</button>
       <button v-if="weekMenu.length" @click="remove">Remove</button>
@@ -30,8 +29,12 @@ import { inject } from "vue";
 import useWeekMenu from "@/compositions/weekMenu";
 import { format, add } from "date-fns";
 import { nl } from "date-fns/locale";
+import ListItem from "@/components/ListItem.vue";
 
 export default {
+  components: {
+    ListItem,
+  },
   props: {
     day: String,
     default: null,

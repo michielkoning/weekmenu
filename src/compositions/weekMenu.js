@@ -9,8 +9,19 @@ export default () => {
 
   const formData = reactive({
     day: "",
-    recipeId: "",
+    recipe: null,
   });
+
+  const updateWeekMenuByRecipeChange = async (id, payload) => {
+    const weekMenuItems = await fb.weekMenuCollection
+      .where("recipe.id", "==", id)
+      .get();
+    weekMenuItems.forEach((doc) => {
+      updateWeekMenuItem(doc.id, {
+        recipe: payload,
+      });
+    });
+  };
 
   const createWeekMenuItem = async () => {
     return create(formData);
@@ -52,5 +63,6 @@ export default () => {
     weekMenu: list,
     getWeekMenuItem,
     updateWeekMenuItem,
+    updateWeekMenuByRecipeChange,
   };
 };

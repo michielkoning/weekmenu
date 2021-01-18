@@ -23,10 +23,10 @@ export default {
   setup() {
     const router = useRouter();
 
-    const selectRecipe = (id) => {
+    const selectRecipe = (recipe) => {
       router.push({
         name: "RecipeDetails",
-        params: { id },
+        params: { id: recipe.id },
       });
     };
 
