@@ -1,11 +1,12 @@
 <template>
-  <li :style="colors" :class="{ active, active }" @click="$emit('selectItem')">
-    <div class="box">
+  <li :class="{ active, active }" @click="$emit('selectItem')">
+    <div class="box" :class="boxLargeColor">
       <template v-if="id">
         {{ id }}
       </template>
-      <div :class="{ icon: iconSmall }">
-        <component :is="listItemIcon" v-if="listItemIcon" />
+
+      <div v-if="listItemIcon" :class="{ icon: iconSmall }">
+        <component :is="listItemIcon" />
       </div>
     </div>
     <div class="title">
@@ -15,8 +16,9 @@
 </template>
 
 <script>
-import { computed } from "vue";
 import IconVegeterian from "@/components/Icons/IconVegeterian.vue";
+import IconFish from "@/components/Icons/IconFish.vue";
+import IconMeat from "@/components/Icons/IconMeat.vue";
 
 export default {
   components: {
@@ -49,48 +51,78 @@ export default {
     },
   },
   emits: ["selectItem"],
-  setup(props) {
-    const colors = computed(() => {
-      let color = "";
-      switch (props.icon) {
-        case "meat":
-          color = "red";
-          break;
 
-        case "fish":
-          color = "blue";
-          break;
-
-        default:
-          color = "green";
-          break;
-      }
-      return {
-        "--color": `var(--color-${color})`,
-        "--color-dark": `var(--color-${color}-dark)`,
-      };
-    });
-
-    return { colors };
-  },
   computed: {
     listItemIcon() {
-      if (this.icon === "vegetarian") {
-        return IconVegeterian;
+      switch (this.icon) {
+        case "vegetarian":
+          return IconVegeterian;
+        case "meat":
+          return IconMeat;
+        case "fish":
+          return IconFish;
+        default:
+          return null;
       }
-      return null;
+    },
+    boxLargeColor() {
+      if (!this.iconSmall) {
+        switch (this.icon) {
+          case "vegetarian":
+            return "green";
+          case "meat":
+            return "red";
+          default:
+            return "blue";
+        }
+      }
+      return this.color;
+    },
+    boxSmallColor() {
+      if (!this.iconSmall) {
+        switch (this.icon) {
+          case "vegetarian":
+            return "green";
+          case "meat":
+            return "red";
+          default:
+            return "blue";
+        }
+      }
+      return this.color;
     },
   },
 };
 </script>
 
 <style lang="postcss" scoped>
+.green {
+  background: var(--color-green);
+  color: var(--color-green-dark);
+}
+
+.red {
+  background: var(--color-red);
+  color: var(--color-red-dark);
+}
+
+.purple {
+  background: var(--color-purple);
+  color: var(--color-purple-dark);
+}
+
+.blue {
+  background: var(--color-blue);
+  color: var(--color-blue-dark);
+}
+
 li {
   display: grid;
   grid-template-columns: 4em auto;
   grid-gap: 0.5em;
   align-items: center;
   padding: 0.5em 0.5em;
+  cursor: pointer;
 
   &.active {
     background: #efefef;
@@ -111,8 +143,6 @@ button {
   display: block;
   height: 4rem;
   width: 4rem;
-  background: var(--color);
-  color: var(--color-dark);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -128,12 +158,13 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--color-dark);
+  background: var(--color-green-dark);
   border-radius: 0.25em;
   color: var(--color);
 
   & svg {
     width: 0.5em;
+    fill: var(--color-green);
     height: 0.5em;
   }
 }

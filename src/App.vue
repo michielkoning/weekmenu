@@ -1,8 +1,8 @@
 <template>
-  <div id="nav">
+  <nav id="nav">
     <router-link :to="{ name: 'WeekMenuHome' }">Weekmenu</router-link> |
     <router-link :to="{ name: 'RecipesHome' }">Recepten</router-link>
-  </div>
+  </nav>
   <router-view />
 </template>
 
@@ -32,4 +32,11 @@ export default {
 
 <style>
 @import "./styles/base.css";
+</style>
+
+<style lang="postcss" scoped>
+nav {
+  padding: 1em 0.5em;
+  text-align: center;
+}
 </style>

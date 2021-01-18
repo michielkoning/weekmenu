@@ -4,7 +4,7 @@
       <ul v-if="weekMenu.length">
         <list-item
           v-for="weekMenuItem in weekMenu"
-          :id="formatDate(weekMenuItem.day)"
+          :id="formatDate(weekMenuItem.day, 'eeeeee')"
           :key="weekMenuItem.id"
           :icon="
             weekMenuItem.recipe && weekMenuItem.recipe.icon
@@ -12,7 +12,7 @@
               : null
           "
           :icon-small="true"
-          color="blue"
+          :color="colors[formatDate(weekMenuItem.day, 'i') - 1]"
           :title="
             weekMenuItem.recipe
               ? weekMenuItem.recipe.title
@@ -56,6 +56,8 @@ export default {
       return new Date(date.seconds * 1000);
     };
 
+    const colors = ["green", "red", "purple", "blue", "green", "red", "purple"];
+
     const selectRecipe = (recipe) => {
       router.push({
         name: "WeekMenuSelectRecipe",
@@ -63,8 +65,8 @@ export default {
       });
     };
 
-    const formatDate = (date) => {
-      return format(convertToDate(date), "eeeeee", { locale: nl });
+    const formatDate = (date, unit) => {
+      return format(convertToDate(date), unit, { locale: nl });
     };
 
     const addWeekMenuItem = () => {
@@ -86,6 +88,7 @@ export default {
     };
 
     return {
+      colors,
       route,
       formatDate,
       remove,
@@ -109,27 +112,5 @@ ul {
   list-style: none outside;
   margin: 0 0 1em;
   padding: 0;
-}
-
-li {
-  display: grid;
-  grid-template-columns: 4em auto;
-  grid-gap: 1em;
-  margin-bottom: 0.25em;
-  align-items: center;
-}
-
-.day {
-  display: block;
-  height: 4em;
-  width: 4em;
-  background: #ccc;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.router-link-active::after {
-  content: " >";
 }
 </style>
