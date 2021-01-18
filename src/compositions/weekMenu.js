@@ -10,6 +10,7 @@ export default () => {
   const formData = reactive({
     day: "",
     recipe: null,
+    icon: "vegetarian",
   });
 
   const updateWeekMenuByRecipeChange = async (id, payload) => {
@@ -43,6 +44,7 @@ export default () => {
     if (response) {
       formData.day = response.day;
       formData.recipeId = response.recipeId;
+      formData.icon = response.icon;
     }
   };
 

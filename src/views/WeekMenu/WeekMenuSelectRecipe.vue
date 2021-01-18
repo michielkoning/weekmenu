@@ -18,11 +18,12 @@ export default {
   },
   setup(props) {
     const { updateWeekMenuItem, formData } = useWeekMenu();
-    const selectRecipe = ({ id, title }) => {
+    const selectRecipe = ({ id, title, icon }) => {
       updateWeekMenuItem(props.id, {
         recipe: {
           id,
           title,
+          icon,
         },
       });
     };
@@ -39,29 +40,5 @@ export default {
 .page {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-}
-
-ul {
-  list-style: none outside;
-  margin: 0 0 1em;
-  padding: 0;
-}
-
-li {
-  display: grid;
-  grid-template-columns: 4em auto;
-  grid-gap: 1em;
-  margin-bottom: 0.25em;
-  align-items: center;
-}
-
-.day {
-  display: block;
-  height: 4em;
-  width: 4em;
-  background: #ccc;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 </style>

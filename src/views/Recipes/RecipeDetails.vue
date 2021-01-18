@@ -1,10 +1,15 @@
 <template>
   <form @submit.prevent="submit">
+    {{ formData }}
     <div>
       <input v-model="formData.title" type="text" />
     </div>
     <div>
-      <textarea v-model="formData.content" />
+      <select v-model="formData.icon">
+        <option value="meat">Vlees</option>
+        <option value="fish">Vis</option>
+        <option value="vegetarian">Vegetarisch</option>
+      </select>
     </div>
     <button type="submit">Recept {{ id ? "wijzigen" : "toevoegen" }}</button>
     <button v-if="id" type="button" @click="deleteRecipe1">

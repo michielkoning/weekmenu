@@ -13,7 +13,7 @@ export default () => {
   const formData = reactive({
     title: "",
     content: "",
-    tags: [],
+    icon: "vegetarian",
   });
 
   const createPost = async () => {
@@ -26,6 +26,7 @@ export default () => {
     await updateWeekMenuByRecipeChange(id, {
       id,
       title: formData.title,
+      icon: formData.icon,
     });
   };
 
@@ -41,6 +42,7 @@ export default () => {
     if (response) {
       formData.title = response.title;
       formData.content = response.content;
+      formData.icon = response.icon;
     }
   };
 

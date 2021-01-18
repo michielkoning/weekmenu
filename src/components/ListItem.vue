@@ -1,5 +1,5 @@
 <template>
-  <li :style="colors">
+  <li :style="colors" :class="{ active, active }" @click="$emit('selectItem')">
     <div class="box">
       <template v-if="id">
         {{ id }}
@@ -8,10 +8,9 @@
         <component :is="listItemIcon" v-if="listItemIcon" />
       </div>
     </div>
-
-    <button @click="$emit('selectItem')">
+    <div class="title">
       {{ title }}
-    </button>
+    </div>
   </li>
 </template>
 
@@ -44,15 +43,34 @@ export default {
       type: Boolean,
       default: false,
     },
+    active: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: ["selectItem"],
   setup(props) {
     const colors = computed(() => {
+      let color = "";
+      switch (props.icon) {
+        case "meat":
+          color = "red";
+          break;
+
+        case "fish":
+          color = "blue";
+          break;
+
+        default:
+          color = "green";
+          break;
+      }
       return {
-        "--color": `var(--color-${props.color})`,
-        "--color-dark": `var(--color-${props.color}-dark)`,
+        "--color": `var(--color-${color})`,
+        "--color-dark": `var(--color-${color}-dark)`,
       };
     });
+
     return { colors };
   },
   computed: {
@@ -71,11 +89,15 @@ li {
   display: grid;
   grid-template-columns: 4em auto;
   grid-gap: 0.5em;
-  margin-bottom: 0.25em;
   align-items: center;
+  padding: 0.5em 0.5em;
 
-  &:not(:last-child) {
-    padding-bottom: 1em;
+  &.active {
+    background: #efefef;
+  }
+
+  &:hover .title {
+    text-decoration: underline;
   }
 }
 
