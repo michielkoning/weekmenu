@@ -16,7 +16,7 @@
           :title="
             weekMenuItem.recipe
               ? weekMenuItem.recipe.title
-              : 'voeg een recept toe'
+              : 'Selecteer een recept'
           "
           :active="route.params.id === weekMenuItem.id"
           @selectItem="selectRecipe(weekMenuItem)"
