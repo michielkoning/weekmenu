@@ -46,5 +46,7 @@ export default {
 <style lang="postcss" scoped>
 .text {
   padding: 1em;
+  position: sticky;
+  top: 0;
 }
 </style>

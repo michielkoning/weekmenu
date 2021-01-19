@@ -183,6 +183,7 @@ ul {
 .btn-close {
   @mixin link-reset;
 
+  z-index: 9;
   position: absolute;
   top: 1em;
   right: 1em;
