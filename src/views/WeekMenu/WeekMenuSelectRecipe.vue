@@ -1,13 +1,11 @@
 <template>
-  <section>
-    <recipes-list v-if="posts.length" @selectRecipe="selectRecipe" />
-    <div v-else class="text">
-      <p>Je hebt nog geen recepten aangemaakt.</p>
-      <router-link :to="{ name: 'RecipeAdd' }" class="btn btn-primary">
-        Maak een nieuw recept aan
-      </router-link>
-    </div>
-  </section>
+  <recipes-list v-if="posts.length" @selectRecipe="selectRecipe" />
+  <div v-else class="text">
+    <p>Je hebt nog geen recepten aangemaakt.</p>
+    <router-link :to="{ name: 'RecipeAdd' }" class="btn btn-primary">
+      Maak een nieuw recept aan
+    </router-link>
+  </div>
 </template>
 
 <script>
@@ -46,10 +44,6 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-section {
-  background: #efefef;
-}
-
 .text {
   padding: 1em;
 }
