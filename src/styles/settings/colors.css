@@ -8,13 +8,13 @@
   --color-gray-lighter: #f9f9f9;
   --color-gray-lighterest: #f1f4f5;
   --color-text: #424242;
-  --color-primary: #98012e;
-  --color-primary-dark: #7f0126;
+  --color-primary: #d4e4a2;
+  --color-primary-dark: #85a60b;
   --color-background: var(--color-gray-lighter);
   --color-background-alternative: #f6f1ec;
 
-  --color-green: #d4e4a2;
-  --color-green-dark: #85a60b;
+  --color-green: var(--color-primary);
+  --color-green-dark: var(--color-primary-dark);
   --color-blue: #b2dee6;
   --color-blue-dark: #0092a7;
   --color-red: #f1bfca;

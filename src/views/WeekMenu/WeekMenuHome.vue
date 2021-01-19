@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <div>
-      <list-animation v-if="weekMenu.length">
+      <list-animation>
         <list-item
           v-for="weekMenuItem in weekMenu"
           :id="formatDate(weekMenuItem.day, 'eeeeee')"

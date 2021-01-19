@@ -1,8 +1,5 @@
 <template>
-  <nav id="nav">
-    <router-link :to="{ name: 'WeekMenuHome' }">Weekmenu</router-link> |
-    <router-link :to="{ name: 'RecipesHome' }">Recepten</router-link>
-  </nav>
+  <the-menu />
   <router-view />
 </template>
 
@@ -10,8 +7,12 @@
 import useRecipes from "@/compositions/recipes";
 import useWeekMenu from "@/compositions/weekMenu";
 import { onMounted, provide } from "vue";
+import TheMenu from "@/components/Layout/TheMenu";
 
 export default {
+  components: {
+    TheMenu,
+  },
   props: {
     id: String,
     default: null,

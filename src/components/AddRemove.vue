@@ -51,6 +51,7 @@ export default {
 <style lang="postcss" scoped>
 .wrapper {
   display: flex;
+  margin-left: 0.5em;
 }
 
 button {

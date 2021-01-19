@@ -1,7 +1,7 @@
 <template>
   <form @submit.prevent="submit">
     <form-fieldset title="Recept beheren">
-      <form-input-text id="name" v-model="formData.title" title="Titel" />
+      <form-input-text id="name" v-model="formData.title" title="Naam recept" />
       <div>
         <select v-model="formData.icon">
           <option value="meat">Vlees</option>
