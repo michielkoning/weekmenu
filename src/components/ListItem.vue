@@ -16,13 +16,13 @@
 </template>
 
 <script>
-import IconVegeterian from "@/components/Icons/IconVegeterian.vue";
+import IconVegetarian from "@/components/Icons/IconVegetarian.vue";
 import IconFish from "@/components/Icons/IconFish.vue";
 import IconMeat from "@/components/Icons/IconMeat.vue";
 
 export default {
   components: {
-    IconVegeterian,
+    IconVegetarian,
   },
   props: {
     id: {
@@ -56,7 +56,7 @@ export default {
     listItemIcon() {
       switch (this.icon) {
         case "vegetarian":
-          return IconVegeterian;
+          return IconVegetarian;
         case "meat":
           return IconMeat;
         case "fish":

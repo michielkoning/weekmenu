@@ -2,13 +2,7 @@
   <form @submit.prevent="submit">
     <form-fieldset title="Recept beheren">
       <form-input-text id="name" v-model="formData.title" title="Naam recept" />
-      <div>
-        <select v-model="formData.icon">
-          <option value="meat">Vlees</option>
-          <option value="fish">Vis</option>
-          <option value="vegetarian">Vegetarisch</option>
-        </select>
-      </div>
+      <form-select-tag v-model="formData.icon" />
       <button type="submit">Recept {{ id ? "wijzigen" : "toevoegen" }}</button>
       <button v-if="id" type="button" @click="deleteRecipe1">
         Recept verwijderen
@@ -23,11 +17,13 @@ import { onMounted } from "vue";
 import { useRouter } from "vue-router";
 import FormFieldset from "@/components/Forms/FormFieldset";
 import FormInputText from "@/components/Forms/FormInputText";
+import FormSelectTag from "@/components/Forms/FormSelectTag";
 
 export default {
   components: {
     FormFieldset,
     FormInputText,
+    FormSelectTag,
   },
   props: {
     id: String,
