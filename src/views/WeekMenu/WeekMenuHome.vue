@@ -92,6 +92,9 @@ export default {
     const remove = () => {
       const lastItem = weekMenu.value[weekMenu.value.length - 1];
       deleteWeekMenuItem(lastItem.id);
+      if (route.params.id === lastItem.id) {
+        router.push({ name: "WeekMenuHome" });
+      }
     };
 
     return {
@@ -112,7 +115,6 @@ export default {
 .page {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-gap: 1em;
 }
 
 ul {

@@ -69,3 +69,9 @@ export default {
   },
 };
 </script>
+
+<style lang="postcss" scoped>
+form {
+  background: #efefef;
+}
+</style>

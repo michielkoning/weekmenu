@@ -1,5 +1,7 @@
 <template>
-  <recipes-list @selectRecipe="selectRecipe" />
+  <section>
+    <recipes-list @selectRecipe="selectRecipe" />
+  </section>
 </template>
 
 <script>
@@ -37,8 +39,7 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-.page {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+section {
+  background: #efefef;
 }
 </style>
