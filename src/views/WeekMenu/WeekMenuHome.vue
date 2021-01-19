@@ -114,6 +114,7 @@ export default {
 <style lang="postcss" scoped>
 .page {
   display: grid;
+  padding: 0 1em;
   grid-template-columns: repeat(2, 1fr);
 }
 

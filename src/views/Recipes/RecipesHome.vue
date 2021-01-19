@@ -1,8 +1,13 @@
 <template>
   <div class="page">
     <div>
-      <recipes-list @selectRecipe="selectRecipe" />
-      <router-link :to="{ name: 'RecipeAdd' }">Add</router-link>
+      <recipes-list
+        :current-id="route.params.id"
+        @selectRecipe="selectRecipe"
+      />
+      <router-link class="btn btn-primary" :to="{ name: 'RecipeAdd' }">
+        Voeg een recept toe
+      </router-link>
     </div>
     <router-view :key="$route.fullPath" />
   </div>
@@ -10,7 +15,7 @@
 
 <script>
 import RecipesList from "@/components/RecipesList";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 
 export default {
   components: {
@@ -22,6 +27,7 @@ export default {
   },
   setup() {
     const router = useRouter();
+    const route = useRoute();
 
     const selectRecipe = (recipe) => {
       router.push({
@@ -31,6 +37,7 @@ export default {
     };
 
     return {
+      route,
       selectRecipe,
     };
   },
@@ -41,5 +48,6 @@ export default {
 .page {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  padding: 0 1em;
 }
 </style>

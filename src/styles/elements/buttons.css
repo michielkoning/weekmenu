@@ -19,3 +19,15 @@ button {
     opacity: 0.5;
   }
 }
+
+.btn {
+  @mixin btn;
+}
+
+.btn-primary {
+  @mixin btn-primary;
+}
+
+.btn-danger {
+  @mixin btn-danger;
+}

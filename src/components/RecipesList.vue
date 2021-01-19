@@ -6,6 +6,7 @@
       :icon="post.icon"
       color="blue"
       :title="post.title"
+      :active="currentId === post.id"
       @selectItem="$emit('selectRecipe', post)"
     />
   </ul>
@@ -18,6 +19,12 @@ import ListItem from "@/components/ListItem.vue";
 export default {
   components: {
     ListItem,
+  },
+  props: {
+    currentId: {
+      type: String,
+      default: null,
+    },
   },
   emits: ["selectRecipe"],
   setup() {

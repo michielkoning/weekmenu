@@ -5,7 +5,7 @@
         {{ id }}
       </template>
 
-      <div v-if="listItemIcon" :class="{ icon: iconSmall }">
+      <div v-if="listItemIcon" :class="[icon, { small: iconSmall }]">
         <component :is="listItemIcon" />
       </div>
     </div>
@@ -96,11 +96,13 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
+.vegetarian,
 .green {
   background: var(--color-green);
   color: var(--color-green-dark);
 }
 
+.meat,
 .red {
   background: var(--color-red);
   color: var(--color-red-dark);
@@ -111,9 +113,27 @@ export default {
   color: var(--color-purple-dark);
 }
 
+.fish,
 .blue {
   background: var(--color-blue);
   color: var(--color-blue-dark);
+}
+
+.small {
+  &.vegetarian {
+    background: var(--color-green-dark);
+    color: var(--color-green);
+  }
+
+  &.meat {
+    background: var(--color-red-dark);
+    color: var(--color-red);
+  }
+
+  &.fish {
+    background: var(--color-blue-dark);
+    color: var(--color-blue);
+  }
 }
 
 li {
@@ -149,7 +169,7 @@ button {
   font-size: 1.5em;
 }
 
-.icon {
+.small {
   position: absolute;
   left: -0.25em;
   top: -0.25em;
@@ -158,13 +178,11 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--color-green-dark);
   border-radius: 0.25em;
-  color: var(--color);
 
   & svg {
+    fill: currentColor;
     width: 0.5em;
-    fill: var(--color-green);
     height: 0.5em;
   }
 }

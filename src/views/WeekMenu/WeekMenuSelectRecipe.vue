@@ -1,13 +1,19 @@
 <template>
   <section>
-    <recipes-list @selectRecipe="selectRecipe" />
+    <recipes-list v-if="posts.length" @selectRecipe="selectRecipe" />
+    <div v-else class="text">
+      <p>Je hebt nog geen recepten aangemaakt.</p>
+      <router-link :to="{ name: 'RecipeAdd' }" class="btn btn-primary">
+        Maak een nieuw recept aan
+      </router-link>
+    </div>
   </section>
 </template>
 
 <script>
 import RecipesList from "@/components/RecipesList";
 import useWeekMenu from "@/compositions/weekMenu";
-
+import { inject } from "vue";
 export default {
   components: {
     RecipesList,
@@ -29,8 +35,9 @@ export default {
         },
       });
     };
-
+    const posts = inject("posts");
     return {
+      posts,
       formData,
       selectRecipe,
     };
@@ -41,5 +48,9 @@ export default {
 <style lang="postcss" scoped>
 section {
   background: #efefef;
+}
+
+.text {
+  padding: 1em;
 }
 </style>
