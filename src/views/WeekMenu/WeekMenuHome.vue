@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <div>
-      <ul v-if="weekMenu.length">
+      <list-animation v-if="weekMenu.length">
         <list-item
           v-for="weekMenuItem in weekMenu"
           :id="formatDate(weekMenuItem.day, 'eeeeee')"
@@ -21,7 +21,7 @@
           :active="route.params.id === weekMenuItem.id"
           @selectItem="selectRecipe(weekMenuItem)"
         />
-      </ul>
+      </list-animation>
       <add-remove
         :show-remove="weekMenu.length > 0"
         @add="addWeekMenuItem"
@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import ListAnimation from "@/components/Animations/ListAnimation.vue";
 import { inject } from "vue";
 import useWeekMenu from "@/compositions/weekMenu";
 import { format, add } from "date-fns";
@@ -43,6 +44,7 @@ import { useRouter, useRoute } from "vue-router";
 
 export default {
   components: {
+    ListAnimation,
     ListItem,
     AddRemove,
   },
