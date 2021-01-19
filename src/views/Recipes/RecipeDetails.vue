@@ -1,20 +1,19 @@
 <template>
   <form @submit.prevent="submit">
-    {{ formData }}
-    <div>
-      <input v-model="formData.title" type="text" />
-    </div>
-    <div>
-      <select v-model="formData.icon">
-        <option value="meat">Vlees</option>
-        <option value="fish">Vis</option>
-        <option value="vegetarian">Vegetarisch</option>
-      </select>
-    </div>
-    <button type="submit">Recept {{ id ? "wijzigen" : "toevoegen" }}</button>
-    <button v-if="id" type="button" @click="deleteRecipe1">
-      Recept verwijderen
-    </button>
+    <form-fieldset title="Recept beheren">
+      <form-input-text id="name" v-model="formData.title" title="Titel" />
+      <div>
+        <select v-model="formData.icon">
+          <option value="meat">Vlees</option>
+          <option value="fish">Vis</option>
+          <option value="vegetarian">Vegetarisch</option>
+        </select>
+      </div>
+      <button type="submit">Recept {{ id ? "wijzigen" : "toevoegen" }}</button>
+      <button v-if="id" type="button" @click="deleteRecipe1">
+        Recept verwijderen
+      </button>
+    </form-fieldset>
   </form>
 </template>
 
@@ -22,7 +21,14 @@
 import useRecipes from "@/compositions/recipes";
 import { onMounted } from "vue";
 import { useRouter } from "vue-router";
+import FormFieldset from "@/components/Forms/FormFieldset";
+import FormInputText from "@/components/Forms/FormInputText";
+
 export default {
+  components: {
+    FormFieldset,
+    FormInputText,
+  },
   props: {
     id: String,
     default: null,

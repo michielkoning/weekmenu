@@ -22,8 +22,11 @@
           @selectItem="selectRecipe(weekMenuItem)"
         />
       </ul>
-      <button @click="addWeekMenuItem">Add</button>
-      <button v-if="weekMenu.length" @click="remove">Remove</button>
+      <add-remove
+        :show-remove="weekMenu.length > 0"
+        @add="addWeekMenuItem"
+        @remove="remove"
+      />
     </div>
     <router-view />
   </div>
@@ -35,11 +38,13 @@ import useWeekMenu from "@/compositions/weekMenu";
 import { format, add } from "date-fns";
 import { nl } from "date-fns/locale";
 import ListItem from "@/components/ListItem.vue";
+import AddRemove from "@/components/AddRemove.vue";
 import { useRouter, useRoute } from "vue-router";
 
 export default {
   components: {
     ListItem,
+    AddRemove,
   },
   props: {
     day: String,
