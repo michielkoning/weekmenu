@@ -9,7 +9,13 @@
         Voeg een recept toe
       </router-link>
     </div>
-    <router-view :key="$route.fullPath" />
+    <div>
+      <router-view v-slot="{ Component }">
+        <transition name="fade" mode="out-in">
+          <component :is="Component" :key="$route.fullPath" />
+        </transition>
+      </router-view>
+    </div>
   </div>
 </template>
 
