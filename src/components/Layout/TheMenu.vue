@@ -41,6 +41,8 @@ a {
   padding: 0.5em 1em;
   border: 2px solid var(--color-green);
   color: var(--color-green-dark);
+  width: 10em;
+  justify-content: center;
 
   &:not(:first-child) {
     border-left: 0;
