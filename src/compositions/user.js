@@ -43,11 +43,22 @@ export default () => {
     }
   };
 
+  const logout = async () => {
+    try {
+      await firebase.auth().signOut();
+      router.push("/inloggen");
+    } catch (error) {
+      alert(error.message);
+      router.push("/inloggen");
+    }
+  };
+
   return {
     error,
     form,
     login,
     register,
     loading,
+    logout,
   };
 };

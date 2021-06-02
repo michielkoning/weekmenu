@@ -13,8 +13,7 @@ import useRecipes from "@/compositions/recipes";
 import useWeekMenu from "@/compositions/weekMenu";
 import { onMounted, provide } from "vue";
 import TheMenu from "@/components/Layout/TheMenu";
-import { firebase } from "@firebase/app";
-import { useRouter } from "vue-router";
+import useUser from "@/compositions/user";
 
 export default {
   components: {
@@ -25,22 +24,9 @@ export default {
     default: null,
   },
   setup() {
-    const router = useRouter();
+    const { logout } = useUser();
     const { posts, getPosts } = useRecipes();
     const { weekMenu, getWeekMenu } = useWeekMenu();
-    const logout = () => {
-      firebase
-        .auth()
-        .signOut()
-        .then(() => {
-          alert("Successfully logged out");
-          router.push("/inloggen");
-        })
-        .catch((error) => {
-          alert(error.message);
-          router.push("/inloggen");
-        });
-    };
     onMounted(() => {
       getPosts();
       getWeekMenu();
