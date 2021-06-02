@@ -21,8 +21,8 @@ const auth = firebase.auth();
 db.enablePersistence();
 
 // collection references
-const postsCollection = db.collection("posts");
+const recipesCollection = db.collection("recipes");
 const weekMenuCollection = db.collection("weekmenu");
 
 // export utils/refs
-export { db, auth, postsCollection, weekMenuCollection };
+export { db, auth, recipesCollection, weekMenuCollection };

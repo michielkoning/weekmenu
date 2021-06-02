@@ -12,6 +12,7 @@
       <button type="submit">Login</button>
       <p v-if="error">{{ error }}</p>
     </form>
+    <button @click="profile">asd</button>
   </div>
 </template>
 <script>
@@ -20,11 +21,12 @@ import useUser from "@/compositions/user";
 export default {
   name: "Login",
   setup() {
-    const { form, error, login } = useUser();
+    const { form, profile, error, login } = useUser();
 
     return {
       error,
       form,
+      profile,
       login,
     };
   },

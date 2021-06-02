@@ -19,11 +19,17 @@
 
       Recepten</router-link
     >
+    <btn-logout />
   </nav>
 </template>
 
 <script>
-export default {};
+import BtnLogout from "@/components/Layout/BtnLogout.vue";
+export default {
+  components: {
+    BtnLogout,
+  },
+};
 </script>
 
 <style lang="postcss" scoped>

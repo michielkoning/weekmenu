@@ -5,7 +5,7 @@ import useWeekMenu from "./weekMenu";
 
 export default () => {
   const { create, update, getAll, list, remove, get } = useApi(
-    fb.postsCollection
+    fb.recipesCollection
   );
 
   const { updateWeekMenuByRecipeChange } = useWeekMenu();

@@ -41,6 +41,7 @@ export default () => {
 
   const getWeekMenuItem = async (id) => {
     const response = await get(id);
+
     if (response) {
       formData.day = response.day;
       formData.recipeId = response.recipeId;

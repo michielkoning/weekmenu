@@ -1,12 +1,15 @@
 import { ref } from "vue";
+import { firebase } from "@firebase/app";
 
 export default (collection) => {
   const list = ref([]);
+  const user = firebase.auth().currentUser;
 
   const create = async (payload) => {
     try {
       const post = {
         createdOn: new Date(),
+        user: user.uid,
         ...payload,
       };
       const response = await collection.add(post);
@@ -18,9 +21,11 @@ export default (collection) => {
 
   const update = async (id, payload) => {
     const response = collection.doc(id);
+    console.log(payload);
     try {
       await response.update({
         ...payload,
+        user: user.uid,
       });
     } catch (error) {
       console.error(error);
@@ -34,28 +39,31 @@ export default (collection) => {
       ...params,
     };
 
-    collection.orderBy(order.orderBy, order.order).onSnapshot((snapshot) => {
-      snapshot.docChanges().forEach((change) => {
-        const { newIndex, oldIndex, doc, type } = change;
-        const post = doc.data();
-        post.id = change.doc.id;
+    collection
+      // .whereEqualTo("user", user.uid)
+      .orderBy(order.orderBy, order.order)
+      .onSnapshot((snapshot) => {
+        snapshot.docChanges().forEach((change) => {
+          const { newIndex, oldIndex, doc, type } = change;
+          const post = doc.data();
+          post.id = change.doc.id;
 
-        if (type === "added") {
-          list.value.splice(newIndex, 0, post);
-          // if we want to handle references we would do it here
-        } else if (type === "modified") {
-          // remove the old one first
-          list.value.splice(oldIndex, 1);
-          // if we want to handle references we would have to unsubscribe
-          // from old references' listeners and subscribe to the new ones
-          list.value.splice(newIndex, 0, post);
-        } else if (type === "removed") {
-          list.value.splice(oldIndex, 1);
-          // if we want to handle references we need to unsubscribe
-          // from old references
-        }
+          if (type === "added") {
+            list.value.splice(newIndex, 0, post);
+            // if we want to handle references we would do it here
+          } else if (type === "modified") {
+            // remove the old one first
+            list.value.splice(oldIndex, 1);
+            // if we want to handle references we would have to unsubscribe
+            // from old references' listeners and subscribe to the new ones
+            list.value.splice(newIndex, 0, post);
+          } else if (type === "removed") {
+            list.value.splice(oldIndex, 1);
+            // if we want to handle references we need to unsubscribe
+            // from old references
+          }
+        });
       });
-    });
   };
 
   const get = async (id) => {
