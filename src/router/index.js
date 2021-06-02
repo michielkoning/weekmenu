@@ -1,31 +1,9 @@
 import { createRouter, createWebHistory } from "vue-router";
+import Dashboard from "../views/Dashboard.vue";
 import RecipesHome from "../views/Recipes/RecipesHome.vue";
 import { firebase } from "@firebase/app";
 
 const routes = [
-  {
-    path: "/",
-    name: "WeekMenuHome",
-    meta: {
-      authRequired: true,
-    },
-    component: () =>
-      import(
-        /* webpackChunkName: "WeekMenu" */ "../views/WeekMenu/WeekMenuHome.vue"
-      ),
-    props: true,
-    children: [
-      {
-        path: ":id",
-        name: "WeekMenuSelectRecipe",
-        component: () =>
-          import(
-            /* webpackChunkName: "WeekMenu2" */ "../views/WeekMenu/WeekMenuSelectRecipe.vue"
-          ),
-        props: true,
-      },
-    ],
-  },
   {
     path: "/inloggen",
     name: "Login",
@@ -39,31 +17,59 @@ const routes = [
       import(/* webpackChunkName: "Register" */ "../views/Register.vue"),
   },
   {
-    path: "/recepten",
-    name: "RecipesHome",
-    component: RecipesHome,
+    path: "/",
+    name: "Dashboard",
+    component: Dashboard,
     props: true,
     meta: {
       authRequired: true,
     },
     children: [
       {
-        path: "toevoegen",
-        name: "RecipeAdd",
-        component: () =>
-          import(
-            /* webpackChunkName: "RecipesDetails" */ "../views/Recipes/RecipeDetails.vue"
-          ),
+        path: "/recepten",
+        name: "RecipesHome",
+        component: RecipesHome,
         props: true,
+        children: [
+          {
+            path: "toevoegen",
+            name: "RecipeAdd",
+            component: () =>
+              import(
+                /* webpackChunkName: "RecipesDetails" */ "../views/Recipes/RecipeDetails.vue"
+              ),
+            props: true,
+          },
+          {
+            path: ":id",
+            name: "RecipeDetails",
+            component: () =>
+              import(
+                /* webpackChunkName: "RecipesDetails" */ "../views/Recipes/RecipeDetails.vue"
+              ),
+            props: true,
+          },
+        ],
       },
       {
-        path: ":id",
-        name: "RecipeDetails",
+        path: "/",
+        name: "WeekMenuHome",
         component: () =>
           import(
-            /* webpackChunkName: "RecipesDetails" */ "../views/Recipes/RecipeDetails.vue"
+            /* webpackChunkName: "WeekMenu" */ "../views/WeekMenu/WeekMenuHome.vue"
           ),
         props: true,
+        children: [
+          {
+            path: ":id",
+            name: "WeekMenuSelectRecipe",
+            component: () =>
+              import(
+                /* webpackChunkName: "WeekMenu2" */ "../views/WeekMenu/WeekMenuSelectRecipe.vue"
+              ),
+            props: true,
+          },
+        ],
       },
     ],
   },

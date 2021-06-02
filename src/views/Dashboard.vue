@@ -36,10 +36,6 @@ export default {
 };
 </script>
 
-<style>
-@import "./styles/base.css";
-</style>
-
 <style lang="postcss" scoped>
 nav {
   padding: 1em 0.5em;

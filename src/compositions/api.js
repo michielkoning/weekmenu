@@ -3,9 +3,9 @@ import { firebase } from "@firebase/app";
 
 export default (collection) => {
   const list = ref([]);
-  const user = firebase.auth().currentUser;
 
   const create = async (payload) => {
+    const user = firebase.auth().currentUser;
     try {
       const post = {
         createdOn: new Date(),
@@ -20,6 +20,7 @@ export default (collection) => {
   };
 
   const update = async (id, payload) => {
+    const user = firebase.auth().currentUser;
     const response = collection.doc(id);
     console.log(payload);
     try {
@@ -38,9 +39,10 @@ export default (collection) => {
       orderBy: "createdOn",
       ...params,
     };
+    const user = firebase.auth().currentUser;
 
     collection
-      // .whereEqualTo("user", user.uid)
+      .where("user", "==", user.uid)
       .orderBy(order.orderBy, order.order)
       .onSnapshot((snapshot) => {
         snapshot.docChanges().forEach((change) => {
@@ -67,7 +69,12 @@ export default (collection) => {
   };
 
   const get = async (id) => {
-    const response = await collection.doc(id).get();
+    const user = firebase.auth().currentUser;
+
+    const response = await collection
+      .where("user", "==", user.uid)
+      .doc(id)
+      .get();
     if (response.exists) {
       return response.data();
     }

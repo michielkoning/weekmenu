@@ -1,8 +1,6 @@
 import { firebase } from "@firebase/app";
 import { reactive, ref } from "vue";
 import { useRouter } from "vue-router";
-import useRecipes from "@/compositions/recipes";
-import useWeekMenu from "@/compositions/weekMenu";
 
 export default () => {
   const form = reactive({
@@ -11,8 +9,6 @@ export default () => {
   });
   const error = ref(null);
   const loading = ref(false);
-  const { getPosts } = useRecipes();
-  const { getWeekMenu } = useWeekMenu();
   const router = useRouter();
 
   const login = async () => {
@@ -23,8 +19,6 @@ export default () => {
       await firebase
         .auth()
         .signInWithEmailAndPassword(form.email, form.password);
-      await getPosts();
-      await getWeekMenu();
       router.push("/");
     } catch (err) {
       error.value = err.message;
@@ -58,24 +52,7 @@ export default () => {
     }
   };
 
-  const profile = () => {
-    const user = firebase.auth().currentUser;
-
-    user
-      .updateProfile({
-        displayName: "Jane Q. User",
-      })
-      .then(function () {
-        // Update successful.
-        console.log("succes");
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  };
-
   return {
-    profile,
     error,
     form,
     login,
