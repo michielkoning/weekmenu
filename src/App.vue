@@ -1,5 +1,6 @@
 <template>
   <the-menu />
+  <button @click="logout">Logout</button>
   <router-view v-slot="{ Component }">
     <transition name="fade" mode="out-in">
       <component :is="Component" />
@@ -12,6 +13,8 @@ import useRecipes from "@/compositions/recipes";
 import useWeekMenu from "@/compositions/weekMenu";
 import { onMounted, provide } from "vue";
 import TheMenu from "@/components/Layout/TheMenu";
+import { firebase } from "@firebase/app";
+import { useRouter } from "vue-router";
 
 export default {
   components: {
@@ -22,8 +25,22 @@ export default {
     default: null,
   },
   setup() {
+    const router = useRouter();
     const { posts, getPosts } = useRecipes();
     const { weekMenu, getWeekMenu } = useWeekMenu();
+    const logout = () => {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          alert("Successfully logged out");
+          router.push("/inloggen");
+        })
+        .catch((error) => {
+          alert(error.message);
+          router.push("/inloggen");
+        });
+    };
     onMounted(() => {
       getPosts();
       getWeekMenu();
@@ -31,6 +48,10 @@ export default {
 
     provide("posts", posts);
     provide("weekMenu", weekMenu);
+
+    return {
+      logout,
+    };
   },
 };
 </script>

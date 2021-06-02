@@ -1,31 +1,24 @@
 <template>
-  <div class="page">
-    <div>
-      <recipes-list
-        :current-id="route.params.id"
-        @selectRecipe="selectRecipe"
-      />
-      <router-link class="btn btn-primary" :to="{ name: 'RecipeAdd' }">
-        Voeg een recept toe
-      </router-link>
-    </div>
-    <div>
-      <router-view v-slot="{ Component }">
-        <transition name="fade" mode="out-in">
-          <component :is="Component" :key="$route.fullPath" />
-        </transition>
-      </router-view>
-    </div>
-  </div>
+  <app-page
+    :active-panel="route.name === 'RecipeDetails' || route.name === 'RecipeAdd'"
+    @close="closePanel"
+  >
+    <recipes-list :current-id="route.params.id" @selectRecipe="selectRecipe" />
+    <router-link class="btn btn-primary" :to="{ name: 'RecipeAdd' }">
+      Voeg een recept toe
+    </router-link>
+  </app-page>
 </template>
 
 <script>
 import RecipesList from "@/components/RecipesList";
 import { useRouter, useRoute } from "vue-router";
+import AppPage from "@/components/Layout/AppPage.vue";
 
 export default {
   components: {
     RecipesList,
+    AppPage,
   },
   props: {
     id: String,
@@ -34,6 +27,7 @@ export default {
   setup() {
     const router = useRouter();
     const route = useRoute();
+    const closePanel = () => router.push({ name: "RecipesHome" });
 
     const selectRecipe = (recipe) => {
       router.push({
@@ -43,17 +37,10 @@ export default {
     };
 
     return {
+      closePanel,
       route,
       selectRecipe,
     };
   },
 };
 </script>
-
-<style lang="postcss" scoped>
-.page {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  padding: 0 1em;
-}
-</style>
