@@ -23,14 +23,14 @@ export default {
     default: null,
   },
   setup() {
-    const { posts, getPosts } = useRecipes();
+    const { recipes, getRecipes } = useRecipes();
     const { weekMenu, getWeekMenu } = useWeekMenu();
     onMounted(() => {
-      getPosts();
+      getRecipes();
       getWeekMenu();
     });
 
-    provide("posts", posts);
+    provide("recipes", recipes);
     provide("weekMenu", weekMenu);
   },
 };

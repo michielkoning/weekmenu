@@ -7,12 +7,12 @@ export default (collection) => {
   const create = async (payload) => {
     const user = firebase.auth().currentUser;
     try {
-      const post = {
+      const data = {
         createdOn: new Date(),
         user: user.uid,
         ...payload,
       };
-      const response = await collection.add(post);
+      const response = await collection.add(data);
       return response.id;
     } catch (error) {
       console.error(error);
@@ -47,18 +47,18 @@ export default (collection) => {
       .onSnapshot((snapshot) => {
         snapshot.docChanges().forEach((change) => {
           const { newIndex, oldIndex, doc, type } = change;
-          const post = doc.data();
-          post.id = change.doc.id;
+          const data = doc.data();
+          data.id = change.doc.id;
 
           if (type === "added") {
-            list.value.splice(newIndex, 0, post);
+            list.value.splice(newIndex, 0, data);
             // if we want to handle references we would do it here
           } else if (type === "modified") {
             // remove the old one first
             list.value.splice(oldIndex, 1);
             // if we want to handle references we would have to unsubscribe
             // from old references' listeners and subscribe to the new ones
-            list.value.splice(newIndex, 0, post);
+            list.value.splice(newIndex, 0, data);
           } else if (type === "removed") {
             list.value.splice(oldIndex, 1);
             // if we want to handle references we need to unsubscribe

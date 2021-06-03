@@ -1,5 +1,5 @@
 <template>
-  <recipes-list v-if="posts.length" @selectRecipe="selectRecipe" />
+  <recipes-list v-if="recipes.length" @selectRecipe="selectRecipe" />
   <div v-else class="text">
     <p>Je hebt nog geen recepten aangemaakt.</p>
     <router-link :to="{ name: 'RecipeAdd' }" class="btn btn-primary">
@@ -33,9 +33,9 @@ export default {
         },
       });
     };
-    const posts = inject("posts");
+    const recipes = inject("recipes");
     return {
-      posts,
+      recipes,
       formData,
       selectRecipe,
     };

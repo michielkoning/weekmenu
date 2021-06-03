@@ -1,13 +1,13 @@
 <template>
-  <ul v-if="posts.length">
+  <ul v-if="recipes.length">
     <list-item
-      v-for="post in posts"
-      :key="post.id"
-      :icon="post.icon"
+      v-for="recipe in recipes"
+      :key="recipe.id"
+      :icon="recipe.icon"
       color="blue"
-      :title="post.title"
-      :active="currentId === post.id"
-      @selectItem="$emit('selectRecipe', post)"
+      :title="recipe.title"
+      :active="currentId === recipe.id"
+      @selectItem="$emit('selectRecipe', recipe)"
     />
   </ul>
 </template>
@@ -28,9 +28,9 @@ export default {
   },
   emits: ["selectRecipe"],
   setup() {
-    const posts = inject("posts");
+    const recipes = inject("recipes");
     return {
-      posts,
+      recipes,
     };
   },
 };

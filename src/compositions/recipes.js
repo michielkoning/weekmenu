@@ -30,7 +30,7 @@ export default () => {
     });
   };
 
-  const getPosts = () => {
+  const getRecipes = () => {
     getAll({
       orderBy: "title",
       order: "asc",
@@ -62,8 +62,8 @@ export default () => {
     getRecipe,
     formData,
     createPost,
-    posts: list,
-    getPosts,
+    recipes: list,
+    getRecipes,
     updatePost,
   };
 };
