@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Dashboard from "../views/Dashboard.vue";
 import RecipesHome from "../views/Recipes/RecipesHome.vue";
-import { firebase } from "@firebase/app";
+import { getCurrentUser } from "./../firebase";
 
 const routes = [
   {
@@ -80,9 +80,9 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   if (to.matched.some((record) => record.meta.authRequired)) {
-    if (firebase.auth().currentUser) {
+    if (await getCurrentUser()) {
       next();
     } else {
       next({

@@ -1,5 +1,6 @@
 <template>
   <the-menu />
+  <btn-logout />
 
   <router-view v-slot="{ Component }">
     <transition name="fade" mode="out-in">
@@ -13,10 +14,12 @@ import useRecipes from "@/compositions/recipes";
 import useWeekMenu from "@/compositions/weekMenu";
 import { onMounted, provide } from "vue";
 import TheMenu from "@/components/Layout/TheMenu";
+import BtnLogout from "@/components/Layout/BtnLogout.vue";
 
 export default {
   components: {
     TheMenu,
+    BtnLogout,
   },
   props: {
     id: String,
@@ -37,11 +40,6 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-nav {
-  padding: 1em 0.5em;
-  text-align: center;
-}
-
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.15s ease;

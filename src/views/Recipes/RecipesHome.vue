@@ -1,6 +1,7 @@
 <template>
   <app-page
     :active-panel="route.name === 'RecipeDetails' || route.name === 'RecipeAdd'"
+    title="Recepten"
     @close="closePanel"
   >
     <recipes-list :current-id="route.params.id" @selectRecipe="selectRecipe" />

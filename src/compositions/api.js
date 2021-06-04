@@ -22,7 +22,6 @@ export default (collection) => {
   const update = async (id, payload) => {
     const user = firebase.auth().currentUser;
     const response = collection.doc(id);
-    console.log(payload);
     try {
       await response.update({
         ...payload,
@@ -69,12 +68,7 @@ export default (collection) => {
   };
 
   const get = async (id) => {
-    const user = firebase.auth().currentUser;
-
-    const response = await collection
-      .where("user", "==", user.uid)
-      .doc(id)
-      .get();
+    const response = await collection.doc(id).get();
     if (response.exists) {
       return response.data();
     }

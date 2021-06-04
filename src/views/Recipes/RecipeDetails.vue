@@ -1,6 +1,7 @@
 <template>
   <form @submit.prevent="submit">
-    <form-fieldset title="Recept beheren">
+    <h1>{{ title }}</h1>
+    <form-fieldset :title="title">
       <form-input-text id="name" v-model="formData.title" title="Naam recept" />
       <form-select-tag v-model="formData.icon" />
       <div class="buttons">
@@ -36,7 +37,7 @@
 
 <script>
 import useRecipes from "@/compositions/recipes";
-import { onMounted } from "vue";
+import { onMounted, computed } from "vue";
 import { useRouter } from "vue-router";
 import FormFieldset from "@/components/Forms/FormFieldset";
 import FormInputText from "@/components/Forms/FormInputText";
@@ -53,6 +54,9 @@ export default {
     default: null,
   },
   setup(props) {
+    const title = computed(() => {
+      return props.id ? "Recept bewerken" : "Nieuw recept";
+    });
     const router = useRouter();
     const {
       createPost,
@@ -81,6 +85,7 @@ export default {
     };
 
     return {
+      title,
       deleteRecipe1,
       submit,
       formData,
