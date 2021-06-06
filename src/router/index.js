@@ -36,7 +36,7 @@ const routes = [
             name: "RecipeAdd",
             component: () =>
               import(
-                /* webpackChunkName: "RecipesDetails" */ "../views/Recipes/RecipeDetails.vue"
+                /* webpackChunkName: "RecipeDetails" */ "../views/Recipes/RecipeDetails.vue"
               ),
             props: true,
           },
@@ -45,7 +45,7 @@ const routes = [
             name: "RecipeDetails",
             component: () =>
               import(
-                /* webpackChunkName: "RecipesDetails" */ "../views/Recipes/RecipeDetails.vue"
+                /* webpackChunkName: "RecipeDetails" */ "../views/Recipes/RecipeDetails.vue"
               ),
             props: true,
           },
@@ -56,7 +56,7 @@ const routes = [
         name: "WeekMenuHome",
         component: () =>
           import(
-            /* webpackChunkName: "WeekMenu" */ "../views/WeekMenu/WeekMenuHome.vue"
+            /* webpackChunkName: "WeekMenuHome" */ "../views/WeekMenu/WeekMenuHome.vue"
           ),
         props: true,
         children: [
@@ -65,7 +65,7 @@ const routes = [
             name: "WeekMenuSelectRecipe",
             component: () =>
               import(
-                /* webpackChunkName: "WeekMenu2" */ "../views/WeekMenu/WeekMenuSelectRecipe.vue"
+                /* webpackChunkName: "WeekMenuSelectRecipe" */ "../views/WeekMenu/WeekMenuSelectRecipe.vue"
               ),
             props: true,
           },
