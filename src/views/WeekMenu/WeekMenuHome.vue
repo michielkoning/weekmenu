@@ -1,6 +1,7 @@
 <template>
   <app-page
     :active-panel="route.name === 'WeekMenuSelectRecipe'"
+    title="Weekmenu"
     @close="closePanel"
   >
     <list-animation>
@@ -80,7 +81,7 @@ export default {
       return format(convertToDate(date), unit, { locale: nl });
     };
 
-    const addWeekMenuItem = () => {
+    const addWeekMenuItem = async () => {
       if (weekMenu.value.length) {
         const lastItem = weekMenu.value[weekMenu.value.length - 1];
         const date = convertToDate(lastItem.day);
@@ -90,7 +91,7 @@ export default {
       } else {
         formData.day = new Date();
       }
-      createWeekMenuItem();
+      await createWeekMenuItem();
     };
 
     const remove = () => {

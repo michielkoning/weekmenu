@@ -18,6 +18,10 @@ export default () => {
     try {
       await firebase
         .auth()
+        .setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+
+      await firebase
+        .auth()
         .signInWithEmailAndPassword(form.email, form.password);
       router.push("/");
     } catch (err) {
@@ -31,6 +35,9 @@ export default () => {
     error.value = null;
     loading.value = true;
     try {
+      await firebase
+        .auth()
+        .setPersistence(firebase.auth.Auth.Persistence.LOCAL);
       await firebase
         .auth()
         .createUserWithEmailAndPassword(form.email, form.password);

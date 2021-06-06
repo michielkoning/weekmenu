@@ -14,6 +14,15 @@ const firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 
+const getCurrentUser = () => {
+  return new Promise((resolve, reject) => {
+    const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
+      unsubscribe();
+      resolve(user);
+    }, reject);
+  });
+};
+
 // utils
 const db = firebase.firestore();
 const auth = firebase.auth();
@@ -25,4 +34,4 @@ const recipesCollection = db.collection("recipes");
 const weekMenuCollection = db.collection("weekmenu");
 
 // export utils/refs
-export { db, auth, recipesCollection, weekMenuCollection };
+export { db, auth, recipesCollection, weekMenuCollection, getCurrentUser };

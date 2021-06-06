@@ -1,4 +1,5 @@
 <template>
+  <h1>Selecteer een recept</h1>
   <recipes-list v-if="recipes.length" @selectRecipe="selectRecipe" />
   <div v-else class="text">
     <p>Je hebt nog geen recepten aangemaakt.</p>
