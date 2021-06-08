@@ -1,29 +1,34 @@
 <template>
-  <div class="page">
-    <div>
-      <h1>{{ title }}</h1>
-      <slot />
-    </div>
-    <router-view v-slot="{ Component }">
-      <transition name="slide">
-        <div v-if="router.params.id" class="panel">
-          <button class="btn-close" @click="$emit('close')">
-            <icon-close />
-          </button>
+  <center-wrapper>
+    <div class="page">
+      <div class="list">
+        <h1>{{ title }}</h1>
+        <slot />
+      </div>
+      <router-view v-slot="{ Component }">
+        <transition name="slide">
+          <div v-if="showPanel" class="panel">
+            <button class="btn-close" @click="$emit('close')">
+              <icon-close />
+            </button>
 
-          <component :is="Component" :key="$route.fullPath" />
-        </div>
-      </transition>
-    </router-view>
-  </div>
+            <component :is="Component" :key="$route.fullPath" />
+          </div>
+        </transition>
+      </router-view>
+    </div>
+  </center-wrapper>
 </template>
 
 <script>
 import IconClose from "@/components/Icons/IconClose.vue";
+import CenterWrapper from "@/components/Layout/CenterWrapper.vue";
+import { computed } from "vue";
 import { useRoute } from "vue-router";
 export default {
   components: {
     IconClose,
+    CenterWrapper,
   },
   props: {
     activePanel: {
@@ -37,10 +42,13 @@ export default {
   },
   emits: ["close"],
   setup() {
-    const router = useRoute();
-
+    const route = useRoute();
+    const showPanel = computed(
+      () => route.params.id || route.name === "RecipeAdd"
+    );
     return {
-      router,
+      route,
+      showPanel,
     };
   },
 };
@@ -55,12 +63,15 @@ export default {
   @media (--viewport-md) {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    padding-left: 1em;
-    padding-right: 1em;
   }
 }
 
+.list {
+  padding-top: 1em;
+}
+
 .panel {
+  padding: 1em;
   background: #efefef;
   position: absolute;
   top: 0;
@@ -77,7 +88,7 @@ export default {
 
 .slide-enter-active,
 .slide-leave-active {
-  transition: all 0.2s ease;
+  transition: all var(--animation);
 }
 
 .slide-enter-from,
@@ -106,7 +117,7 @@ export default {
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.15s ease;
+  transition: opacity var(--animation);
 }
 
 .fade-enter-from,

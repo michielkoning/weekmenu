@@ -30,6 +30,7 @@ export default {
   setup() {
     const { recipes, getRecipes } = useRecipes();
     const { weekMenu, getWeekMenu } = useWeekMenu();
+
     onMounted(() => {
       getRecipes();
       getWeekMenu();
@@ -44,7 +45,7 @@ export default {
 <style lang="postcss" scoped>
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.15s ease;
+  transition: opacity var(--animation);
 }
 
 .fade-enter-from,
