@@ -95,11 +95,6 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-form {
-  background: #efefef;
-  padding: 1em;
-}
-
 .buttons {
   display: flex;
   justify-content: space-between;

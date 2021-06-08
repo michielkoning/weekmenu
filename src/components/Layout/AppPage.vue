@@ -1,39 +1,35 @@
 <template>
-  <div class="page">
-    <div>
-      <h1>{{ title }}</h1>
-      <slot />
-    </div>
-
-    <div>
+  <center-wrapper>
+    <div class="page">
+      <div class="list">
+        <h1>{{ title }}</h1>
+        <slot />
+      </div>
       <router-view v-slot="{ Component }">
-        <div :key="activePanel" class="panel">
-          <button class="btn-close" @click="$emit('close')">
-            <svg
-              aria-hidden="true"
-              focusable="false"
-              data-prefix="fas"
-              data-icon="times"
-              class="svg-inline--fa fa-times fa-w-11"
-              role="img"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 352 512"
-            >
-              <path
-                fill="currentColor"
-                d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
-              ></path>
-            </svg>
-          </button>
-          <component :is="Component" :key="$route.fullPath" />
-        </div>
+        <transition name="slide">
+          <div v-if="showPanel" class="panel">
+            <button class="btn-close" @click="$emit('close')">
+              <icon-close />
+            </button>
+
+            <component :is="Component" :key="$route.fullPath" />
+          </div>
+        </transition>
       </router-view>
     </div>
-  </div>
+  </center-wrapper>
 </template>
 
 <script>
+import IconClose from "@/components/Icons/IconClose.vue";
+import CenterWrapper from "@/components/Layout/CenterWrapper.vue";
+import { computed } from "vue";
+import { useRoute } from "vue-router";
 export default {
+  components: {
+    IconClose,
+    CenterWrapper,
+  },
   props: {
     activePanel: {
       type: Boolean,
@@ -45,6 +41,16 @@ export default {
     },
   },
   emits: ["close"],
+  setup() {
+    const route = useRoute();
+    const showPanel = computed(
+      () => route.params.id || route.name === "RecipeAdd"
+    );
+    return {
+      route,
+      showPanel,
+    };
+  },
 };
 </script>
 
@@ -57,12 +63,15 @@ export default {
   @media (--viewport-md) {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    padding-left: 1em;
-    padding-right: 1em;
   }
 }
 
+.list {
+  padding-top: 1em;
+}
+
 .panel {
+  padding: 1em;
   background: #efefef;
   position: absolute;
   top: 0;
@@ -79,7 +88,7 @@ export default {
 
 .slide-enter-active,
 .slide-leave-active {
-  transition: all 0.2s ease;
+  transition: all var(--animation);
 }
 
 .slide-enter-from,
@@ -108,7 +117,7 @@ export default {
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.15s ease;
+  transition: opacity var(--animation);
 }
 
 .fade-enter-from,

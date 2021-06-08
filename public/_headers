@@ -1,6 +1,8 @@
 /img/*
-  Cache-Control: public, s-max-age=604800
+  Cache-Control: public, max-age=604800
 /*.css
-  Cache-Control: public, s-max-age=604800
+  Cache-Control: public, max-age=604800
 /*.js
-  Cache-Control: public, s-max-age=604800
+  Cache-Control: public, max-age=604800
+/*
+  Permissions-Policy: interest-cohort=()

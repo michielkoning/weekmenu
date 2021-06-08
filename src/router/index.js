@@ -42,6 +42,9 @@ const routes = [
           },
           {
             path: ":id",
+            meta: {
+              showModal: true,
+            },
             name: "RecipeDetails",
             component: () =>
               import(
@@ -62,6 +65,9 @@ const routes = [
         children: [
           {
             path: ":id",
+            meta: {
+              showModal: true,
+            },
             name: "WeekMenuSelectRecipe",
             component: () =>
               import(

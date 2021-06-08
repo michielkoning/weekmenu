@@ -1,6 +1,8 @@
 <template>
-  <the-menu />
-  <btn-logout />
+  <div class="header">
+    <the-menu />
+    <btn-logout class="btn-logout" />
+  </div>
 
   <router-view v-slot="{ Component }">
     <transition name="fade" mode="out-in">
@@ -28,6 +30,7 @@ export default {
   setup() {
     const { recipes, getRecipes } = useRecipes();
     const { weekMenu, getWeekMenu } = useWeekMenu();
+
     onMounted(() => {
       getRecipes();
       getWeekMenu();
@@ -42,11 +45,21 @@ export default {
 <style lang="postcss" scoped>
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.15s ease;
+  transition: opacity var(--animation);
 }
 
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+
+.header {
+  position: relative;
+}
+
+.btn-logout {
+  position: absolute;
+  right: var(--gutter);
+  top: 2em;
 }
 </style>
