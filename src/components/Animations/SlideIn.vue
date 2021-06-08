@@ -8,17 +8,20 @@
   </transition>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from "vue";
+
+export default defineComponent({
+  emits: ["after-enter", "before-leave"],
   methods: {
     afterEnter(el) {
-      this.$emit('after-enter', el)
+      this.$emit("after-enter", el);
     },
     beforeLeave(el) {
-      this.$emit('before-leave', el)
+      this.$emit("before-leave", el);
     },
   },
-}
+});
 </script>
 
 <style lang="postcss" scoped>

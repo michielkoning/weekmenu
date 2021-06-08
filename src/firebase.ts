@@ -1,4 +1,4 @@
-import { firebase } from "@firebase/app";
+import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
 
@@ -14,7 +14,7 @@ const firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 
-const getCurrentUser = () => {
+const getCurrentUser = (): Promise<firebase.User | null> => {
   return new Promise((resolve, reject) => {
     const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
       unsubscribe();

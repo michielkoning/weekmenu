@@ -15,12 +15,13 @@
   </li>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from "vue";
 import IconVegetarian from "@/components/Icons/IconVegetarian.vue";
 import IconFish from "@/components/Icons/IconFish.vue";
 import IconMeat from "@/components/Icons/IconMeat.vue";
 
-export default {
+export default defineComponent({
   components: {
     IconVegetarian,
   },
@@ -92,7 +93,7 @@ export default {
       return this.color;
     },
   },
-};
+});
 </script>
 
 <style lang="postcss" scoped>

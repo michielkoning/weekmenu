@@ -33,9 +33,9 @@
   </app-page>
 </template>
 
-<script>
+<script lang="ts">
 import ListAnimation from "@/components/Animations/ListAnimation.vue";
-import { inject } from "vue";
+import { inject, defineComponent } from "vue";
 import useWeekMenu from "@/compositions/weekMenu";
 import { format, add } from "date-fns";
 import { nl } from "date-fns/locale";
@@ -44,7 +44,7 @@ import AddRemove from "@/components/AddRemove.vue";
 import AppPage from "@/components/Layout/AppPage.vue";
 import { useRouter, useRoute } from "vue-router";
 
-export default {
+export default defineComponent({
   components: {
     ListAnimation,
     ListItem,
@@ -114,7 +114,7 @@ export default {
       selectRecipe,
     };
   },
-};
+});
 </script>
 
 <style lang="postcss" scoped>

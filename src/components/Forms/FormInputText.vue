@@ -13,10 +13,12 @@
   </form-field>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from "vue";
+
 import FormField from "@/components/Forms/FormField";
 
-export default {
+export default defineComponent({
   components: {
     FormField,
   },
@@ -52,7 +54,7 @@ export default {
     },
   },
   emits: ["update:modelValue"],
-};
+});
 </script>
 
 <style lang="postcss" module>

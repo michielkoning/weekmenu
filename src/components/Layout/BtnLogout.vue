@@ -2,10 +2,11 @@
   <button @click="logout">Logout</button>
 </template>
 
-<script>
+<script lang="ts">
 import useUser from "@/compositions/user";
+import { defineComponent } from "vue";
 
-export default {
+export default defineComponent({
   setup() {
     const { logout } = useUser();
 
@@ -13,5 +14,5 @@ export default {
       logout,
     };
   },
-};
+});
 </script>

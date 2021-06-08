@@ -20,12 +20,12 @@
   </center-wrapper>
 </template>
 
-<script>
+<script lang="ts">
 import IconClose from "@/components/Icons/IconClose.vue";
 import CenterWrapper from "@/components/Layout/CenterWrapper.vue";
-import { computed } from "vue";
+import { computed, defineComponent } from "vue";
 import { useRoute } from "vue-router";
-export default {
+export default defineComponent({
   components: {
     IconClose,
     CenterWrapper,
@@ -51,7 +51,7 @@ export default {
       showPanel,
     };
   },
-};
+});
 </script>
 
 <style lang="postcss" scoped>

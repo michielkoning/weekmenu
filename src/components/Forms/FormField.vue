@@ -9,10 +9,11 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from "vue";
 import ErrorMessage from "@/components/Forms/ErrorMessage";
 
-export default {
+export default defineComponent({
   components: {
     ErrorMessage,
   },
@@ -30,7 +31,7 @@ export default {
       default: "",
     },
   },
-};
+});
 </script>
 
 <style lang="postcss" module>

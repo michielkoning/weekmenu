@@ -12,11 +12,11 @@
   </ul>
 </template>
 
-<script>
-import { inject } from "vue";
+<script lang="ts">
+import { inject, defineComponent } from "vue";
 import ListItem from "@/components/ListItem.vue";
 
-export default {
+export default defineComponent({
   components: {
     ListItem,
   },
@@ -33,7 +33,7 @@ export default {
       recipes,
     };
   },
-};
+});
 </script>
 
 <style lang="postcss" scoped>

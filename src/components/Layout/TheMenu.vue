@@ -11,11 +11,13 @@
   </nav>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from "vue";
 import IconWeekMenu from "@/components/Icons/IconWeekMenu.vue";
 import IconRecipes from "@/components/Icons/IconRecipes.vue";
 import { useRoute } from "vue-router";
-export default {
+
+export default defineComponent({
   components: {
     IconWeekMenu,
     IconRecipes,
@@ -29,7 +31,7 @@ export default {
       router,
     };
   },
-};
+});
 </script>
 
 <style lang="postcss" scoped>

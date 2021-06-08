@@ -9,11 +9,12 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import RecipesList from "@/components/RecipesList";
 import useWeekMenu from "@/compositions/weekMenu";
-import { inject } from "vue";
-export default {
+import { inject, defineComponent } from "vue";
+
+export default defineComponent({
   components: {
     RecipesList,
   },
@@ -41,7 +42,7 @@ export default {
       selectRecipe,
     };
   },
-};
+});
 </script>
 
 <style lang="postcss" scoped>

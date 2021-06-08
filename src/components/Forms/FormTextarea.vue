@@ -11,8 +11,10 @@
   </form-field>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from "vue";
+
+export default defineComponent({
   inheritAttrs: false,
   props: {
     title: {
@@ -33,10 +35,10 @@ export default {
     },
     errorMessage: {
       type: String,
-      default: '',
+      default: "",
     },
   },
-}
+});
 </script>
 
 <style lang="postcss" module>

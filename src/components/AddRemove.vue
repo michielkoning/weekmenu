@@ -36,8 +36,10 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from "vue";
+
+export default defineComponent({
   props: {
     showRemove: {
       type: Boolean,
@@ -45,7 +47,7 @@ export default {
     },
   },
   emits: ["add", "remove"],
-};
+});
 </script>
 
 <style lang="postcss" scoped>
