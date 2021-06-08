@@ -11,14 +11,14 @@
   </router-view>
 </template>
 
-<script>
+<script lang="ts">
 import useRecipes from "@/compositions/recipes";
 import useWeekMenu from "@/compositions/weekMenu";
-import { onMounted, provide } from "vue";
+import { onMounted, provide, defineComponent } from "vue";
 import TheMenu from "@/components/Layout/TheMenu";
 import BtnLogout from "@/components/Layout/BtnLogout.vue";
 
-export default {
+export default defineComponent({
   components: {
     TheMenu,
     BtnLogout,
@@ -39,7 +39,7 @@ export default {
     provide("recipes", recipes);
     provide("weekMenu", weekMenu);
   },
-};
+});
 </script>
 
 <style lang="postcss" scoped>

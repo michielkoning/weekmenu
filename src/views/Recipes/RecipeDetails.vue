@@ -35,15 +35,16 @@
   </form>
 </template>
 
-<script>
+<script lang="ts">
 import useRecipes from "@/compositions/recipes";
 import { onMounted, computed } from "vue";
 import { useRouter } from "vue-router";
 import FormFieldset from "@/components/Forms/FormFieldset";
 import FormInputText from "@/components/Forms/FormInputText";
 import FormSelectTag from "@/components/Forms/FormSelectTag";
+import { defineComponent } from "vue";
 
-export default {
+export default defineComponent({
   components: {
     FormFieldset,
     FormInputText,
@@ -58,13 +59,8 @@ export default {
       return props.id ? "Recept bewerken" : "Nieuw recept";
     });
     const router = useRouter();
-    const {
-      createPost,
-      formData,
-      getRecipe,
-      updatePost,
-      deleteRecipe,
-    } = useRecipes();
+    const { createPost, formData, getRecipe, updatePost, deleteRecipe } =
+      useRecipes();
 
     onMounted(() => {
       if (props.id) getRecipe(props.id);
@@ -91,7 +87,7 @@ export default {
       formData,
     };
   },
-};
+});
 </script>
 
 <style lang="postcss" scoped>

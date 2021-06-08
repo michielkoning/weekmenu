@@ -33,7 +33,7 @@
   </app-page>
 </template>
 
-<script lang="ts">
+<script>
 import ListAnimation from "@/components/Animations/ListAnimation.vue";
 import { inject, defineComponent } from "vue";
 import useWeekMenu from "@/compositions/weekMenu";

@@ -13,6 +13,7 @@
 import RecipesList from "@/components/RecipesList";
 import useWeekMenu from "@/compositions/weekMenu";
 import { inject, defineComponent } from "vue";
+import { IRecipe } from "@/interfaces/IRecipe";
 
 export default defineComponent({
   components: {
@@ -26,7 +27,7 @@ export default defineComponent({
   },
   setup(props) {
     const { updateWeekMenuItem, formData } = useWeekMenu();
-    const selectRecipe = ({ id, title, icon }) => {
+    const selectRecipe = ({ id, title, icon }: IRecipe) => {
       updateWeekMenuItem(props.id, {
         recipe: {
           id,

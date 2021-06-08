@@ -14,10 +14,11 @@
     </form>
   </div>
 </template>
-<script>
+<script lang="ts">
 import useUser from "@/compositions/user";
+import { defineComponent } from "vue";
 
-export default {
+export default defineComponent({
   name: "Login",
   setup() {
     const { form, error, login } = useUser();
@@ -28,5 +29,5 @@ export default {
       login,
     };
   },
-};
+});
 </script>

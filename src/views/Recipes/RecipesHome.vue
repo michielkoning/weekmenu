@@ -11,12 +11,14 @@
   </app-page>
 </template>
 
-<script>
+<script lang="ts">
 import RecipesList from "@/components/RecipesList";
 import { useRouter, useRoute } from "vue-router";
 import AppPage from "@/components/Layout/AppPage.vue";
+import { defineComponent } from "vue";
+import { IRecipe } from "@/interfaces/IRecipe";
 
-export default {
+export default defineComponent({
   components: {
     RecipesList,
     AppPage,
@@ -30,7 +32,7 @@ export default {
     const route = useRoute();
     const closePanel = () => router.push({ name: "RecipesHome" });
 
-    const selectRecipe = (recipe) => {
+    const selectRecipe = (recipe: IRecipe) => {
       router.push({
         name: "RecipeDetails",
         params: { id: recipe.id },
@@ -43,7 +45,7 @@ export default {
       selectRecipe,
     };
   },
-};
+});
 </script>
 
 <style lang="postcss" scoped>
