@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts">
-import RecipesList from "@/components/RecipesList";
+import RecipesList from "@/components/RecipesList.vue";
 import useWeekMenu from "@/compositions/weekMenu";
 import { inject, defineComponent } from "vue";
 import { IRecipe } from "@/interfaces/IRecipe";

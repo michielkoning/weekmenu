@@ -16,7 +16,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 
-import FormField from "@/components/Forms/FormField";
+import FormField from "@/components/Forms/FormField.vue";
 
 export default defineComponent({
   components: {

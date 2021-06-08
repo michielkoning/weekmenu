@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts">
-import RecipesList from "@/components/RecipesList";
+import RecipesList from "@/components/RecipesList.vue";
 import { useRouter, useRoute } from "vue-router";
 import AppPage from "@/components/Layout/AppPage.vue";
 import { defineComponent } from "vue";

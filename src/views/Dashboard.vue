@@ -15,7 +15,7 @@
 import useRecipes from "@/compositions/recipes";
 import useWeekMenu from "@/compositions/weekMenu";
 import { onMounted, provide, defineComponent } from "vue";
-import TheMenu from "@/components/Layout/TheMenu";
+import TheMenu from "@/components/Layout/TheMenu.vue";
 import BtnLogout from "@/components/Layout/BtnLogout.vue";
 
 export default defineComponent({

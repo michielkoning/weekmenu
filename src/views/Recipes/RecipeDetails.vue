@@ -39,9 +39,9 @@
 import useRecipes from "@/compositions/recipes";
 import { onMounted, computed } from "vue";
 import { useRouter } from "vue-router";
-import FormFieldset from "@/components/Forms/FormFieldset";
-import FormInputText from "@/components/Forms/FormInputText";
-import FormSelectTag from "@/components/Forms/FormSelectTag";
+import FormFieldset from "@/components/Forms/FormFieldset.vue";
+import FormInputText from "@/components/Forms/FormInputText.vue";
+import FormSelectTag from "@/components/Forms/FormSelectTag.vue";
 import { defineComponent } from "vue";
 
 export default defineComponent({

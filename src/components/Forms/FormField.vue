@@ -11,7 +11,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import ErrorMessage from "@/components/Forms/ErrorMessage";
+import ErrorMessage from "@/components/Forms/ErrorMessage.vue";
 
 export default defineComponent({
   components: {
