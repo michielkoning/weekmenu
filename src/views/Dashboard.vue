@@ -1,6 +1,8 @@
 <template>
-  <the-menu />
-  <btn-logout />
+  <div class="header">
+    <the-menu />
+    <btn-logout class="btn-logout" />
+  </div>
 
   <router-view v-slot="{ Component }">
     <transition name="fade" mode="out-in">
@@ -48,5 +50,15 @@ export default {
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+
+.header {
+  position: relative;
+}
+
+.btn-logout {
+  position: absolute;
+  right: var(--gutter);
+  top: 2em;
 }
 </style>

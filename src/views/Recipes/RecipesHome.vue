@@ -45,3 +45,9 @@ export default {
   },
 };
 </script>
+
+<style lang="postcss" scoped>
+.btn {
+  margin-left: 0.5em;
+}
+</style>
