@@ -1,20 +1,23 @@
 import { reactive } from "vue";
-import * as fb from "../firebase";
-import useApi from "./api";
+import * as fb from "@/firebase";
+import useApi from "@/compositions/api";
+import { IRecipe } from "@/interfaces/IRecipe";
+import { IWeekMenuItem } from "@/interfaces/IWeekMenuItem";
 
 export default () => {
-  const { create, update, getAll, list, remove, get } = useApi(
+  const { create, update, getAll, list, remove } = useApi(
     fb.weekMenuCollection
   );
 
   const formData = reactive({
     day: "",
     recipe: null,
-    icon: "vegetarian",
-    recipeId: null,
   });
 
-  const updateWeekMenuByRecipeChange = async (id: string, payload: any) => {
+  const updateWeekMenuByRecipeChange = async (
+    id: string,
+    payload: IRecipe | null
+  ) => {
     const weekMenuItems = await fb.weekMenuCollection
       .where("recipe.id", "==", id)
       .get();
@@ -29,7 +32,7 @@ export default () => {
     return create(formData);
   };
 
-  const updateWeekMenuItem = async (id: string, payload: any) => {
+  const updateWeekMenuItem = async (id: string, payload: IWeekMenuItem) => {
     update(id, payload);
   };
 
@@ -38,16 +41,6 @@ export default () => {
       orderBy: "day",
       order: "asc",
     });
-  };
-
-  const getWeekMenuItem = async (id: string) => {
-    const response = await get(id);
-
-    if (response) {
-      formData.day = response.day;
-      formData.recipeId = response.recipeId;
-      formData.icon = response.icon;
-    }
   };
 
   const deleteWeekMenuItem = async (id: string) => {
@@ -65,7 +58,6 @@ export default () => {
     formData,
     createWeekMenuItem,
     weekMenu: list,
-    getWeekMenuItem,
     updateWeekMenuItem,
     updateWeekMenuByRecipeChange,
   };

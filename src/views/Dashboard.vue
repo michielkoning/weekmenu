@@ -23,10 +23,6 @@ export default defineComponent({
     TheMenu,
     BtnLogout,
   },
-  props: {
-    id: String,
-    default: null,
-  },
   setup() {
     const { recipes, getRecipes } = useRecipes();
     const { weekMenu, getWeekMenu } = useWeekMenu();
