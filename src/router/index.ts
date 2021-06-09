@@ -20,7 +20,6 @@ const routes = [
     path: "/",
     name: "Dashboard",
     component: Dashboard,
-    props: true,
     meta: {
       authRequired: true,
     },
@@ -29,7 +28,6 @@ const routes = [
         path: "/recepten",
         name: "RecipesHome",
         component: RecipesHome,
-        props: true,
         children: [
           {
             path: "toevoegen",
@@ -38,7 +36,6 @@ const routes = [
               import(
                 /* webpackChunkName: "RecipeDetails" */ "../views/Recipes/RecipeDetails.vue"
               ),
-            props: true,
           },
           {
             path: ":id",
@@ -61,7 +58,6 @@ const routes = [
           import(
             /* webpackChunkName: "WeekMenuHome" */ "../views/WeekMenu/WeekMenuHome.vue"
           ),
-        props: true,
         children: [
           {
             path: ":id",
