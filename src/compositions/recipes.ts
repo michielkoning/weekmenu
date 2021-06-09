@@ -1,5 +1,5 @@
 import { reactive } from "vue";
-import * as fb from "./../firebase";
+import * as fb from "../firebase";
 import useApi from "./api";
 import useWeekMenu from "./weekMenu";
 
@@ -20,7 +20,7 @@ export default () => {
     return create(formData);
   };
 
-  const updatePost = async (id) => {
+  const updatePost = async (id: string) => {
     await update(id, formData);
 
     await updateWeekMenuByRecipeChange(id, {
@@ -37,7 +37,7 @@ export default () => {
     });
   };
 
-  const getRecipe = async (id) => {
+  const getRecipe = async (id: string) => {
     const response = await get(id);
     if (response) {
       formData.title = response.title;
@@ -46,7 +46,7 @@ export default () => {
     }
   };
 
-  const deleteRecipe = async (id) => {
+  const deleteRecipe = async (id: string) => {
     try {
       await remove(id);
       await updateWeekMenuByRecipeChange(id, null);

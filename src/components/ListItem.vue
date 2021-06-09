@@ -66,7 +66,7 @@ export default defineComponent({
           return null;
       }
     },
-    boxLargeColor() {
+    boxLargeColor(): string {
       if (!this.iconSmall) {
         switch (this.icon) {
           case "vegetarian":
@@ -79,7 +79,7 @@ export default defineComponent({
       }
       return this.color;
     },
-    boxSmallColor() {
+    boxSmallColor(): string {
       if (!this.iconSmall) {
         switch (this.icon) {
           case "vegetarian":

@@ -11,9 +11,10 @@ export default () => {
     day: "",
     recipe: null,
     icon: "vegetarian",
+    recipeId: null,
   });
 
-  const updateWeekMenuByRecipeChange = async (id, payload) => {
+  const updateWeekMenuByRecipeChange = async (id: string, payload: any) => {
     const weekMenuItems = await fb.weekMenuCollection
       .where("recipe.id", "==", id)
       .get();
@@ -28,7 +29,7 @@ export default () => {
     return create(formData);
   };
 
-  const updateWeekMenuItem = async (id, payload) => {
+  const updateWeekMenuItem = async (id: string, payload: any) => {
     update(id, payload);
   };
 
@@ -39,7 +40,7 @@ export default () => {
     });
   };
 
-  const getWeekMenuItem = async (id) => {
+  const getWeekMenuItem = async (id: string) => {
     const response = await get(id);
 
     if (response) {
@@ -49,7 +50,7 @@ export default () => {
     }
   };
 
-  const deleteWeekMenuItem = async (id) => {
+  const deleteWeekMenuItem = async (id: string) => {
     try {
       await remove(id);
       return true;

@@ -1,15 +1,15 @@
 import { ref } from "vue";
-import { firebase } from "@firebase/app";
+import firebase from "firebase/app";
 
-export default (collection) => {
-  const list = ref([]);
+export default (collection: firebase.firestore.CollectionReference): any => {
+  const list = ref([] as firebase.firestore.DocumentData[]);
 
-  const create = async (payload) => {
+  const create = async (payload: any) => {
     const user = firebase.auth().currentUser;
     try {
       const data = {
         createdOn: new Date(),
-        user: user.uid,
+        user: user?.uid,
         ...payload,
       };
       const response = await collection.add(data);
@@ -19,20 +19,20 @@ export default (collection) => {
     }
   };
 
-  const update = async (id, payload) => {
+  const update = async (id: string, payload: any) => {
     const user = firebase.auth().currentUser;
     const response = collection.doc(id);
     try {
       await response.update({
         ...payload,
-        user: user.uid,
+        user: user?.uid,
       });
     } catch (error) {
       console.error(error);
     }
   };
 
-  const getAll = (params) => {
+  const getAll = (params: any) => {
     const order = {
       order: "desc",
       orderBy: "createdOn",
@@ -41,7 +41,7 @@ export default (collection) => {
     const user = firebase.auth().currentUser;
 
     collection
-      .where("user", "==", user.uid)
+      .where("user", "==", user?.uid)
       .orderBy(order.orderBy, order.order)
       .onSnapshot((snapshot) => {
         snapshot.docChanges().forEach((change) => {
@@ -67,14 +67,14 @@ export default (collection) => {
       });
   };
 
-  const get = async (id) => {
+  const get = async (id: string) => {
     const response = await collection.doc(id).get();
     if (response.exists) {
       return response.data();
     }
   };
 
-  const remove = async (id) => {
+  const remove = async (id: string) => {
     try {
       await collection.doc(id).delete();
       return true;

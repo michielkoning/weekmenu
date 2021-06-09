@@ -76,6 +76,9 @@ export default defineComponent({
     };
 
     const deleteRecipe1 = async () => {
+      if (props.id === undefined) {
+        return;
+      }
       await deleteRecipe(props.id);
       router.push({ name: "RecipesHome" });
     };
