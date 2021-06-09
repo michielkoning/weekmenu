@@ -1,14 +1,13 @@
-import { reactive } from "vue";
-import * as fb from "@/firebase";
+import { reactive, ref } from "vue";
+import { weekMenuCollection } from "@/firebase";
 import useApi from "@/compositions/api";
 import { IRecipe } from "@/interfaces/IRecipe";
-import { IWeekMenuItem } from "@/interfaces/IWeekMenuItem";
 import { ComponentOptions } from "vue";
+import { IWeekMenuItem } from "@/interfaces/IWeekMenuItem";
 
+const list = ref([] as IWeekMenuItem[]);
 export default (): ComponentOptions => {
-  const { create, update, getAll, list, remove } = useApi(
-    fb.weekMenuCollection
-  );
+  const { create, update, getAll, remove } = useApi("weekMenu");
 
   const formData = reactive({
     day: "",
@@ -19,7 +18,7 @@ export default (): ComponentOptions => {
     id: string,
     payload: IRecipe | null
   ) => {
-    const weekMenuItems = await fb.weekMenuCollection
+    const weekMenuItems = await weekMenuCollection
       .where("recipe.id", "==", id)
       .get();
     weekMenuItems.forEach((doc) => {
@@ -37,8 +36,8 @@ export default (): ComponentOptions => {
     update(id, payload);
   };
 
-  const getWeekMenu = () => {
-    getAll({
+  const getWeekMenu = async () => {
+    list.value = await getAll({
       orderBy: "day",
       order: "asc",
     });

@@ -25,7 +25,6 @@ const getCurrentUser = (): Promise<firebase.User | null> => {
 
 // utils
 const db = firebase.firestore();
-const auth = firebase.auth();
 
 db.enablePersistence();
 
@@ -34,4 +33,4 @@ const recipesCollection = db.collection("recipes");
 const weekMenuCollection = db.collection("weekmenu");
 
 // export utils/refs
-export { db, auth, recipesCollection, weekMenuCollection, getCurrentUser };
+export { db, recipesCollection, weekMenuCollection, getCurrentUser };

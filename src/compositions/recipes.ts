@@ -1,19 +1,18 @@
-import { reactive } from "vue";
-import * as fb from "../firebase";
+import { reactive, ref } from "vue";
 import useApi from "./api";
 import useWeekMenu from "./weekMenu";
 import { ComponentOptions } from "vue";
+import { IRecipe } from "@/interfaces/IRecipe";
+
+const list = ref([] as IRecipe[]);
 
 export default (): ComponentOptions => {
-  const { create, update, getAll, list, remove, get } = useApi(
-    fb.recipesCollection
-  );
+  const { create, update, getAll, remove, get } = useApi("recipes");
 
   const { updateWeekMenuByRecipeChange } = useWeekMenu();
 
   const formData = reactive({
     title: "",
-    content: "",
     icon: "vegetarian",
   });
 
@@ -31,8 +30,8 @@ export default (): ComponentOptions => {
     });
   };
 
-  const getRecipes = () => {
-    getAll({
+  const getRecipes = async () => {
+    list.value = await getAll({
       orderBy: "title",
       order: "asc",
     });
@@ -42,7 +41,6 @@ export default (): ComponentOptions => {
     const response = await get(id);
     if (response) {
       formData.title = response.title;
-      formData.content = response.content;
       formData.icon = response.icon;
     }
   };

@@ -15,8 +15,9 @@
 import RecipesList from "@/components/RecipesList.vue";
 import { useRouter, useRoute } from "vue-router";
 import AppPage from "@/components/Layout/AppPage.vue";
-import { defineComponent } from "vue";
+import { defineComponent, onMounted } from "vue";
 import { IRecipe } from "@/interfaces/IRecipe";
+import useRecipes from "@/compositions/recipes";
 
 export default defineComponent({
   components: {
@@ -31,6 +32,11 @@ export default defineComponent({
     const router = useRouter();
     const route = useRoute();
     const closePanel = () => router.push({ name: "RecipesHome" });
+    const { getRecipes } = useRecipes();
+
+    onMounted(() => {
+      getRecipes();
+    });
 
     const selectRecipe = (recipe: IRecipe) => {
       router.push({

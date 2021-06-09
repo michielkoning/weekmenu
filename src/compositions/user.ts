@@ -7,7 +7,7 @@ const user = ref(null as firebase.User | null);
 
 export default (): ComponentOptions => {
   const form = reactive({
-    email: "michielkoning@gmail.com",
+    email: "michielasdkaoni12312n1g@gmail.com",
     password: "michielkoning",
   });
   const error = ref(null);
@@ -53,9 +53,10 @@ export default (): ComponentOptions => {
       await firebase
         .auth()
         .setPersistence(firebase.auth.Auth.Persistence.LOCAL);
-      await firebase
+      const response = await firebase
         .auth()
         .createUserWithEmailAndPassword(form.email, form.password);
+      firebase.firestore().collection("users").doc(response.user?.uid).set({});
       router.push("/");
     } catch (err) {
       error.value = err.message;

@@ -13,8 +13,9 @@
 </template>
 
 <script lang="ts">
-import { inject, defineComponent } from "vue";
+import { defineComponent } from "vue";
 import ListItem from "@/components/ListItem.vue";
+import useRecipes from "@/compositions/recipes";
 
 export default defineComponent({
   components: {
@@ -28,7 +29,7 @@ export default defineComponent({
   },
   emits: ["selectRecipe"],
   setup() {
-    const recipes = inject("recipes");
+    const { recipes } = useRecipes();
     return {
       recipes,
     };

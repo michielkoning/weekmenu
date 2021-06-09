@@ -12,9 +12,7 @@
 </template>
 
 <script lang="ts">
-import useRecipes from "@/compositions/recipes";
-import useWeekMenu from "@/compositions/weekMenu";
-import { onMounted, provide, defineComponent } from "vue";
+import { defineComponent } from "vue";
 import TheMenu from "@/components/Layout/TheMenu.vue";
 import BtnLogout from "@/components/Layout/BtnLogout.vue";
 
@@ -22,18 +20,6 @@ export default defineComponent({
   components: {
     TheMenu,
     BtnLogout,
-  },
-  setup() {
-    const { recipes, getRecipes } = useRecipes();
-    const { weekMenu, getWeekMenu } = useWeekMenu();
-
-    onMounted(() => {
-      getRecipes();
-      getWeekMenu();
-    });
-
-    provide("recipes", recipes);
-    provide("weekMenu", weekMenu);
   },
 });
 </script>

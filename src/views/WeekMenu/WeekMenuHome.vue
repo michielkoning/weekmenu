@@ -35,7 +35,7 @@
 
 <script>
 import ListAnimation from "@/components/Animations/ListAnimation.vue";
-import { inject, defineComponent } from "vue";
+import { defineComponent, onMounted } from "vue";
 import useWeekMenu from "@/compositions/weekMenu";
 import { format, add } from "date-fns";
 import { nl } from "date-fns/locale";
@@ -56,13 +56,22 @@ export default defineComponent({
     default: null,
   },
   setup() {
-    const weekMenu = inject("weekMenu");
     const router = useRouter();
     const route = useRoute();
 
     const closePanel = () => router.push({ name: "WeekMenuHome" });
 
-    const { createWeekMenuItem, formData, deleteWeekMenuItem } = useWeekMenu();
+    const {
+      createWeekMenuItem,
+      formData,
+      deleteWeekMenuItem,
+      getWeekMenu,
+      weekMenu,
+    } = useWeekMenu();
+
+    onMounted(() => {
+      getWeekMenu();
+    });
 
     const convertToDate = (date) => {
       return new Date(date.seconds * 1000);

@@ -12,7 +12,8 @@
 <script lang="ts">
 import RecipesList from "@/components/RecipesList.vue";
 import useWeekMenu from "@/compositions/weekMenu";
-import { inject, defineComponent } from "vue";
+import useRecipes from "@/compositions/recipes";
+import { onMounted, defineComponent } from "vue";
 import { IRecipe } from "@/interfaces/IRecipe";
 
 export default defineComponent({
@@ -27,6 +28,11 @@ export default defineComponent({
   },
   setup(props) {
     const { updateWeekMenuItem, formData } = useWeekMenu();
+    const { recipes, getRecipes } = useRecipes();
+
+    onMounted(() => {
+      getRecipes();
+    });
     const selectRecipe = ({ id, title, icon }: IRecipe) => {
       updateWeekMenuItem(props.id, {
         recipe: {
@@ -36,7 +42,6 @@ export default defineComponent({
         },
       });
     };
-    const recipes = inject("recipes");
     return {
       recipes,
       formData,
