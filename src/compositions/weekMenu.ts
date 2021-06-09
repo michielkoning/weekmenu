@@ -3,8 +3,9 @@ import * as fb from "@/firebase";
 import useApi from "@/compositions/api";
 import { IRecipe } from "@/interfaces/IRecipe";
 import { IWeekMenuItem } from "@/interfaces/IWeekMenuItem";
+import { ComponentOptions } from "vue";
 
-export default () => {
+export default (): ComponentOptions => {
   const { create, update, getAll, list, remove } = useApi(
     fb.weekMenuCollection
   );

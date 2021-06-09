@@ -2,8 +2,9 @@ import { reactive } from "vue";
 import * as fb from "../firebase";
 import useApi from "./api";
 import useWeekMenu from "./weekMenu";
+import { ComponentOptions } from "vue";
 
-export default () => {
+export default (): ComponentOptions => {
   const { create, update, getAll, list, remove, get } = useApi(
     fb.recipesCollection
   );

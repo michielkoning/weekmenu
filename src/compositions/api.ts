@@ -1,7 +1,10 @@
 import { ref } from "vue";
 import firebase from "firebase/app";
+import { ComponentOptions } from "vue";
 
-export default (collection: firebase.firestore.CollectionReference): any => {
+export default (
+  collection: firebase.firestore.CollectionReference
+): ComponentOptions => {
   const list = ref([] as firebase.firestore.DocumentData[]);
 
   const create = async (payload: any) => {
@@ -84,44 +87,11 @@ export default (collection: firebase.firestore.CollectionReference): any => {
   };
 
   return {
-    create,
     update,
+    create,
     getAll,
     get,
     remove,
     list,
   };
 };
-
-// const RECIPES = [
-//   {
-//     id: 1,
-//     day: "Za",
-//     title: "Bloemkoolsoufflé",
-//     tags: ["Vegetarisch"],
-//   },
-//   {
-//     id: 2,
-//     day: "Zo",
-//     title: "Courgettelasagne",
-//     tags: ["Vegetarisch"],
-//   },
-//   {
-//     id: 3,
-//     day: "Ma",
-//     title: "Gevulde bolcourgette",
-//     tags: ["Vegetarisch"],
-//   },
-//   {
-//     id: 4,
-//     day: "Di",
-//     title: "Kerriekokos paksoi",
-//     tags: ["Vegetarisch", "Rijst"],
-//   },
-//   {
-//     id: 5,
-//     day: "Wo",
-//     title: "Zalmlasagne",
-//     tags: ["Vis", "Pasta"],
-//   },
-// ];

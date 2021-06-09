@@ -1,8 +1,11 @@
 import firebase from "firebase/app";
 import { reactive, ref } from "vue";
 import { useRouter } from "vue-router";
+import { ComponentOptions } from "vue";
 
-export default () => {
+const user = ref(null as firebase.User | null);
+
+export default (): ComponentOptions => {
   const form = reactive({
     email: "michielkoning@gmail.com",
     password: "michielkoning",
@@ -10,6 +13,18 @@ export default () => {
   const error = ref(null);
   const loading = ref(false);
   const router = useRouter();
+
+  const listener = ref(null as firebase.Unsubscribe | null);
+
+  const setUserEventListener = () => {
+    listener.value = firebase.auth().onAuthStateChanged((firebaseUser) => {
+      user.value = firebaseUser;
+    });
+  };
+
+  const resetUserEventListener = () => {
+    listener.value = null;
+  };
 
   const login = async () => {
     error.value = null;
@@ -60,11 +75,14 @@ export default () => {
   };
 
   return {
+    user,
     error,
     form,
     login,
     register,
     loading,
     logout,
+    setUserEventListener,
+    resetUserEventListener,
   };
 };
