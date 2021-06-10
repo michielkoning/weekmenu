@@ -3,7 +3,7 @@
     <list-item
       v-for="recipe in recipes"
       :key="recipe.id"
-      :icon="recipe.icon"
+      :icon="recipe.category"
       color="blue"
       :title="recipe.title"
       :active="currentId === recipe.id"

@@ -1,11 +1,11 @@
 export enum Categories {
   vegetarian = "vegetarian",
   fish = "fish",
+  meat = "meat",
 }
 
 export interface IRecipe {
   id: string;
-  icon: string;
+  category: Categories;
   title: string;
-  user?: string;
 }

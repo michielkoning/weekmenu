@@ -2,7 +2,7 @@ import { reactive, ref } from "vue";
 import useApi from "./api";
 import useWeekMenu from "./weekMenu";
 import { ComponentOptions } from "vue";
-import { IRecipe } from "@/interfaces/IRecipe";
+import { IRecipe, Categories } from "@/interfaces/IRecipe";
 
 const list = ref([] as IRecipe[]);
 
@@ -13,8 +13,8 @@ export default (): ComponentOptions => {
 
   const formData = reactive({
     title: "",
-    icon: "vegetarian",
-  });
+    category: Categories.vegetarian,
+  } as IRecipe);
 
   const createPost = async () => {
     return create(formData);
@@ -26,7 +26,7 @@ export default (): ComponentOptions => {
     await updateWeekMenuByRecipeChange(id, {
       id,
       title: formData.title,
-      icon: formData.icon,
+      category: formData.category,
     });
   };
 
@@ -41,7 +41,7 @@ export default (): ComponentOptions => {
     const response = await get(id);
     if (response) {
       formData.title = response.title;
-      formData.icon = response.icon;
+      formData.category = response.category;
     }
   };
 

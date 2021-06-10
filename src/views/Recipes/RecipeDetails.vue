@@ -3,7 +3,7 @@
     <h1>{{ title }}</h1>
     <form-fieldset :title="title">
       <form-input-text id="name" v-model="formData.title" title="Naam recept" />
-      <form-select-tag v-model="formData.icon" />
+      <form-select-tag v-model="formData.category" />
       <div class="buttons">
         <button type="submit" class="btn btn-primary">
           Recept {{ id ? "wijzigen" : "toevoegen" }}

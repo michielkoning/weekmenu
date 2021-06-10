@@ -33,12 +33,12 @@ export default defineComponent({
     onMounted(() => {
       getRecipes();
     });
-    const selectRecipe = ({ id, title, icon }: IRecipe) => {
+    const selectRecipe = ({ id, title, category }: IRecipe) => {
       updateWeekMenuItem(props.id, {
         recipe: {
           id,
           title,
-          icon,
+          category,
         },
       });
     };

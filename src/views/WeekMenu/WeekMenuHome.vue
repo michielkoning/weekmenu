@@ -10,8 +10,8 @@
         :id="formatDate(weekMenuItem.day, 'eeeeee')"
         :key="weekMenuItem.id"
         :icon="
-          weekMenuItem.recipe && weekMenuItem.recipe.icon
-            ? weekMenuItem.recipe.icon
+          weekMenuItem.recipe && weekMenuItem.recipe.category
+            ? weekMenuItem.recipe.category
             : null
         "
         :icon-small="true"

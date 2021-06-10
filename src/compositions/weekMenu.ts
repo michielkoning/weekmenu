@@ -12,7 +12,7 @@ export default (): ComponentOptions => {
   const formData = reactive({
     day: "",
     recipe: null,
-  });
+  } as IWeekMenuItem);
 
   const updateWeekMenuByRecipeChange = async (
     id: string,
