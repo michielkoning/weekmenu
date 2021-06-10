@@ -22,7 +22,6 @@ export default (): ComponentOptions => {
 
   const updatePost = async (id: string) => {
     await update(id, formData);
-
     await updateWeekMenuByRecipeChange(id, {
       id,
       title: formData.title,

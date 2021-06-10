@@ -87,6 +87,7 @@ export default (collectionId: string): ComponentOptions => {
   };
 
   return {
+    collection,
     update,
     create,
     getAll,

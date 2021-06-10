@@ -1,5 +1,4 @@
 import { reactive, ref } from "vue";
-import { weekMenuCollection } from "@/firebase";
 import useApi from "@/compositions/api";
 import { IRecipe } from "@/interfaces/IRecipe";
 import { ComponentOptions } from "vue";
@@ -7,10 +6,10 @@ import { IWeekMenuItem } from "@/interfaces/IWeekMenuItem";
 
 const list = ref([] as IWeekMenuItem[]);
 export default (): ComponentOptions => {
-  const { create, update, getAll, remove } = useApi("weekMenu");
+  const { create, update, getAll, remove, collection } = useApi("weekMenu");
 
   const formData = reactive({
-    day: "",
+    day: null,
     recipe: null,
   } as IWeekMenuItem);
 
@@ -18,10 +17,9 @@ export default (): ComponentOptions => {
     id: string,
     payload: IRecipe | null
   ) => {
-    const weekMenuItems = await weekMenuCollection
-      .where("recipe.id", "==", id)
-      .get();
-    weekMenuItems.forEach((doc) => {
+    const weekMenuItems = await collection.where("recipe.id", "==", id).get();
+
+    weekMenuItems.forEach((doc: any) => {
       updateWeekMenuItem(doc.id, {
         recipe: payload,
       });

@@ -28,9 +28,5 @@ const db = firebase.firestore();
 
 db.enablePersistence();
 
-// collection references
-const recipesCollection = db.collection("recipes");
-const weekMenuCollection = db.collection("weekmenu");
-
 // export utils/refs
-export { db, recipesCollection, weekMenuCollection, getCurrentUser };
+export { db, getCurrentUser };
