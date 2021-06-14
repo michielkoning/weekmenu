@@ -1,8 +1,6 @@
 <template>
   <div>
-    <input v-model="date" type="date" />
-    {{ date }}
-    {{ date2 }}
+    <input v-model="date" type="date" @change="convertDate" />
     {{ formData.startDate }}
   </div>
   <button @click="createWeek">Create new week</button>
@@ -11,18 +9,19 @@
 <script lang="ts">
 import { parse } from "date-fns";
 import useWeek from "@/compositions/weeks";
-import { defineComponent, ref, computed } from "vue";
+import { defineComponent, ref } from "vue";
 export default defineComponent({
   setup() {
-    const date = ref("");
-    const date2 = computed(() => {
-      if (date.value) {
-        return parse(date.value, "yyyy-MM-dd", new Date());
+    const date = ref(null as string | null);
+    const convertDate = () => {
+      if (!date.value) {
+        formData.startDate = null;
+        return;
       }
-      return null;
-    });
+      formData.startDate = parse(date.value, "yyyy-MM-dd", new Date());
+    };
     const { createWeek, formData } = useWeek();
-    return { createWeek, formData, date, date2 };
+    return { createWeek, formData, date, convertDate };
   },
 });
 </script>
