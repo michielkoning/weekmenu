@@ -6,7 +6,8 @@ import { IWeekMenuItem } from "@/interfaces/IWeekMenuItem";
 
 const list = ref([] as IWeekMenuItem[]);
 export default (): ComponentOptions => {
-  const { create, update, getAll, remove, collection } = useApi("weekMenu");
+  const { create, update, getAll, remove, baseCollection } = useApi("weekMenu");
+  const collection = baseCollection.collection("weekMenu");
 
   const formData = reactive({
     day: null,
@@ -27,15 +28,15 @@ export default (): ComponentOptions => {
   };
 
   const createWeekMenuItem = async () => {
-    return create(formData);
+    return create(collection, formData);
   };
 
   const updateWeekMenuItem = async (id: string, payload: IWeekMenuItem) => {
-    update(id, payload);
+    update(collection, id, payload);
   };
 
   const getWeekMenu = async () => {
-    list.value = await getAll({
+    list.value = await getAll(collection, {
       orderBy: "day",
       order: "asc",
     });
@@ -43,7 +44,7 @@ export default (): ComponentOptions => {
 
   const deleteWeekMenuItem = async (id: string) => {
     try {
-      await remove(id);
+      await remove(collection, id);
       return true;
     } catch (error) {
       console.error(error);

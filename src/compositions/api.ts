@@ -6,13 +6,15 @@ export default (collectionId: string): ComponentOptions => {
   const list = ref([] as firebase.firestore.DocumentData[]);
   const user = firebase.auth().currentUser;
 
-  const collection = firebase
+  const baseCollection = firebase
     .firestore()
     .collection("users")
-    .doc(user?.uid)
-    .collection(collectionId);
+    .doc(user?.uid);
 
-  const create = async (payload: any) => {
+  const create = async (
+    collection: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>,
+    payload: any
+  ) => {
     try {
       const data = {
         createdOn: new Date(),
@@ -25,7 +27,11 @@ export default (collectionId: string): ComponentOptions => {
     }
   };
 
-  const update = async (id: string, payload: any) => {
+  const update = async (
+    collection: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>,
+    id: string,
+    payload: any
+  ) => {
     const response = collection.doc(id);
     try {
       await response.update({
@@ -36,7 +42,10 @@ export default (collectionId: string): ComponentOptions => {
     }
   };
 
-  const getAll = async (params: any) => {
+  const getAll = async (
+    collection: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>,
+    params: any
+  ) => {
     const order = {
       order: "desc",
       orderBy: "createdOn",
@@ -70,14 +79,21 @@ export default (collectionId: string): ComponentOptions => {
     return list.value;
   };
 
-  const get = async (id: string) => {
+  const get = async (
+    collection: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>,
+    id: string
+  ) => {
     const response = await collection.doc(id).get();
     if (response.exists) {
       return response.data();
     }
+    return null;
   };
 
-  const remove = async (id: string) => {
+  const remove = async (
+    collection: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>,
+    id: string
+  ) => {
     try {
       await collection.doc(id).delete();
       return true;
@@ -87,7 +103,7 @@ export default (collectionId: string): ComponentOptions => {
   };
 
   return {
-    collection,
+    baseCollection,
     update,
     create,
     getAll,
