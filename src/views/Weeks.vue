@@ -4,7 +4,10 @@
       {{ week.id }}<br />
     </router-link>
     <input v-model="date" type="date" @change="convertDate" />
-    {{ test }}
+
+    <div v-if="test">
+      {{ test.day6 }}
+    </div>
   </div>
   <button @click="createWeek">Create new week</button>
 </template>

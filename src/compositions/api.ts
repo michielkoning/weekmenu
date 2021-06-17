@@ -46,14 +46,14 @@ export default (collectionId: string): ComponentOptions => {
     collection: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>,
     params: any
   ) => {
-    const order = {
-      order: "desc",
-      orderBy: "createdOn",
-      ...params,
-    };
+    // const order = {
+    //   order: "desc",
+    //   orderBy: "createdOn",
+    //   ...params,
+    // };
 
     await collection
-      .orderBy(order.orderBy, order.order)
+      // .orderBy(order.orderBy, order.order)
       .onSnapshot((snapshot) => {
         snapshot.docChanges().forEach((change) => {
           const { newIndex, oldIndex, doc, type } = change;

@@ -2,6 +2,8 @@ import { reactive, ref } from "vue";
 import useApi from "./api";
 import { ComponentOptions } from "vue";
 import { IWeek } from "@/interfaces/IWeek";
+import firebase from "firebase/app";
+import { IWeekMenuItem } from "@/interfaces/IWeekMenuItem";
 
 const list = ref([] as IWeek[]);
 export default (): ComponentOptions => {
@@ -10,7 +12,13 @@ export default (): ComponentOptions => {
 
   const formData = reactive({
     startDate: new Date(),
-    endDate: new Date(),
+    day1: null,
+    day2: null,
+    day3: null,
+    day4: null,
+    day5: null,
+    day6: null,
+    day7: null,
   } as IWeek);
 
   const createWeek = async () => {
@@ -22,7 +30,7 @@ export default (): ComponentOptions => {
     console.log(list.value);
   };
 
-  const getWeek = async (id: string) => {
+  const getWeek = async (id: string): Promise<IWeek> => {
     return await get(collection, id);
   };
 
