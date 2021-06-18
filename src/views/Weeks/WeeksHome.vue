@@ -9,7 +9,12 @@
     >
       <span :class="{ active: id === week.id }">Week {{ index }}</span>
       <div v-if="week.days">
-        {{ week.days.map((day) => day.title).join(", ") }}
+        {{
+          week.days
+            .filter((day) => day !== null)
+            .map((day) => day.title)
+            .join(", ")
+        }}
       </div>
       <br />
     </router-link>

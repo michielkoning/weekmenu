@@ -16,10 +16,13 @@
   </div>
   <br /><br />
   <div v-if="day">
-    <strong>Recepten</strong><br />
+    <strong>Recepten voor dag {{ day }}</strong
+    ><br />
     <div v-for="recipe in recipes" :key="recipe.id">
       <button @click="selectRecipe(recipe)">{{ recipe.title }}</button>
     </div>
+    <br />
+    <button @click="selectRecipe(null)">Reset</button>
   </div>
 </template>
 
@@ -44,6 +47,7 @@ export default defineComponent({
     const { recipes, getRecipes } = useRecipe();
 
     const id = computed(() => props.id);
+    const day = computed(() => parseInt(props.day));
 
     watch(id, async () => {
       await getWeek(id.value);
@@ -57,7 +61,10 @@ export default defineComponent({
     });
 
     const selectRecipe = (recipe: IRecipe) => {
-      formData.days[props.day] = recipe;
+      if (formData?.day?.length > day.value) {
+        return;
+      }
+      formData.days[day.value] = recipe;
       updateWeek(props.id);
     };
 
