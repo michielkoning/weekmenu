@@ -7,18 +7,12 @@ import { IWeekMenuItem } from "@/interfaces/IWeekMenuItem";
 
 const list = ref([] as IWeek[]);
 export default (): ComponentOptions => {
-  const { create, get, getAll, baseCollection } = useApi("a");
+  const { create, get, getAll, baseCollection, update } = useApi("a");
   const collection = baseCollection.collection("weeks");
 
   const formData = reactive({
     startDate: new Date(),
-    day1: null,
-    day2: null,
-    day3: null,
-    day4: null,
-    day5: null,
-    day6: null,
-    day7: null,
+    days: [],
   } as IWeek);
 
   const createWeek = async () => {
@@ -30,11 +24,17 @@ export default (): ComponentOptions => {
     console.log(list.value);
   };
 
-  const getWeek = async (id: string): Promise<IWeek> => {
-    return await get(collection, id);
+  const updateWeek = async (id: string) => {
+    await update(collection, id, formData);
+  };
+  const getWeek = async (id: string) => {
+    const response = await get(collection, id);
+    formData.startDate = response.startDate;
+    formData.days = response.days;
   };
 
   return {
+    updateWeek,
     getWeeks,
     weeks: list,
     formData,

@@ -17,14 +17,14 @@ const routes = [
       import(/* webpackChunkName: "Register" */ "../views/Register.vue"),
   },
   {
-    path: "/weken/:id?",
+    path: "/weken/:id?/:day?",
     name: "Weeks",
     props: true,
     meta: {
       authRequired: true,
     },
     component: () =>
-      import(/* webpackChunkName: "Register" */ "../views/Weeks.vue"),
+      import(/* webpackChunkName: "Register" */ "../views/Weeks/WeeksHome.vue"),
   },
   {
     path: "/",
