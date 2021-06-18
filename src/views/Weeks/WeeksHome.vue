@@ -7,41 +7,28 @@
       :key="week.id"
       :to="`/weken/${week.id}`"
     >
-      Week {{ index }}<br />
+      <span :class="{ active: id === week.id }">Week {{ index }}</span>
+      <div v-if="week.days">
+        {{ week.days.map((day) => day.title).join(", ") }}
+      </div>
+      <br />
     </router-link>
     <br />
-    <div v-if="formData && formData.days">
-      <router-link
-        v-for="(weekDay, index) in formData.days"
-        :key="index"
-        :to="`/weken/${id}/${index}`"
-      >
-        {{ index }} {{ weekDay }}<br />
-      </router-link>
-    </div>
-  </div>
-  <br /><br />
-  <div v-if="day">
-    <button @click="selectRecipe">test</button>
+    <router-view v-slot="{ Component }">
+      <component :is="Component" />
+    </router-view>
   </div>
 </template>
 
 <script lang="ts">
 import { parse } from "date-fns";
 import useWeek from "@/compositions/weeks";
-import { defineComponent, ref, onMounted, watch, computed } from "vue";
+import { useRoute } from "vue-router";
+import { defineComponent, ref, onMounted, computed } from "vue";
 export default defineComponent({
-  props: {
-    id: {
-      type: String,
-      default: null,
-    },
-    day: {
-      type: String,
-      default: null,
-    },
-  },
-  setup(props) {
+  setup() {
+    const route = useRoute();
+    const id = computed(() => route.params.id);
     const date = ref(null as string | null);
     const convertDate = () => {
       if (!date.value) {
@@ -50,41 +37,26 @@ export default defineComponent({
       }
       formData.startDate = parse(date.value, "yyyy-MM-dd", new Date());
     };
-    const { createWeek, formData, getWeek, getWeeks, weeks, updateWeek } =
-      useWeek();
-
-    const id = computed(() => props.id);
-
-    watch(id, async () => {
-      await getWeek(id.value);
-    });
+    const { createWeek, formData, getWeeks, weeks } = useWeek();
 
     onMounted(async () => {
       await getWeeks();
-      if (props.id) {
-        await getWeek(props.id);
-      }
     });
 
-    const selectRecipe = () => {
-      formData.days[props.day] = "test";
-      updateWeek(props.id);
-    };
-
     return {
+      id,
       createWeek,
       formData,
       date,
       convertDate,
       weeks,
-      selectRecipe,
     };
   },
 });
 </script>
 
 <style lang="postcss" scoped>
-.router-link-active {
+.active {
   font-weight: bold;
 }
 </style>

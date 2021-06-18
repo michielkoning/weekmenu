@@ -19,7 +19,7 @@ export default (): ComponentOptions => {
   } as IRecipe);
 
   const createPost = async () => {
-    return create(formData);
+    return create(collection, formData);
   };
 
   const updatePost = async (id: string) => {

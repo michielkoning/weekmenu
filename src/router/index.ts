@@ -17,14 +17,27 @@ const routes = [
       import(/* webpackChunkName: "Register" */ "../views/Register.vue"),
   },
   {
-    path: "/weken/:id?/:day?",
+    path: "/weken",
     name: "Weeks",
     props: true,
     meta: {
       authRequired: true,
     },
     component: () =>
-      import(/* webpackChunkName: "Register" */ "../views/Weeks/WeeksHome.vue"),
+      import(
+        /* webpackChunkName: "WeeksHome" */ "../views/Weeks/WeeksHome.vue"
+      ),
+    children: [
+      {
+        path: ":id/:day?",
+        name: "WeeksDetails",
+        component: () =>
+          import(
+            /* webpackChunkName: "WeeksDetails" */ "../views/Weeks/WeeksDetails.vue"
+          ),
+        props: true,
+      },
+    ],
   },
   {
     path: "/",
