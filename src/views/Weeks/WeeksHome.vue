@@ -2,12 +2,10 @@
   <div>
     <input v-model="date" type="date" @change="convertDate" /><br />
     <button @click="createWeek">Create new week</button><br /><br />
-    <router-link
-      v-for="(week, index) in weeks"
-      :key="week.id"
-      :to="`/weken/${week.id}`"
-    >
-      <span :class="{ active: id === week.id }">Week {{ index }}</span>
+    <div v-for="(week, index) in weeks" :key="week.id">
+      <router-link :to="`/weken/${week.id}`">
+        <span :class="{ active: id === week.id }">Week {{ index }}</span>
+      </router-link>
       <div v-if="week.days">
         {{
           week.days
@@ -15,9 +13,13 @@
             .map((day) => day.title)
             .join(", ")
         }}
+        <br />
+        <button @click="copy(week.id)">Copy</button>&nbsp;
       </div>
+      <button @click="remove(week.id)">Delete</button>
       <br />
-    </router-link>
+      <br />
+    </div>
     <br />
     <router-view v-slot="{ Component }">
       <component :is="Component" />
@@ -28,11 +30,12 @@
 <script lang="ts">
 import { parse } from "date-fns";
 import useWeek from "@/compositions/weeks";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { defineComponent, ref, onMounted, computed } from "vue";
 export default defineComponent({
   setup() {
     const route = useRoute();
+    const router = useRouter();
     const id = computed(() => route.params.id);
     const date = ref(null as string | null);
     const convertDate = () => {
@@ -42,18 +45,38 @@ export default defineComponent({
       }
       formData.startDate = parse(date.value, "yyyy-MM-dd", new Date());
     };
-    const { createWeek, formData, getWeeks, weeks } = useWeek();
+
+    const { createWeek, formData, getWeeks, weeks, copyWeek, deleteWeek } =
+      useWeek();
+
+    const copy = async (id: string) => {
+      const response = await copyWeek(id);
+      if (response) {
+        router.push({
+          name: "WeeksDetails",
+          params: {
+            id: response,
+          },
+        });
+      }
+    };
+
+    const remove = async (id: string) => {
+      await deleteWeek(id);
+    };
 
     onMounted(async () => {
       await getWeeks();
     });
 
     return {
+      copy,
       id,
       createWeek,
       formData,
       date,
       convertDate,
+      remove,
       weeks,
     };
   },

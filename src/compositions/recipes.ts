@@ -7,8 +7,7 @@ import { IRecipe, Categories } from "@/interfaces/IRecipe";
 const list = ref([] as IRecipe[]);
 
 export default (): ComponentOptions => {
-  const { create, update, getAll, remove, get, baseCollection } =
-    useApi("recipes");
+  const { create, update, getAll, remove, get, baseCollection } = useApi();
   const collection = baseCollection.collection("recipes");
 
   const { updateWeekMenuByRecipeChange } = useWeekMenu();

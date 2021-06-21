@@ -6,7 +6,7 @@ import { IWeekMenuItem } from "@/interfaces/IWeekMenuItem";
 
 const list = ref([] as IWeekMenuItem[]);
 export default (): ComponentOptions => {
-  const { create, update, getAll, remove, baseCollection } = useApi("weekMenu");
+  const { create, update, getAll, remove, baseCollection } = useApi();
   const collection = baseCollection.collection("weekMenu");
 
   const formData = reactive({

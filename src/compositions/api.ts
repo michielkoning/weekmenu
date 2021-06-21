@@ -2,7 +2,7 @@ import { ref } from "vue";
 import firebase from "firebase/app";
 import { ComponentOptions } from "vue";
 
-export default (collectionId: string): ComponentOptions => {
+export default (): ComponentOptions => {
   const list = ref([] as firebase.firestore.DocumentData[]);
   const user = firebase.auth().currentUser;
 
@@ -17,8 +17,8 @@ export default (collectionId: string): ComponentOptions => {
   ) => {
     try {
       const data = {
-        createdOn: new Date(),
         ...payload,
+        createdOn: new Date(),
       };
       const response = await collection.add(data);
       return response.id;
@@ -46,14 +46,14 @@ export default (collectionId: string): ComponentOptions => {
     collection: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>,
     params: any
   ) => {
-    // const order = {
-    //   order: "desc",
-    //   orderBy: "createdOn",
-    //   ...params,
-    // };
+    const order = {
+      order: "desc",
+      orderBy: "createdOn",
+      ...params,
+    };
 
     await collection
-      // .orderBy(order.orderBy, order.order)
+      .orderBy(order.orderBy, order.order)
       .onSnapshot((snapshot) => {
         snapshot.docChanges().forEach((change) => {
           const { newIndex, oldIndex, doc, type } = change;
@@ -77,6 +77,14 @@ export default (collectionId: string): ComponentOptions => {
         });
       });
     return list.value;
+  };
+
+  const copy = async (
+    collection: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>,
+    id: string
+  ) => {
+    const response = await get(collection, id);
+    return create(collection, response);
   };
 
   const get = async (
@@ -109,5 +117,6 @@ export default (collectionId: string): ComponentOptions => {
     getAll,
     get,
     remove,
+    copy,
   };
 };
