@@ -10,7 +10,7 @@
           },
         }"
       >
-        <span :class="{ active: id === week.id }">Week {{ index }}</span>
+        <span>Week {{ index }}</span>
       </router-link>
       - <button @click="copy(week.id)">Copy</button> -
       <button @click="remove(week.id)">Delete</button>
@@ -32,38 +32,35 @@
 
 <script lang="ts">
 import useWeek from "@/compositions/weeks";
-import { useRoute, useRouter } from "vue-router";
-import { defineComponent, onMounted, computed } from "vue";
+import { useRouter } from "vue-router";
+import { defineComponent, onMounted } from "vue";
 export default defineComponent({
   setup() {
-    const route = useRoute();
     const router = useRouter();
-    const id = computed(() => route.params.id);
 
     const { createWeek, formData, getWeeks, weeks, copyWeek, deleteWeek } =
       useWeek();
 
+    const goToWeek = (id: string) => {
+      router.push({
+        name: "WeeksDetails",
+        params: {
+          id,
+        },
+      });
+    };
+
     const copy = async (id: string) => {
       const response = await copyWeek(id);
       if (response) {
-        router.push({
-          name: "WeeksDetails",
-          params: {
-            id: response,
-          },
-        });
+        goToWeek(response);
       }
     };
 
     const create = async () => {
       const response = await createWeek();
       if (response) {
-        router.push({
-          name: "WeeksDetails",
-          params: {
-            id: response,
-          },
-        });
+        goToWeek(response);
       }
     };
 
@@ -80,7 +77,6 @@ export default defineComponent({
 
     return {
       copy,
-      id,
       formData,
       remove,
       weeks,
@@ -91,7 +87,7 @@ export default defineComponent({
 </script>
 
 <style lang="postcss" scoped>
-.active {
+.router-link-active {
   font-weight: bold;
 }
 </style>

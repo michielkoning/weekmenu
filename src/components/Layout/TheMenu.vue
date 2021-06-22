@@ -1,10 +1,21 @@
 <template>
   <nav id="nav">
-    <router-link :to="{ name: 'Weeks' }">
+    <router-link
+      :to="{ name: 'Weeks' }"
+      :class="{
+        active: router.name === 'WeeksDetails' || router.name === 'Weeks',
+      }"
+    >
       <icon-week-menu />
       Weekmenu
     </router-link>
-    <router-link :to="{ name: 'RecipesHome' }">
+    <router-link
+      :to="{ name: 'RecipesHome' }"
+      :class="{
+        active:
+          router.name === 'RecipeDetails' || router.name === 'RecipesHome',
+      }"
+    >
       <icon-recipes />
       Recepten
     </router-link>
@@ -67,7 +78,7 @@ a {
     text-decoration: underline;
   }
 
-  &.router-link-active {
+  &.active {
     background-color: var(--color-primary);
   }
 }
