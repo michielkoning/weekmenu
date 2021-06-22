@@ -1,6 +1,6 @@
 <template>
   <nav id="nav">
-    <router-link :to="{ name: 'WeekMenuHome' }">
+    <router-link :to="{ name: 'Weeks' }">
       <icon-week-menu />
       Weekmenu
     </router-link>

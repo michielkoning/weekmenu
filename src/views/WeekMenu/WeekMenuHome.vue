@@ -59,7 +59,7 @@ export default defineComponent({
     const router = useRouter();
     const route = useRoute();
 
-    const closePanel = () => router.push({ name: "WeekMenuHome" });
+    const closePanel = () => router.push({ name: "Weeks" });
 
     const {
       createWeekMenuItem,

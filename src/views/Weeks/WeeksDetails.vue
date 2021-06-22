@@ -5,7 +5,13 @@
       <router-link
         v-for="(weekDay, index) in formData.days"
         :key="index"
-        :to="`/weken/${id}/${index}`"
+        :to="{
+          name: 'WeeksDetails',
+          params: {
+            id,
+            day: index,
+          },
+        }"
       >
         {{ index }}
         <template v-if="weekDay">{{ weekDay.title }}</template>

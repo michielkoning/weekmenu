@@ -17,11 +17,11 @@ export default (): ComponentOptions => {
     category: Categories.vegetarian,
   } as IRecipe);
 
-  const createPost = async () => {
+  const createRecipe = async () => {
     return create(collection, formData);
   };
 
-  const updatePost = async (id: string) => {
+  const updateRecipe = async (id: string) => {
     await update(collection, id, formData);
     await updateWeekMenuByRecipeChange(id, {
       id,
@@ -60,9 +60,9 @@ export default (): ComponentOptions => {
     deleteRecipe,
     getRecipe,
     formData,
-    createPost,
+    createRecipe,
     recipes: list,
     getRecipes,
-    updatePost,
+    updateRecipe,
   };
 };

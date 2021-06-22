@@ -1,9 +1,16 @@
 <template>
   <div>
     <input v-model="date" type="date" @change="convertDate" /><br />
-    <button @click="createWeek">Create new week</button><br /><br />
+    <button @click="create">Create new week</button><br /><br />
     <div v-for="(week, index) in weeks" :key="week.id">
-      <router-link :to="`/weken/${week.id}`">
+      <router-link
+        :to="{
+          name: 'WeeksDetails',
+          params: {
+            id: week.id,
+          },
+        }"
+      >
         <span :class="{ active: id === week.id }">Week {{ index }}</span>
       </router-link>
       <div v-if="week.days">
@@ -61,8 +68,23 @@ export default defineComponent({
       }
     };
 
+    const create = async () => {
+      const response = await createWeek();
+      if (response) {
+        router.push({
+          name: "WeeksDetails",
+          params: {
+            id: response,
+          },
+        });
+      }
+    };
+
     const remove = async (id: string) => {
       await deleteWeek(id);
+      router.push({
+        name: "Weeks",
+      });
     };
 
     onMounted(async () => {
@@ -72,12 +94,12 @@ export default defineComponent({
     return {
       copy,
       id,
-      createWeek,
       formData,
       date,
       convertDate,
       remove,
       weeks,
+      create,
     };
   },
 });

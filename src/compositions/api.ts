@@ -51,6 +51,7 @@ export default (): ComponentOptions => {
       orderBy: "createdOn",
       ...params,
     };
+    const list: firebase.firestore.DocumentData[] = [];
 
     await collection
       .orderBy(order.orderBy, order.order)

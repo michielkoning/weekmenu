@@ -16,29 +16,7 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "Register" */ "../views/Register.vue"),
   },
-  {
-    path: "/weken",
-    name: "Weeks",
-    props: true,
-    meta: {
-      authRequired: true,
-    },
-    component: () =>
-      import(
-        /* webpackChunkName: "WeeksHome" */ "../views/Weeks/WeeksHome.vue"
-      ),
-    children: [
-      {
-        path: ":id/:day?",
-        name: "WeeksDetails",
-        component: () =>
-          import(
-            /* webpackChunkName: "WeeksDetails" */ "../views/Weeks/WeeksDetails.vue"
-          ),
-        props: true,
-      },
-    ],
-  },
+
   {
     path: "/",
     name: "Dashboard",
@@ -76,21 +54,22 @@ const routes = [
       },
       {
         path: "/",
-        name: "WeekMenuHome",
+        name: "Weeks",
+        props: true,
+        meta: {
+          authRequired: true,
+        },
         component: () =>
           import(
-            /* webpackChunkName: "WeekMenuHome" */ "../views/WeekMenu/WeekMenuHome.vue"
+            /* webpackChunkName: "WeeksHome" */ "../views/Weeks/WeeksHome.vue"
           ),
         children: [
           {
-            path: ":id",
-            meta: {
-              showModal: true,
-            },
-            name: "WeekMenuSelectRecipe",
+            path: ":id/:day?",
+            name: "WeeksDetails",
             component: () =>
               import(
-                /* webpackChunkName: "WeekMenuSelectRecipe" */ "../views/WeekMenu/WeekMenuSelectRecipe.vue"
+                /* webpackChunkName: "WeeksDetails" */ "../views/Weeks/WeeksDetails.vue"
               ),
             props: true,
           },

@@ -59,7 +59,7 @@ export default defineComponent({
       return props.id ? "Recept bewerken" : "Nieuw recept";
     });
     const router = useRouter();
-    const { createPost, formData, getRecipe, updatePost, deleteRecipe } =
+    const { createRecipe, formData, getRecipe, updateRecipe, deleteRecipe } =
       useRecipes();
 
     onMounted(() => {
@@ -68,9 +68,9 @@ export default defineComponent({
 
     const submit = async () => {
       if (props.id) {
-        updatePost(props.id);
+        updateRecipe(props.id);
       } else {
-        const id = await createPost();
+        const id = await createRecipe();
         router.push({ name: "RecipeDetails", params: { id } });
       }
     };
