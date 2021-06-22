@@ -1,6 +1,5 @@
 <template>
   <div>
-    <input v-model="date" type="date" @change="convertDate" /><br />
     <button @click="create">Create new week</button><br /><br />
     <div v-for="(week, index) in weeks" :key="week.id">
       <router-link
@@ -13,6 +12,8 @@
       >
         <span :class="{ active: id === week.id }">Week {{ index }}</span>
       </router-link>
+      - <button @click="copy(week.id)">Copy</button> -
+      <button @click="remove(week.id)">Delete</button>
       <div v-if="week.days">
         {{
           week.days
@@ -20,14 +21,9 @@
             .map((day) => day.title)
             .join(", ")
         }}
-        <br />
-        <button @click="copy(week.id)">Copy</button>&nbsp;
       </div>
-      <button @click="remove(week.id)">Delete</button>
-      <br />
       <br />
     </div>
-    <br />
     <router-view v-slot="{ Component }">
       <component :is="Component" />
     </router-view>
@@ -35,23 +31,14 @@
 </template>
 
 <script lang="ts">
-import { parse } from "date-fns";
 import useWeek from "@/compositions/weeks";
 import { useRoute, useRouter } from "vue-router";
-import { defineComponent, ref, onMounted, computed } from "vue";
+import { defineComponent, onMounted, computed } from "vue";
 export default defineComponent({
   setup() {
     const route = useRoute();
     const router = useRouter();
     const id = computed(() => route.params.id);
-    const date = ref(null as string | null);
-    const convertDate = () => {
-      if (!date.value) {
-        formData.startDate = null;
-        return;
-      }
-      formData.startDate = parse(date.value, "yyyy-MM-dd", new Date());
-    };
 
     const { createWeek, formData, getWeeks, weeks, copyWeek, deleteWeek } =
       useWeek();
@@ -95,8 +82,6 @@ export default defineComponent({
       copy,
       id,
       formData,
-      date,
-      convertDate,
       remove,
       weeks,
       create,

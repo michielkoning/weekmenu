@@ -1,6 +1,5 @@
 import { reactive, ref } from "vue";
 import useApi from "./api";
-import useWeekMenu from "./weekMenu";
 import { ComponentOptions } from "vue";
 import { IRecipe, Categories } from "@/interfaces/IRecipe";
 
@@ -9,8 +8,6 @@ const list = ref([] as IRecipe[]);
 export default (): ComponentOptions => {
   const { create, update, getAll, remove, get, baseCollection } = useApi();
   const collection = baseCollection.collection("recipes");
-
-  const { updateWeekMenuByRecipeChange } = useWeekMenu();
 
   const formData = reactive({
     title: "",
@@ -23,11 +20,6 @@ export default (): ComponentOptions => {
 
   const updateRecipe = async (id: string) => {
     await update(collection, id, formData);
-    await updateWeekMenuByRecipeChange(id, {
-      id,
-      title: formData.title,
-      category: formData.category,
-    });
   };
 
   const getRecipes = async () => {
@@ -48,7 +40,6 @@ export default (): ComponentOptions => {
   const deleteRecipe = async (id: string) => {
     try {
       await remove(collection, id);
-      await updateWeekMenuByRecipeChange(id, null);
 
       return true;
     } catch (error) {
