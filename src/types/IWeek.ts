@@ -1,4 +1,4 @@
-import { IRecipe } from "@/interfaces/IRecipe";
+import { IRecipe } from "@/types/IRecipe";
 
 export interface IWeek {
   id?: string;

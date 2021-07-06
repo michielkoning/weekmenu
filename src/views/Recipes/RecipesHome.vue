@@ -16,8 +16,8 @@ import RecipesList from "@/components/RecipesList.vue";
 import { useRouter, useRoute } from "vue-router";
 import AppPage from "@/components/Layout/AppPage.vue";
 import { defineComponent, onMounted } from "vue";
-import { IRecipe } from "@/interfaces/IRecipe";
 import useRecipes from "@/compositions/recipes";
+import { IRecipe } from "@/types/IRecipe";
 
 export default defineComponent({
   components: {

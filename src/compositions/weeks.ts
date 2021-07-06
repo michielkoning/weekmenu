@@ -1,7 +1,7 @@
 import { reactive, ref } from "vue";
 import useApi from "./api";
 import { ComponentOptions } from "vue";
-import { IWeek } from "@/interfaces/IWeek";
+import { IWeek } from "@/types/IWeek";
 
 const list = ref([] as IWeek[]);
 export default (): ComponentOptions => {

@@ -42,9 +42,9 @@
 import useWeek from "@/compositions/weeks";
 import useRecipe from "@/compositions/recipes";
 import { defineComponent, onMounted, watch, computed } from "vue";
-import { IRecipe } from "@/interfaces/IRecipe";
 import AddRemove from "@/components/AddRemove.vue";
 import { useRouter } from "vue-router";
+import { IRecipe } from "@/types/IRecipe";
 
 export default defineComponent({
   components: { AddRemove },

@@ -1,7 +1,7 @@
 import { reactive, ref } from "vue";
 import useApi from "./api";
 import { ComponentOptions } from "vue";
-import { IRecipe, Categories } from "@/interfaces/IRecipe";
+import { IRecipe, Categories } from "@/types/IRecipe";
 
 const list = ref([] as IRecipe[]);
 
