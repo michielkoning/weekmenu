@@ -45,6 +45,7 @@ export default defineComponent({
   position: absolute;
   right: var(--gutter);
   top: 2em;
+  z-index: 6;
 }
 
 .page {
