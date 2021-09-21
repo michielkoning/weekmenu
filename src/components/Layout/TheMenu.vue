@@ -47,35 +47,57 @@ export default defineComponent({
 
 <style lang="postcss" scoped>
 nav {
-  padding: 1em 0.5em;
   text-align: center;
   display: flex;
   justify-content: center;
+  width: 100%;
+
+  position: fixed;
+  bottom: 0;
+
+  @media (--viewport-sm) {
+    padding: 1em 0.5em;
+    position: static;
+    width: auto;
+    bottom: auto;
+  }
 }
 
 a {
   @mixin link-reset;
   display: flex;
   align-items: center;
+  flex-direction: column;
   padding: 0.5em 1em;
   border: 2px solid var(--color-green);
+  border-bottom-width: 0;
   color: var(--color-green-dark);
-  width: 10em;
   justify-content: center;
+  flex: 1 0 auto;
+  z-index: 9;
+  background-color: var(--color-white);
 
   &:not(:first-child) {
     border-left: 0;
-  }
-  &:first-child {
-    border-radius: 0.25em 0 0 0.25em;
-  }
-  &:last-child {
-    border-radius: 0 0.25em 0.25em 0;
   }
 
   &:hover,
   &:focus {
     text-decoration: underline;
+  }
+
+  @media (--viewport-sm) {
+    flex-direction: row;
+    width: 10em;
+    flex: 0 0 auto;
+    border-bottom-width: 2px;
+
+    &:first-child {
+      border-radius: 0.25em 0 0 0.25em;
+    }
+    &:last-child {
+      border-radius: 0 0.25em 0.25em 0;
+    }
   }
 
   &.active {
@@ -84,8 +106,14 @@ a {
 }
 
 svg {
-  margin-right: 0.5em;
-  width: 1em;
-  height: 1em;
+  display: block;
+  width: 1.5em;
+  height: 1.5em;
+
+  @media (--viewport-sm) {
+    margin-right: 0.5em;
+    width: 1em;
+    height: 1em;
+  }
 }
 </style>

@@ -4,11 +4,13 @@
     <btn-logout class="btn-logout" />
   </div>
 
-  <router-view v-slot="{ Component }">
-    <transition name="fade" mode="out-in">
-      <component :is="Component" />
-    </transition>
-  </router-view>
+  <div class="page">
+    <router-view v-slot="{ Component }">
+      <transition name="fade" mode="out-in">
+        <component :is="Component" />
+      </transition>
+    </router-view>
+  </div>
 </template>
 
 <script lang="ts">
@@ -43,5 +45,9 @@ export default defineComponent({
   position: absolute;
   right: var(--gutter);
   top: 2em;
+}
+
+.page {
+  margin-bottom: 4em;
 }
 </style>
