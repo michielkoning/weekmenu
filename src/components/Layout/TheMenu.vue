@@ -76,7 +76,10 @@ a {
   justify-content: center;
   flex: 1 0 auto;
   background-color: var(--color-white);
-  padding-bottom: env(safe-area-inset-bottom);
+
+  @supports (padding-bottom: env(safe-area-inset-bottom)) {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
 
   &:not(:first-child) {
     border-left: 0;
@@ -92,6 +95,7 @@ a {
     width: 10em;
     flex: 0 0 auto;
     border-bottom-width: 2px;
+    padding-bottom: 0.5em;
 
     &:first-child {
       border-radius: 0.25em 0 0 0.25em;

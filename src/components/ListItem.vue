@@ -145,6 +145,8 @@ li {
   padding: 0.5em 0.5em;
   cursor: pointer;
 
+  margin: 0 -0.5em;
+
   &.active {
     background: #efefef;
   }

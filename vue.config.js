@@ -16,6 +16,7 @@ module.exports = {
       name: title,
       orientation: "portrait-primary",
       short_name: title,
+      start_url: "https://weekmenuapp.netlify.app/",
     },
   },
 };

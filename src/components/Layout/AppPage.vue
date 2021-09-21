@@ -1,23 +1,27 @@
 <template>
-  <center-wrapper>
-    <div class="page">
-      <div class="list">
-        <h1>{{ title }}</h1>
-        <slot />
+  <div class="page">
+    <div class="list">
+      <div class="header">
+        <center-wrapper>
+          <h1>{{ title }}</h1>
+        </center-wrapper>
       </div>
-      <router-view v-slot="{ Component }">
-        <transition name="slide">
-          <div v-if="showPanel" class="panel">
-            <button class="btn-close" @click="$emit('close')">
-              <icon-close />
-            </button>
-
-            <component :is="Component" :key="$route.fullPath" />
-          </div>
-        </transition>
-      </router-view>
+      <center-wrapper>
+        <slot />
+      </center-wrapper>
     </div>
-  </center-wrapper>
+    <router-view v-slot="{ Component }">
+      <transition name="slide">
+        <div v-if="showPanel" class="panel">
+          <button class="btn-close" @click="$emit('close')">
+            <icon-close />
+          </button>
+
+          <component :is="Component" :key="$route.fullPath" />
+        </div>
+      </transition>
+    </router-view>
+  </div>
 </template>
 
 <script lang="ts">
@@ -66,8 +70,14 @@ export default defineComponent({
   }
 }
 
-.list {
-  padding-top: 1em;
+.header {
+  background: var(--color-primary);
+  padding-top: env(safe-area-inset-top);
+  color: var(--color-green-dark);
+
+  & h1 {
+    padding: 0.5em 0;
+  }
 }
 
 .panel {
