@@ -1,5 +1,5 @@
 import { ref } from "vue";
-import firebase from "firebase/app";
+import { firebase } from "@/firebase";
 import { ComponentOptions } from "vue";
 
 export default (): ComponentOptions => {

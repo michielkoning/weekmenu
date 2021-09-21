@@ -1,16 +1,15 @@
-import firebase from "firebase/app";
-import "firebase/auth";
-import "firebase/firestore";
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+import "firebase/compat/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBCMm4pk84wPYQFoanNiTG2tPgfapLNDbE",
-  authDomain: "weekmenu-41c5d.firebaseapp.com",
-  databaseURL:
-    "https://weekmenu-41c5d-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "weekmenu-41c5d",
-  storageBucket: "weekmenu-41c5d.appspot.com",
-  messagingSenderId: "945789997382",
-  appId: "1:945789997382:web:96a1157541a46314efd547",
+  apiKey: process.env.VUE_APP_API_KEY,
+  authDomain: process.env.VUE_APP_AUTH_DOMAIN,
+  databaseURL: process.env.VUE_APP_DATABASE_URL,
+  projectId: process.env.VUE_APP_PROJECT_ID,
+  storageBucket: process.env.VUE_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.VUE_APP_messagingSenderId,
+  appId: process.env.VUE_APP_APP_ID,
 };
 firebase.initializeApp(firebaseConfig);
 
@@ -29,4 +28,4 @@ const db = firebase.firestore();
 db.enablePersistence();
 
 // export utils/refs
-export { db, getCurrentUser };
+export { db, getCurrentUser, firebase };

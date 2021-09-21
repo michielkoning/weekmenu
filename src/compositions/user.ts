@@ -1,4 +1,4 @@
-import firebase from "firebase/app";
+import { firebase } from "@/firebase";
 import { reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 import { ComponentOptions } from "vue";
