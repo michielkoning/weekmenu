@@ -7,7 +7,7 @@
       }"
     >
       <icon-week-menu />
-      Weekmenu
+      <span class="title">Weekmenu</span>
     </router-link>
     <router-link
       :to="{ name: 'RecipesHome' }"
@@ -17,7 +17,7 @@
       }"
     >
       <icon-recipes />
-      Recepten
+      <span class="title">Recepten</span>
     </router-link>
   </nav>
 </template>
@@ -103,6 +103,11 @@ a {
   &.active {
     background-color: var(--color-primary);
   }
+}
+
+.title {
+  display: block;
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 svg {
