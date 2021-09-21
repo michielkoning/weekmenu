@@ -11,7 +11,7 @@ module.exports = {
     manifestOptions: {
       background_color: color,
       theme_color: color,
-      categories: ["politics"],
+      categories: ["food"],
       lang: "nl",
       name: title,
       orientation: "portrait-primary",
