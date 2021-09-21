@@ -51,6 +51,7 @@ nav {
   display: flex;
   justify-content: center;
   width: 100%;
+  z-index: 9;
 
   position: fixed;
   bottom: 0;
@@ -74,8 +75,11 @@ a {
   color: var(--color-green-dark);
   justify-content: center;
   flex: 1 0 auto;
-  z-index: 9;
   background-color: var(--color-white);
+
+  @supports (padding-bottom: safe-area-inset-bottom) {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
 
   &:not(:first-child) {
     border-left: 0;
@@ -107,7 +111,6 @@ a {
 
 .title {
   display: block;
-  padding-bottom: env(safe-area-inset-bottom);
 }
 
 svg {
