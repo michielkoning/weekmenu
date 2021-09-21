@@ -76,10 +76,7 @@ a {
   justify-content: center;
   flex: 1 0 auto;
   background-color: var(--color-white);
-
-  @supports (padding-bottom: safe-area-inset-bottom) {
-    padding-bottom: env(safe-area-inset-bottom);
-  }
+  padding-bottom: env(safe-area-inset-bottom);
 
   &:not(:first-child) {
     border-left: 0;
