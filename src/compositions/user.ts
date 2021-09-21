@@ -40,7 +40,7 @@ export default (): ComponentOptions => {
         .signInWithEmailAndPassword(form.email, form.password);
       router.push("/");
     } catch (err) {
-      error.value = err.message;
+      // error.value = err.message;
     } finally {
       loading.value = false;
     }
@@ -59,7 +59,7 @@ export default (): ComponentOptions => {
       firebase.firestore().collection("users").doc(response.user?.uid).set({});
       router.push("/");
     } catch (err) {
-      error.value = err.message;
+      // error.value = err.message;
     } finally {
       loading.value = false;
     }
@@ -70,7 +70,7 @@ export default (): ComponentOptions => {
       await firebase.auth().signOut();
       router.push("/inloggen");
     } catch (error) {
-      alert(error.message);
+      // alert(error.message);
       router.push("/inloggen");
     }
   };
