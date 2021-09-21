@@ -74,6 +74,8 @@ export default defineComponent({
   background: var(--color-primary);
   padding-top: env(safe-area-inset-top);
   color: var(--color-green-dark);
+  position: sticky;
+  top: 0;
 
   & h1 {
     padding: 0.5em 0;

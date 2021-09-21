@@ -2,5 +2,5 @@
   --notch-left: env(safe-area-inset-left);
   --notch-right: env(safe-area-inset-right);
   --notch-top: env(safe-area-inset-top);
-  --notch: var(--notch-top) var(--notch-right) 0 var(--notch-left);
+  --notch: 0 var(--notch-right) 0 var(--notch-left);
 }
