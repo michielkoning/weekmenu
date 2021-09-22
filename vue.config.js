@@ -18,5 +18,8 @@ module.exports = {
       short_name: title,
       start_url: "https://weekmenuapp.netlify.app/",
     },
+    workboxOptions: {
+      exclude: ["netlify.toml"],
+    },
   },
 };
