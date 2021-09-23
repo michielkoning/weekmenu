@@ -10,13 +10,23 @@ module.exports = {
     appleMobileWebAppStatusBarStyle: "black-translucent",
     manifestOptions: {
       background_color: color,
-      theme_color: color,
       categories: ["food"],
       lang: "nl",
-      name: title,
       orientation: "portrait-primary",
-      short_name: title,
-      start_url: "https://weekmenuapp.netlify.app/",
+      shortcuts: [
+        {
+          name: "Weekmenu",
+          short_name: "Weekmenu",
+          url: "/weekmenu",
+          icons: [{ src: "/img/icons/android-chrome", sizes: "192x192" }],
+        },
+        {
+          name: "Recepten",
+          short_name: "Recepten",
+          url: "/recepten",
+          icons: [{ src: "/img/icons/android-chrome.png", sizes: "192x192" }],
+        },
+      ],
     },
     workboxOptions: {
       exclude: ["netlify.toml"],
