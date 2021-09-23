@@ -18,10 +18,6 @@ export default defineComponent({
     onUnmounted(() => {
       resetUserEventListener();
     });
-
-    return {
-      user,
-    };
   },
 });
 </script>
