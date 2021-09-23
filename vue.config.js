@@ -17,7 +17,7 @@ module.exports = {
         {
           name: "Weekmenu",
           short_name: "Weekmenu",
-          url: "/weekmenu",
+          url: "/",
           icons: [{ src: "/img/icons/android-chrome", sizes: "192x192" }],
         },
         {
