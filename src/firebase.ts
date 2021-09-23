@@ -1,6 +1,7 @@
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
+import { enableIndexedDbPersistence } from "firebase/firestore";
 
 const initializeFirebase = (): void => {
   const firebaseConfig = {
@@ -13,10 +14,9 @@ const initializeFirebase = (): void => {
     storageBucket: process.env.VUE_APP_STORAGE_BUCKET,
   };
   firebase.initializeApp(firebaseConfig);
-  // utils
-  const db = firebase.firestore();
 
-  db.enablePersistence();
+  const db = firebase.firestore();
+  enableIndexedDbPersistence(db);
 };
 
 const getCurrentUser = (): Promise<firebase.User | null> => {
