@@ -1,9 +1,9 @@
 import firebase from "firebase/compat/app";
+import { enableIndexedDbPersistence } from "firebase/firestore";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
-import { enableIndexedDbPersistence } from "firebase/firestore";
 
-const initializeFirebase = (): void => {
+const initializeFirebase = async (): Promise<void> => {
   const firebaseConfig = {
     apiKey: process.env.VUE_APP_API_KEY,
     appId: process.env.VUE_APP_APP_ID,
@@ -16,7 +16,7 @@ const initializeFirebase = (): void => {
   firebase.initializeApp(firebaseConfig);
 
   const db = firebase.firestore();
-  enableIndexedDbPersistence(db);
+  await enableIndexedDbPersistence(db);
 };
 
 const getCurrentUser = (): Promise<firebase.User | null> => {
