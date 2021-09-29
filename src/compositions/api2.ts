@@ -111,6 +111,7 @@ export default (collectionId: string): ComponentOptions => {
     await deleteDoc(doc(db, "users", user.uid, collectionId, id));
   };
 
+  //
   const update = async (id: string, payload: any) => {
     if (!user) {
       return null;
