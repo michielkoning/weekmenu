@@ -1,17 +1,19 @@
+// https://firebase.google.com/docs/firestore/data-model?hl=sk
 import { ref } from "vue";
 import firebase from "firebase/compat/app";
+import { db } from "@/firebase";
 import "firebase/compat/auth";
+import { doc } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 
 import { ComponentOptions } from "vue";
 
 export default (): ComponentOptions => {
   const list = ref([] as firebase.firestore.DocumentData[]);
-  const user = firebase.auth().currentUser;
+  const auth = getAuth();
+  const user = auth.currentUser;
 
-  const baseCollection = firebase
-    .firestore()
-    .collection("users")
-    .doc(user?.uid);
+  const baseCollection = doc(db, "users", user ? user.uid : "12");
 
   const create = async (
     collection: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>,

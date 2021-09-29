@@ -1,13 +1,12 @@
 import { reactive, ref } from "vue";
-import useApi from "./api";
+import useApi from "./api2";
 import { ComponentOptions } from "vue";
 import { IRecipe, Categories } from "@/types/IRecipe";
 
 const list = ref([] as IRecipe[]);
 
 export default (): ComponentOptions => {
-  const { create, update, getAll, remove, get, baseCollection } = useApi();
-  const collection = baseCollection.collection("recipes");
+  const { create, update, getAll, remove, get } = useApi("recipes");
 
   const formData = reactive({
     title: "",
@@ -15,22 +14,22 @@ export default (): ComponentOptions => {
   } as IRecipe);
 
   const createRecipe = async () => {
-    return create(collection, formData);
+    return create(formData);
   };
 
   const updateRecipe = async (id: string) => {
-    await update(collection, id, formData);
+    await update(id, formData);
   };
 
   const getRecipes = async () => {
-    list.value = await getAll(collection, {
+    list.value = await getAll({
       orderBy: "title",
       order: "asc",
     });
   };
 
   const getRecipe = async (id: string) => {
-    const response = await get(collection, id);
+    const response = await get(id);
     if (response) {
       formData.title = response.title;
       formData.category = response.category;
@@ -38,13 +37,7 @@ export default (): ComponentOptions => {
   };
 
   const deleteRecipe = async (id: string) => {
-    try {
-      await remove(collection, id);
-
-      return true;
-    } catch (error) {
-      console.error(error);
-    }
+    await remove(id);
   };
 
   return {

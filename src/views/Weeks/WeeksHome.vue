@@ -1,45 +1,35 @@
 <template>
-  <div>
-    <button @click="create">Create new week</button><br /><br />
-    <div v-for="(week, index) in weeks" :key="week.id">
-      <router-link
-        :to="{
-          name: 'WeeksDetails',
-          params: {
-            id: week.id,
-          },
-        }"
-      >
-        <span>Week {{ index }}</span>
-      </router-link>
-      - <button @click="copy(week.id)">Copy</button> -
-      <button @click="remove(week.id)">Delete</button>
-      <div v-if="week.days">
-        {{
-          week.days
-            .filter((day) => day !== null)
-            .map((day) => day.title)
-            .join(", ")
-        }}
-      </div>
-      <br />
-    </div>
-    <router-view v-slot="{ Component }">
-      <component :is="Component" />
-    </router-view>
+  <div v-for="(week, index) in weeks" :key="week.id">
+    <router-link
+      :to="{
+        name: 'WeeksDetails',
+        params: {
+          id: week.id,
+        },
+      }"
+    >
+      <span>Week {{ index }}</span>
+      <button @click="copy(week.id)">copy</button>
+      <button @click="remove(week.id)">remove</button>
+    </router-link>
   </div>
+  <button @click="create">Create</button>
+  <router-view v-slot="{ Component }">
+    <component :is="Component" />
+  </router-view>
 </template>
 
 <script lang="ts">
 import useWeek from "@/compositions/weeks";
 import { useRouter } from "vue-router";
-import { defineComponent, onMounted } from "vue";
+import { defineComponent, onMounted, onUnmounted } from "vue";
 export default defineComponent({
   setup() {
     const router = useRouter();
-
-    const { createWeek, formData, getWeeks, weeks, copyWeek, deleteWeek } =
+    const { createWeek, getWeeks, weeks, unsubscribe, copyWeek, deleteWeek } =
       useWeek();
+    // const { createWeek, formData, getWeeks, weeks, copyWeek, deleteWeek } =
+    //   useWeek();
 
     const goToWeek = (id: string) => {
       router.push({
@@ -75,10 +65,16 @@ export default defineComponent({
       await getWeeks();
     });
 
+    onUnmounted(() => {
+      if (unsubscribe) {
+        unsubscribe();
+      }
+    });
+
     return {
-      copy,
-      formData,
+      // formData,
       remove,
+      copy,
       weeks,
       create,
     };

@@ -2,11 +2,6 @@ import { initializeApp } from "firebase/app";
 import { getFirestore, enableIndexedDbPersistence } from "firebase/firestore";
 import { getAuth, User } from "firebase/auth";
 
-// let firebaseApp = null as null | FirebaseApp;
-// let db = null as null | Firestore;
-const initializeFirebase = () => {
-  console.log("a");
-};
 const firebaseConfig = {
   apiKey: process.env.VUE_APP_API_KEY,
   appId: process.env.VUE_APP_APP_ID,
@@ -19,7 +14,6 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig);
 const db = getFirestore(firebaseApp);
 enableIndexedDbPersistence(db);
-// };
 
 const getCurrentUser = (): Promise<User | null> => {
   return new Promise((resolve, reject) => {
@@ -31,4 +25,4 @@ const getCurrentUser = (): Promise<User | null> => {
   });
 };
 
-export { initializeFirebase, getCurrentUser, firebaseApp, db };
+export { getCurrentUser, firebaseApp, db };

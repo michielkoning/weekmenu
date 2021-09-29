@@ -1,13 +1,12 @@
-import { reactive, ref } from "vue";
-import useApi from "./api";
+import { ref, reactive } from "vue";
 import { ComponentOptions } from "vue";
 import { IWeek } from "@/types/IWeek";
 
+import api from "@/compositions/api2";
+
 const list = ref([] as IWeek[]);
 export default (): ComponentOptions => {
-  const { create, get, getAll, baseCollection, update, copy, remove } =
-    useApi();
-  const collection = baseCollection.collection("weeks");
+  const { getAll, unsubscribe, get, create, copy, remove } = api("weeks");
 
   const formData = reactive({
     startDate: new Date(),
@@ -15,57 +14,35 @@ export default (): ComponentOptions => {
   } as IWeek);
 
   const createWeek = async () => {
-    return await create(collection, formData);
-  };
-
-  const copyWeek = async (id: string) => {
-    return await copy(collection, id);
+    return await create(formData);
   };
 
   const getWeeks = async () => {
-    list.value = await getAll(collection);
-  };
-
-  const updateWeek = async (id: string) => {
-    await update(collection, id, formData);
+    list.value = await getAll();
   };
 
   const getWeek = async (id: string) => {
-    const response = await get(collection, id);
+    const response = await get(id);
     formData.startDate = response.startDate;
     formData.days = response.days;
   };
 
-  const addDay = async (id: string) => {
-    formData.days[formData.days.length] = null;
-    return await updateWeek(id);
-  };
-
-  const removeDay = async (id: string) => {
-    formData.days.pop();
-    return await updateWeek(id);
+  const copyWeek = async (id: string) => {
+    return await copy(id);
   };
 
   const deleteWeek = async (id: string) => {
-    try {
-      await remove(collection, id);
-
-      return true;
-    } catch (error) {
-      console.error(error);
-    }
+    await remove(id);
   };
 
   return {
-    updateWeek,
-    getWeeks,
-    weeks: list,
     formData,
-    createWeek,
-    getWeek,
-    addDay,
-    removeDay,
+    unsubscribe,
     copyWeek,
+    getWeeks,
+    getWeek,
+    weeks: list,
+    createWeek,
     deleteWeek,
   };
 };
