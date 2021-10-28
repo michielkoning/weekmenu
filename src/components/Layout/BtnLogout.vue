@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts">
-import useUser from "@/compositions/user";
+import useUser from "@/composables/user";
 import { defineComponent } from "vue";
 
 export default defineComponent({

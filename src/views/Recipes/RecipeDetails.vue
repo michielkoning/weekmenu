@@ -36,7 +36,7 @@
 </template>
 
 <script lang="ts">
-import useRecipes from "@/compositions/recipes";
+import useRecipes from "@/composables/recipes";
 import { onMounted, computed } from "vue";
 import { useRouter } from "vue-router";
 import FormFieldset from "@/components/Forms/FormFieldset.vue";

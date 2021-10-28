@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import useUser from "@/compositions/user";
+import useUser from "@/composables/user";
 import { onMounted, defineComponent, onUnmounted } from "vue";
 
 export default defineComponent({
@@ -18,10 +18,6 @@ export default defineComponent({
     onUnmounted(() => {
       resetUserEventListener();
     });
-
-    return {
-      user,
-    };
   },
 });
 </script>

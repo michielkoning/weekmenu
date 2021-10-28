@@ -15,7 +15,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import ListItem from "@/components/ListItem.vue";
-import useRecipes from "@/compositions/recipes";
+import useRecipes from "@/composables/recipes";
 
 export default defineComponent({
   components: {
