@@ -2,11 +2,11 @@ import { ref, reactive } from "vue";
 import { ComponentOptions } from "vue";
 import { IWeek } from "@/types/IWeek";
 
-import api from "@/compositions/api2";
+import useApi from "@/composables/api";
 
 const list = ref([] as IWeek[]);
 export default (): ComponentOptions => {
-  const { getAll, unsubscribe, get, create, copy, remove } = api("weeks");
+  const { getAll, unsubscribe, get, create, copy, remove } = useApi("weeks");
 
   const formData = reactive({
     startDate: new Date(),

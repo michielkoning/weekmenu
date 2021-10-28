@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts">
-import useWeek from "@/compositions/weeks";
+import useWeek from "@/composables/weeks";
 import { defineComponent, onMounted, watch, computed } from "vue";
 
 export default defineComponent({

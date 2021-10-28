@@ -20,7 +20,7 @@
 </template>
 
 <script lang="ts">
-import useWeek from "@/compositions/weeks";
+import useWeek from "@/composables/weeks";
 import { useRouter } from "vue-router";
 import { defineComponent, onMounted, onUnmounted } from "vue";
 export default defineComponent({

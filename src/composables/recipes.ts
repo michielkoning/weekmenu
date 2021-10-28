@@ -1,5 +1,5 @@
 import { reactive, ref } from "vue";
-import useApi from "./api2";
+import useApi from "@/composables/api";
 import { ComponentOptions } from "vue";
 import { IRecipe, Categories } from "@/types/IRecipe";
 
