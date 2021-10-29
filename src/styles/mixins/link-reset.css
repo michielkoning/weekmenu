@@ -2,6 +2,6 @@
   &,
   &:hover,
   &:focus {
-    box-shadow: none;
+    text-decoration: none;
   }
 }

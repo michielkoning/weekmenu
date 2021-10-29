@@ -1,11 +1,9 @@
-export enum Categories {
-  vegetarian = "vegetarian",
-  fish = "fish",
-  meat = "meat",
-}
+import { IIngredient } from "@/types/IIngredient";
 
 export interface IRecipe {
   id: string;
-  category: Categories;
   title: string;
+  preperationTime?: number;
+  ingredients: IIngredient[];
+  directions: string[];
 }

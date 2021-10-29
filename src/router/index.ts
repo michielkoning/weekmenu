@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Dashboard from "../views/Dashboard.vue";
-import RecipesHome from "../views/Recipes/RecipesHome.vue";
+import Recipes from "../views/Recipes.vue";
 import { getCurrentUser } from "./../firebase";
 
 const routes = [
@@ -26,31 +26,12 @@ const routes = [
     },
     children: [
       {
-        path: "/recepten",
-        name: "RecipesHome",
-        component: RecipesHome,
-        children: [
-          {
-            path: "toevoegen",
-            name: "RecipeAdd",
-            component: () =>
-              import(
-                /* webpackChunkName: "RecipeDetails" */ "../views/Recipes/RecipeDetails.vue"
-              ),
-          },
-          {
-            path: ":id",
-            meta: {
-              showModal: true,
-            },
-            name: "RecipeDetails",
-            component: () =>
-              import(
-                /* webpackChunkName: "RecipeDetails" */ "../views/Recipes/RecipeDetails.vue"
-              ),
-            props: true,
-          },
-        ],
+        path: "/recepten/:id?",
+        name: "Recipes",
+        component: Recipes,
+        meta: {
+          authRequired: true,
+        },
       },
       {
         path: "/",

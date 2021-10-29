@@ -1,33 +1,18 @@
 <template>
   <ul v-if="recipes.length">
-    <list-item
-      v-for="recipe in recipes"
-      :key="recipe.id"
-      :icon="recipe.category"
-      color="blue"
-      :title="recipe.title"
-      :active="currentId === recipe.id"
-      @selectItem="$emit('selectRecipe', recipe)"
-    />
+    <list-item v-for="recipe in recipes" :key="recipe.id" :recipe="recipe" />
   </ul>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import ListItem from "@/components/ListItem.vue";
+import ListItem from "@/components/Recipes/RecipeListItem.vue";
 import useRecipes from "@/composables/recipes";
 
 export default defineComponent({
   components: {
     ListItem,
   },
-  props: {
-    currentId: {
-      type: String,
-      default: null,
-    },
-  },
-  emits: ["selectRecipe"],
   setup() {
     const { recipes } = useRecipes();
     return {

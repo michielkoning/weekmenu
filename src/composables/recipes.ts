@@ -1,7 +1,7 @@
 import { reactive, ref } from "vue";
 import useApi from "@/composables/api";
 import { ComponentOptions } from "vue";
-import { IRecipe, Categories } from "@/types/IRecipe";
+import { IRecipe } from "@/types/IRecipe";
 
 const list = ref([] as IRecipe[]);
 
@@ -9,8 +9,10 @@ export default (): ComponentOptions => {
   const { create, update, getAll, remove, get } = useApi("recipes");
 
   const formData = reactive({
+    id: "",
     title: "",
-    category: Categories.vegetarian,
+    ingredients: [],
+    directions: [],
   } as IRecipe);
 
   const createRecipe = async () => {
@@ -31,8 +33,16 @@ export default (): ComponentOptions => {
   const getRecipe = async (id: string) => {
     const response = await get(id);
     if (response) {
+      const ingredients = response.ingredients
+        ? JSON.parse(JSON.parse(response.ingredients))
+        : [];
+
+      const directions = response.directions
+        ? JSON.parse(response.directions)
+        : [];
       formData.title = response.title;
-      formData.category = response.category;
+      formData.ingredients = ingredients;
+      formData.directions = directions;
     }
   };
 
