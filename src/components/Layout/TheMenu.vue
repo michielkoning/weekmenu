@@ -10,10 +10,10 @@
       <span class="title">Weekmenu</span>
     </router-link>
     <router-link
-      :to="{ name: 'RecipesHome' }"
+      :to="{ name: 'Recipes' }"
       :class="{
         active:
-          router.name === 'RecipeDetails' || router.name === 'RecipesHome',
+          router.name === 'Recipes' || router.name === 'Recipes',
       }"
     >
       <icon-recipes />

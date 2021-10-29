@@ -28,8 +28,8 @@ export default (): ComponentOptions => {
 
   const listener = ref(null as Unsubscribe | null);
 
-  const setUserEventListener = () => {
-    const auth = getAuth();
+  const setUserEventListener = async () => {
+    const auth = await getAuth();
     listener.value = auth.onAuthStateChanged((firebaseUser) => {
       user.value = firebaseUser;
     });

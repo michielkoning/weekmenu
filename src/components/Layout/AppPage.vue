@@ -10,28 +10,15 @@
         <slot />
       </center-wrapper>
     </div>
-    <router-view v-slot="{ Component }">
-      <transition name="slide">
-        <div v-if="showPanel" class="panel">
-          <button class="btn-close" @click="$emit('close')">
-            <icon-close />
-          </button>
-
-          <component :is="Component" :key="$route.fullPath" />
-        </div>
-      </transition>
-    </router-view>
   </div>
 </template>
 
 <script lang="ts">
-import IconClose from "@/components/Icons/IconClose.vue";
 import CenterWrapper from "@/components/Layout/CenterWrapper.vue";
 import { computed, defineComponent } from "vue";
 import { useRoute } from "vue-router";
 export default defineComponent({
   components: {
-    IconClose,
     CenterWrapper,
   },
   props: {
@@ -66,19 +53,7 @@ export default defineComponent({
 
   @media (--viewport-md) {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-.header {
-  background: var(--color-primary);
-  padding-top: env(safe-area-inset-top);
-  color: var(--color-green-dark);
-  position: sticky;
-  top: 0;
-
-  & h1 {
-    padding: 0.5em 0;
+    grid-template-columns: 30em auto;
   }
 }
 

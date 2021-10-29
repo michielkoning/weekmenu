@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent="submit">
-    <h1>{{ title }}</h1>
+    <h1>{{ formData.title }}</h1>
     <form-fieldset :title="title">
       <form-input-text id="name" v-model="formData.title" title="Naam recept" />
       <form-select-tag v-model="formData.category" />
@@ -37,12 +37,13 @@
 
 <script lang="ts">
 import useRecipes from "@/composables/recipes";
-import { onMounted, computed } from "vue";
+import { onMounted, computed, watch } from "vue";
 import { useRouter } from "vue-router";
 import FormFieldset from "@/components/Forms/FormFieldset.vue";
 import FormInputText from "@/components/Forms/FormInputText.vue";
 import FormSelectTag from "@/components/Forms/FormSelectTag.vue";
 import { defineComponent } from "vue";
+import { useRoute } from "vue-router";
 
 export default defineComponent({
   components: {
@@ -50,37 +51,42 @@ export default defineComponent({
     FormInputText,
     FormSelectTag,
   },
-  props: {
-    id: String,
-    default: null,
-  },
-  setup(props) {
+  setup() {
+    const route = useRoute();
     const title = computed(() => {
-      return props.id ? "Recept bewerken" : "Nieuw recept";
+      return route.params.id ? "Recept bewerken" : "Nieuw recept";
     });
     const router = useRouter();
+
+    const id = computed(() => {
+      return route.params.id;
+    });
     const { createRecipe, formData, getRecipe, updateRecipe, deleteRecipe } =
       useRecipes();
 
     onMounted(() => {
-      if (props.id) getRecipe(props.id);
+      if (id.value) getRecipe(id.value);
+    });
+
+    watch(id, (newId) => {
+      getRecipe(newId);
     });
 
     const submit = async () => {
-      if (props.id) {
-        updateRecipe(props.id);
+      if (route.params.id) {
+        updateRecipe(route.params.id);
       } else {
         const id = await createRecipe();
-        router.push({ name: "RecipeDetails", params: { id } });
+        router.push({ name: "Recipes", params: { id } });
       }
     };
 
     const deleteRecipe1 = async () => {
-      if (props.id === undefined) {
+      if (route.params.id === undefined) {
         return;
       }
-      await deleteRecipe(props.id);
-      router.push({ name: "RecipesHome" });
+      await deleteRecipe(route.params.id);
+      router.push({ name: "Recipes" });
     };
 
     return {
