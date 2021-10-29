@@ -1,9 +1,11 @@
 <template>
   <div v-if="ingredients.length" class="ingredients">
     <h2>Ingredienten</h2>
+    <eaters v-model="totalEaters" />
+
     <ul>
       <li v-for="ingredient in ingredients" :key="ingredient.title">
-        {{ ingredient.amount }}
+        {{ ingredient.amount * totalEaters }}
         {{ ingredient.title }}
       </li>
     </ul>
@@ -12,14 +14,24 @@
 
 <script lang="ts">
 import { IIngredient } from "@/types/IIngredient";
-import { defineComponent, PropType } from "vue";
+import { defineComponent, PropType, ref } from "vue";
+import Eaters from "@/components/Recipes/Eaters.vue";
 
 export default defineComponent({
+  components: {
+    Eaters,
+  },
   props: {
     ingredients: {
       type: Array as PropType<IIngredient[]>,
       default: () => [],
     },
+  },
+  setup() {
+    const totalEaters = ref(2);
+    return {
+      totalEaters,
+    };
   },
 });
 </script>

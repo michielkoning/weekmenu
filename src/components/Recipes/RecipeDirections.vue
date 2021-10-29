@@ -1,11 +1,8 @@
 <template>
   <div class="directions">
-    <p
-      v-for="direction in directions"
-      :key="direction"
-      class="direction"
-      v-html="direction"
-    />
+    <p v-for="direction in directions" :key="direction" class="direction">
+      {{ direction }}
+    </p>
   </div>
 </template>
 
@@ -24,7 +21,7 @@ export default defineComponent({
 
 <style lang="postcss" scoped>
 .directions {
-  counter-reset: preperation;
+  counter-reset: directions;
 }
 
 .direction {
@@ -33,13 +30,11 @@ export default defineComponent({
 
   &::before {
     font-family: "header";
-    font-size: 1.2em;
-    line-height: 1;
     position: absolute;
-    top: 0.1em;
+    top: 0;
     left: 0;
-    counter-increment: preperation;
-    content: counter(preperation);
+    counter-increment: directions;
+    content: counter(directions);
   }
 }
 </style>

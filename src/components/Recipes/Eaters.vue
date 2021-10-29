@@ -1,44 +1,38 @@
 <template>
   <div class="eaters">
     <button
-      :disabled="totalEaters <= 1"
+      :disabled="modelValue <= 1"
       class="add"
-      @click="changeAmountofEaters(totalEaters - 1)"
+      @click="changeAmountofEaters(modelValue - 1)"
     >
       -
     </button>
     <div class="amount">
-      {{ totalEaters }} {{ $tc("details.persons", totalEaters) }}
+      {{ modelValue }} {{ modelValue === "1" ? "Persoon" : "Personen" }}
     </div>
-    <button class="substract" @click="changeAmountofEaters(totalEaters + 1)">
+    <button class="substract" @click="changeAmountofEaters(modelValue + 1)">
       +
     </button>
   </div>
 </template>
 
-<script>
-import { mapActions } from "vuex";
+<script lang="ts">
+import { defineComponent } from "vue";
 
-export default {
-  computed: {
-    totalEaters: {
-      get() {
-        return this.$store.state.settings.totalEaters;
-      },
-      set(value) {
-        this.setTotalEaters(value);
-      },
-    },
+export default defineComponent({
+  props: {
+    modelValue: String, // previously was `value: String`
   },
-  methods: {
-    ...mapActions({
-      setTotalEaters: "settings/setTotalEaters",
-    }),
-    changeAmountofEaters(counter) {
-      this.totalEaters = counter;
-    },
+  emits: ["update:modelValue"],
+  setup(_, { emit }) {
+    const changeAmountofEaters = (counter: number) => {
+      emit("update:modelValue", counter);
+    };
+    return {
+      changeAmountofEaters,
+    };
   },
-};
+});
 </script>
 
 <style lang="postcss" scoped>
@@ -52,7 +46,7 @@ export default {
 }
 
 button {
-  border: 2px solid var(--black);
+  border: 1px solid var(--color-black);
   flex: 0 0 1.5em;
   &:disabled {
     color: var(--gray);
@@ -60,8 +54,8 @@ button {
 }
 
 .amount {
-  border-top: 2px solid var(--black);
-  border-bottom: 2px solid var(--black);
+  border-top: 1px solid var(--color-black);
+  border-bottom: 1px solid var(--color-black);
   padding: 0 0.5em;
 }
 

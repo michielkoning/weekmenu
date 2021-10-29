@@ -12,8 +12,7 @@
     <router-link
       :to="{ name: 'Recipes' }"
       :class="{
-        active:
-          router.name === 'Recipes' || router.name === 'Recipes',
+        active: router.name === 'Recipes',
       }"
     >
       <icon-recipes />
