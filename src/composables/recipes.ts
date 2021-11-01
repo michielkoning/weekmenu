@@ -13,6 +13,7 @@ export default (): ComponentOptions => {
     title: "",
     ingredients: [],
     directions: [],
+    preparationTime: 0,
   } as IRecipe);
 
   const createRecipe = async () => {
@@ -43,6 +44,7 @@ export default (): ComponentOptions => {
       formData.title = response.title;
       formData.ingredients = ingredients;
       formData.directions = directions;
+      formData.preparationTime = response.preparationTime;
     }
   };
 

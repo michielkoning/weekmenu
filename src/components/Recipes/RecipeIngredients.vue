@@ -5,7 +5,7 @@
 
     <ul>
       <li v-for="ingredient in ingredients" :key="ingredient.title">
-        {{ ingredient.amount * totalEaters }}
+        {{ calculateIngedient(ingredient.amount) }}
         {{ ingredient.title }}
       </li>
     </ul>
@@ -29,7 +29,12 @@ export default defineComponent({
   },
   setup() {
     const totalEaters = ref(2);
+    const calculateIngedient = (amount: number) => {
+      const total = amount * totalEaters.value;
+      return new Intl.NumberFormat("nl-NL").format(total);
+    };
     return {
+      calculateIngedient,
       totalEaters,
     };
   },
