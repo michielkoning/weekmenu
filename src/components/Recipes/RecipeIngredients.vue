@@ -1,6 +1,5 @@
 <template>
   <div v-if="ingredients.length" class="ingredients">
-    <eaters v-model="totalEaters" />
     <h2>Ingredienten</h2>
 
     <ul>
@@ -9,6 +8,7 @@
         {{ ingredient.title }}
       </li>
     </ul>
+    <eaters v-model="totalEaters" />
   </div>
 </template>
 
@@ -42,7 +42,7 @@ export default defineComponent({
 </script>
 
 <style lang="postcss" scoped>
-h2 {
+- h2 {
   padding-bottom: 0.5em;
 }
 

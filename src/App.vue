@@ -56,6 +56,6 @@ export default defineComponent({
 
 .page {
   margin: 0 auto;
-  max-width: 64em;
+  max-width: 80em;
 }
 </style>

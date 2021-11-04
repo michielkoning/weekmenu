@@ -4,11 +4,23 @@
       :ingredients="formData.ingredients"
       class="ingredients"
     />
-    <div class="title">
-      <button>edit</button>
+    <div class="header">
       <h1>{{ formData.title }}</h1>
+      <router-link
+        v-if="formData.id"
+        class="link"
+        :to="{
+          name: 'RecipeEdit',
+          params: { id: formData.id },
+        }"
+      >
+        edit
+      </router-link>
     </div>
-    <recipe-directions :directions="formData.directions" class="directions" />
+    <div class="directions">
+      {{ formData.preparationTime }} minuten
+      <recipe-directions :directions="formData.directions" />
+    </div>
   </div>
 </template>
 
@@ -48,25 +60,11 @@ export default defineComponent({
 </script>
 
 <style lang="postcss" scoped>
-.buttons {
-  display: flex;
-  justify-content: space-between;
-}
-
-.icon {
-  width: 1em;
-  height: 1em;
-}
-
-.div {
-  background: white;
-}
-
 .recipe {
   display: grid;
   grid-gap: 1rem;
   grid-template-columns: 2fr 1fr;
-  grid-template-areas: "title ingredients" "directions ingredients";
+  grid-template-areas: "header ingredients" "directions ingredients";
   grid-template-rows: auto 1fr;
 }
 
@@ -74,11 +72,17 @@ export default defineComponent({
   grid-area: ingredients;
 }
 
-.title {
-  grid-area: title;
+.header {
+  grid-area: header;
 }
 
 .directions {
   grid-area: directions;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1em;
 }
 </style>

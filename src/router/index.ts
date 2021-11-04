@@ -17,12 +17,32 @@ const routes = [
   },
 
   {
-    path: "/:id?",
+    path: "/",
     name: "Recipes",
     component: Recipes,
     meta: {
       authRequired: true,
     },
+    children: [
+      {
+        path: ":id/edit",
+        name: "RecipeEdit",
+        component: () =>
+          import(
+            /* webpackChunkName: "RecipeEdit" */ "../views/Recipes/RecipeEdit.vue"
+          ),
+        props: true,
+      },
+      {
+        path: ":id",
+        name: "RecipeDetails",
+        component: () =>
+          import(
+            /* webpackChunkName: "RecipeDetails" */ "../views/Recipes/RecipeDetails.vue"
+          ),
+        props: true,
+      },
+    ],
   },
 
   {

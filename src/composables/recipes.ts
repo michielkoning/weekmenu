@@ -20,8 +20,8 @@ export default (): ComponentOptions => {
     return create(formData);
   };
 
-  const updateRecipe = async (id: string) => {
-    await update(id, formData);
+  const updateRecipe = async () => {
+    await update(formData);
   };
 
   const getRecipes = async () => {
@@ -34,17 +34,18 @@ export default (): ComponentOptions => {
   const getRecipe = async (id: string) => {
     const response = await get(id);
     if (response) {
-      const ingredients = response.ingredients
-        ? JSON.parse(JSON.parse(response.ingredients))
-        : [];
+      // const ingredients = response.ingredients
+      //   ? JSON.parse(JSON.parse(response.ingredients))
+      //   : [];
 
       const directions = response.directions
         ? JSON.parse(response.directions)
         : [];
+      formData.id = response.id;
       formData.title = response.title;
-      formData.ingredients = ingredients;
+      // formData.ingredients = ingredients;
       formData.directions = directions;
-      formData.preparationTime = response.preparationTime;
+      formData.preparationTime = response.preparationTime || 0;
     }
   };
 

@@ -92,7 +92,10 @@ export default (collectionId: string): ComponentOptions => {
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-      return docSnap.data();
+      return {
+        id: docSnap.id,
+        ...docSnap.data(),
+      };
     }
 
     return null;
@@ -112,12 +115,12 @@ export default (collectionId: string): ComponentOptions => {
   };
 
   //
-  const update = async (id: string, payload: any) => {
+  const update = async (payload: any) => {
     if (!user) {
       return null;
     }
 
-    const sfDocRef = doc(db, "users", user.uid, collectionId, id);
+    const sfDocRef = doc(db, "users", user.uid, collectionId, payload.id);
 
     await runTransaction(db, async (transaction) => {
       const sfDoc = await transaction.get(sfDocRef);

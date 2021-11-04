@@ -7,7 +7,7 @@
     <router-link
       class="link"
       :to="{
-        name: 'Recipes',
+        name: 'RecipeDetails',
         params: { id: recipe.id },
       }"
     >

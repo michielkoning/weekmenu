@@ -1,6 +1,6 @@
 <template>
   <div class="directions">
-    <p v-for="direction in directions" :key="direction" class="direction">
+    <p v-for="(direction, index) in directions" :key="index" class="direction">
       {{ direction }}
     </p>
   </div>

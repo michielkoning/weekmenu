@@ -1,7 +1,11 @@
 <template>
   <div class="page">
     <recipe-list />
-    <recipe-details />
+    <router-view v-slot="{ Component }">
+      <transition name="fade" mode="out-in">
+        <component :is="Component" />
+      </transition>
+    </router-view>
   </div>
 </template>
 
@@ -9,12 +13,10 @@
 import RecipeList from "@/components/Recipes/RecipeList.vue";
 import { defineComponent, onMounted } from "vue";
 import useRecipes from "@/composables/recipes";
-import RecipeDetails from "@/components/Recipes/RecipeDetails.vue";
 
 export default defineComponent({
   components: {
     RecipeList,
-    RecipeDetails,
   },
   setup() {
     const { getRecipes } = useRecipes();
@@ -38,5 +40,15 @@ export default defineComponent({
   @media (--viewport-md) {
     grid-template-columns: 20em auto;
   }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity var(--animation);
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
