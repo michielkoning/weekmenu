@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Dashboard from "../views/Dashboard.vue";
 import Recipes from "../views/Recipes.vue";
 import { getCurrentUser } from "./../firebase";
 
@@ -18,43 +17,34 @@ const routes = [
   },
 
   {
-    path: "/",
-    name: "Dashboard",
-    component: Dashboard,
+    path: "/:id?",
+    name: "Recipes",
+    component: Recipes,
     meta: {
       authRequired: true,
     },
+  },
+
+  {
+    path: "/weekmenu",
+    name: "Weeks",
+    props: true,
+    meta: {
+      authRequired: true,
+    },
+    component: () =>
+      import(
+        /* webpackChunkName: "WeeksHome" */ "../views/Weeks/WeeksHome.vue"
+      ),
     children: [
       {
-        path: ":id?",
-        name: "Recipes",
-        component: Recipes,
-        meta: {
-          authRequired: true,
-        },
-      },
-      {
-        path: "weekmenu",
-        name: "Weeks",
-        props: true,
-        meta: {
-          authRequired: true,
-        },
+        path: ":id/:day?",
+        name: "WeeksDetails",
         component: () =>
           import(
-            /* webpackChunkName: "WeeksHome" */ "../views/Weeks/WeeksHome.vue"
+            /* webpackChunkName: "WeeksDetails" */ "../views/Weeks/WeeksDetails.vue"
           ),
-        children: [
-          {
-            path: ":id/:day?",
-            name: "WeeksDetails",
-            component: () =>
-              import(
-                /* webpackChunkName: "WeeksDetails" */ "../views/Weeks/WeeksDetails.vue"
-              ),
-            props: true,
-          },
-        ],
+        props: true,
       },
     ],
   },

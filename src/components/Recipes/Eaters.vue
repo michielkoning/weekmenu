@@ -21,7 +21,7 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
   props: {
-    modelValue: String, // previously was `value: String`
+    modelValue: Number,
   },
   emits: ["update:modelValue"],
   setup(_, { emit }) {
@@ -48,6 +48,8 @@ export default defineComponent({
 button {
   border: 1px solid var(--color-black);
   flex: 0 0 1.5em;
+  touch-action: manipulation;
+
   &:disabled {
     color: var(--gray);
   }

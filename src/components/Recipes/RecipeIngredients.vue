@@ -1,7 +1,7 @@
 <template>
   <div v-if="ingredients.length" class="ingredients">
-    <h2>Ingredienten</h2>
     <eaters v-model="totalEaters" />
+    <h2>Ingredienten</h2>
 
     <ul>
       <li v-for="ingredient in ingredients" :key="ingredient.title">

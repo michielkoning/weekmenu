@@ -1,8 +1,11 @@
 <template>
-  <div>
-    <h1>{{ formData.title }}</h1>
-    <recipe-ingredients :ingredients="formData.ingredients" />
-    <recipe-directions :directions="formData.directions" />
+  <div class="recipe">
+    <recipe-ingredients
+      :ingredients="formData.ingredients"
+      class="ingredients"
+    />
+    <h1 class="title">{{ formData.title }}</h1>
+    <recipe-directions :directions="formData.directions" class="directions" />
   </div>
 </template>
 
