@@ -34,16 +34,15 @@ export default (): ComponentOptions => {
   const getRecipe = async (id: string) => {
     const response = await get(id);
     if (response) {
-      // const ingredients = response.ingredients
-      //   ? JSON.parse(JSON.parse(response.ingredients))
-      //   : [];
-
+      const ingredients = response.ingredients
+        ? JSON.parse(response.ingredients)
+        : [];
       const directions = response.directions
         ? JSON.parse(response.directions)
         : [];
       formData.id = response.id;
       formData.title = response.title;
-      // formData.ingredients = ingredients;
+      formData.ingredients = ingredients;
       formData.directions = directions;
       formData.preparationTime = response.preparationTime || 0;
     }

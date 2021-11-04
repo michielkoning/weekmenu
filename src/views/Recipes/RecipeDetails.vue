@@ -1,9 +1,5 @@
 <template>
   <div class="recipe">
-    <recipe-ingredients
-      :ingredients="formData.ingredients"
-      class="ingredients"
-    />
     <div class="header">
       <h1>{{ formData.title }}</h1>
       <router-link
@@ -17,6 +13,11 @@
         edit
       </router-link>
     </div>
+    <recipe-ingredients
+      :ingredients="formData.ingredients"
+      class="ingredients"
+    />
+
     <div class="directions">
       {{ formData.preparationTime }} minuten
       <recipe-directions :directions="formData.directions" />
@@ -63,23 +64,25 @@ export default defineComponent({
 .recipe {
   display: grid;
   grid-gap: 1rem;
-  grid-template-columns: 2fr 1fr;
-  grid-template-areas: "header ingredients" "directions ingredients";
-  grid-template-rows: auto 1fr;
+  @media (--viewport-lg) {
+    grid-template-columns: 2fr 1fr;
+    grid-template-areas: "header ingredients" "directions ingredients";
+    grid-template-rows: auto 1fr;
+  }
 }
+@media (--viewport-lg) {
+  .ingredients {
+    grid-area: ingredients;
+  }
 
-.ingredients {
-  grid-area: ingredients;
+  .header {
+    grid-area: header;
+  }
+
+  .directions {
+    grid-area: directions;
+  }
 }
-
-.header {
-  grid-area: header;
-}
-
-.directions {
-  grid-area: directions;
-}
-
 .header {
   display: flex;
   justify-content: space-between;
