@@ -26,7 +26,7 @@ const routes = [
     },
     children: [
       {
-        path: "/recepten/:id?",
+        path: ":id?",
         name: "Recipes",
         component: Recipes,
         meta: {
@@ -34,7 +34,7 @@ const routes = [
         },
       },
       {
-        path: "/",
+        path: "weekmenu",
         name: "Weeks",
         props: true,
         meta: {

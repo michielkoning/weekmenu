@@ -1,15 +1,6 @@
 <template>
   <nav id="nav">
     <router-link
-      :to="{ name: 'Weeks' }"
-      :class="{
-        active: router.name === 'WeeksDetails' || router.name === 'Weeks',
-      }"
-    >
-      <icon-week-menu />
-      <span class="title">Weekmenu</span>
-    </router-link>
-    <router-link
       :to="{ name: 'Recipes' }"
       :class="{
         active: router.name === 'Recipes',
@@ -17,6 +8,15 @@
     >
       <icon-recipes />
       <span class="title">Recepten</span>
+    </router-link>
+    <router-link
+      :to="{ name: 'Weeks' }"
+      :class="{
+        active: router.name === 'WeeksDetails' || router.name === 'Weeks',
+      }"
+    >
+      <icon-week-menu />
+      <span class="title">Weekmenu</span>
     </router-link>
   </nav>
 </template>
@@ -76,10 +76,6 @@ a {
   flex: 1 0 auto;
   background-color: var(--color-white);
 
-  @supports (padding-bottom: env(safe-area-inset-bottom)) {
-    padding-bottom: env(safe-area-inset-bottom);
-  }
-
   &:not(:first-child) {
     border-left: 0;
   }
@@ -111,6 +107,7 @@ a {
 
 .title {
   display: block;
+  padding-bottom: calc(env(safe-area-inset-bottom) * 2);
 }
 
 svg {
