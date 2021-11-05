@@ -25,6 +25,16 @@ const routes = [
     },
     children: [
       {
+        path: "add",
+        name: "RecipeAdd",
+        component: () =>
+          import(
+            /* webpackChunkName: "RecipeEdit" */ "../views/Recipes/RecipeEdit.vue"
+          ),
+        props: true,
+      },
+
+      {
         path: ":id/edit",
         name: "RecipeEdit",
         component: () =>

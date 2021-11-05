@@ -1,12 +1,12 @@
 <template>
-  <form-field :id="id" :error-message="errorMessage" :title="title">
+  <form-field :id="name || id" :error-message="errorMessage" :title="title">
     <textarea
-      :id="id"
+      :id="name || id"
       :name="name || id"
       v-bind="$attrs"
-      :value="value"
+      :value="modelValue"
       :class="$style.field"
-      @input="$emit('input', $event.target.value)"
+      @input="$emit('update:modelValue', $event.target.value)"
     />
   </form-field>
 </template>
@@ -14,7 +14,12 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 
+import FormField from "@/components/Forms/FormField.vue";
+
 export default defineComponent({
+  components: {
+    FormField,
+  },
   inheritAttrs: false,
   props: {
     title: {
@@ -23,21 +28,30 @@ export default defineComponent({
     },
     id: {
       type: String,
-      required: true,
+      default: null,
     },
     name: {
       type: String,
       default: null,
     },
-    value: {
+    type: {
       type: String,
+      default: "text",
+    },
+    modelValue: {
+      type: [String, Number],
       required: true,
+    },
+    maxlength: {
+      type: Number,
+      default: 50,
     },
     errorMessage: {
       type: String,
-      default: "",
+      default: null,
     },
   },
+  emits: ["update:modelValue"],
 });
 </script>
 

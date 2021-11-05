@@ -40,7 +40,7 @@ export default (): ComponentOptions => {
       const directions = response.directions
         ? JSON.parse(response.directions)
         : [];
-      formData.id = response.id;
+      formData.id = id;
       formData.title = response.title;
       formData.ingredients = ingredients;
       formData.directions = directions;

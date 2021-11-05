@@ -1,34 +1,61 @@
 <template>
   <form class="recipe" @submit.prevent="save">
-    <input v-model="formData.title" type="text" />
-    <input v-model="formData.preparationTime" type="text" />
-    <textarea v-model="directions" rows="10" />
-    <textarea v-model="ingredients" rows="10" />
+    <form-fieldset title="Recept bewerken">
+      <form-input-text v-model="formData.title" name="title" title="Titel" />
+      <form-input-text
+        v-model="formData.preparationTime"
+        name="preparationTime"
+        title="Bereidingstijd"
+      />
+      <form-textarea
+        v-model="directions"
+        name="directions"
+        title="Bereidingstijd"
+        rows="10"
+      />
+      <form-textarea
+        v-model="ingredients"
+        name="ingredients"
+        title="Ingrediënten"
+        rows="10"
+      />
+    </form-fieldset>
     <button type="submit">Save</button>
+    <button type="button" @click="deleteR">Delete</button>
   </form>
 </template>
 
 <script lang="ts">
 import useRecipes from "@/composables/recipes";
 import { IIngredient } from "@/types/IIngredient";
-import { defineComponent, onMounted, computed, ref } from "vue";
-import { useRoute, useRouter } from "vue-router";
-
+import { defineComponent, onMounted, ref } from "vue";
+import { useRouter } from "vue-router";
+import FormInputText from "@/components/Forms/FormInputText.vue";
+import FormFieldset from "@/components/Forms/FormFieldset.vue";
+import FormTextarea from "@/components/Forms/FormTextarea.vue";
 export default defineComponent({
-  setup() {
-    const route = useRoute();
+  components: {
+    FormInputText,
+    FormFieldset,
+    FormTextarea,
+  },
+  props: {
+    id: {
+      type: String,
+      default: null,
+    },
+  },
+  setup(props) {
     const router = useRouter();
 
     const directions = ref("");
     const ingredients = ref("");
 
-    const id = computed(() => {
-      return route.params.id;
-    });
-    const { formData, getRecipe, updateRecipe } = useRecipes();
+    const { formData, getRecipe, updateRecipe, createRecipe, deleteRecipe } =
+      useRecipes();
 
     onMounted(async () => {
-      await getRecipe(id.value);
+      await getRecipe(props.id);
       directions.value = formData.directions.join("\n\n");
       ingredients.value = formData.ingredients
         .map((ingredient: IIngredient) => {
@@ -39,6 +66,13 @@ export default defineComponent({
         })
         .join("\n");
     });
+
+    const deleteR = async () => {
+      await deleteRecipe(props.id);
+      router.push({
+        name: "Recipes",
+      });
+    };
 
     const createIngredients = () => {
       const directionList = ingredients.value.split("\n");
@@ -67,10 +101,16 @@ export default defineComponent({
     const save = async () => {
       formData.directions = createDirections();
       formData.ingredients = createIngredients();
-      await updateRecipe();
+      let id = null;
+      if (props.id) {
+        id = props.id;
+        await updateRecipe();
+      } else {
+        id = await createRecipe();
+      }
       router.push({
         name: "RecipeDetails",
-        params: { id: formData.id },
+        params: { id },
       });
     };
 
@@ -79,6 +119,7 @@ export default defineComponent({
       directions,
       save,
       formData,
+      deleteR,
     };
   },
 });

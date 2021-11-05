@@ -1,7 +1,7 @@
 <template>
-  <form-field :id="id" :error-message="errorMessage" :title="title">
+  <form-field :id="name || id" :error-message="errorMessage" :title="title">
     <input
-      :id="id"
+      :id="name || id"
       :name="name || id"
       v-bind="$attrs"
       :value="modelValue"
@@ -30,7 +30,7 @@ export default defineComponent({
     },
     id: {
       type: String,
-      required: true,
+      default: null,
     },
     name: {
       type: String,

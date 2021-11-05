@@ -1,7 +1,17 @@
 <template>
-  <ul v-if="recipes.length">
-    <list-item v-for="recipe in recipes" :key="recipe.id" :recipe="recipe" />
-  </ul>
+  <div>
+    <ul v-if="recipes.length">
+      <list-item v-for="recipe in recipes" :key="recipe.id" :recipe="recipe" />
+    </ul>
+    <router-link
+      class="link"
+      :to="{
+        name: 'RecipeAdd',
+      }"
+    >
+      add
+    </router-link>
+  </div>
 </template>
 
 <script lang="ts">
