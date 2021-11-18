@@ -9,7 +9,7 @@
 
 <script lang="ts">
 import RecipeList from "@/components/Recipes/RecipeList.vue";
-import { defineComponent, onMounted } from "vue";
+import { defineComponent, onMounted, onUnmounted } from "vue";
 import useRecipes from "@/composables/recipes";
 
 export default defineComponent({
@@ -17,11 +17,15 @@ export default defineComponent({
     RecipeList,
   },
   setup() {
-    const { getRecipes } = useRecipes();
+    const { getRecipes, unsubscribe } = useRecipes();
 
     onMounted(() => {
-      console.log('test')
       getRecipes();
+    });
+    onUnmounted(() => {
+      if (unsubscribe) {
+        unsubscribe();
+      }
     });
   },
 });

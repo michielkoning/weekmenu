@@ -6,7 +6,8 @@ import { IRecipe } from "@/types/IRecipe";
 const list = ref([] as IRecipe[]);
 
 export default (): ComponentOptions => {
-  const { create, update, getAll, remove, get } = useApi("recipes");
+  const { create, update, getAll, remove, get, unsubscribe } =
+    useApi("recipes");
 
   const formData = reactive({
     id: "",
@@ -60,5 +61,6 @@ export default (): ComponentOptions => {
     recipes: list,
     getRecipes,
     updateRecipe,
+    unsubscribe,
   };
 };
