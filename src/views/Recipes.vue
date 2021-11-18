@@ -20,6 +20,7 @@ export default defineComponent({
     const { getRecipes } = useRecipes();
 
     onMounted(() => {
+      console.log('test')
       getRecipes();
     });
   },

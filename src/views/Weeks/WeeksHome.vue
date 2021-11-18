@@ -1,22 +1,24 @@
 <template>
-  <div v-for="(week, index) in weeks" :key="week.id">
-    <router-link
-      :to="{
-        name: 'WeeksDetails',
-        params: {
-          id: week.id,
-        },
-      }"
-    >
-      <span>Week {{ index }}</span>
-      <button @click="copy(week.id)">copy</button>
-      <button @click="remove(week.id)">remove</button>
-    </router-link>
+  <div>
+    <div v-for="(week, index) in weeks" :key="week.id">
+      <router-link
+        :to="{
+          name: 'WeeksDetails',
+          params: {
+            id: week.id,
+          },
+        }"
+      >
+        <span>Week {{ index }}</span>
+        <button @click="copy(week.id)">copy</button>
+        <button @click="remove(week.id)">remove</button>
+      </router-link>
+    </div>
+    <button @click="create">Create</button>
+    <router-view v-slot="{ Component }">
+      <component :is="Component" />
+    </router-view>
   </div>
-  <button @click="create">Create</button>
-  <router-view v-slot="{ Component }">
-    <component :is="Component" />
-  </router-view>
 </template>
 
 <script lang="ts">
@@ -28,8 +30,6 @@ export default defineComponent({
     const router = useRouter();
     const { createWeek, getWeeks, weeks, unsubscribe, copyWeek, deleteWeek } =
       useWeek();
-    // const { createWeek, formData, getWeeks, weeks, copyWeek, deleteWeek } =
-    //   useWeek();
 
     const goToWeek = (id: string) => {
       router.push({
