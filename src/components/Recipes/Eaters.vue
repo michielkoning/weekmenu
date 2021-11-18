@@ -21,7 +21,10 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
   props: {
-    modelValue: Number,
+    modelValue: {
+      type: Number,
+      required: true,
+    },
   },
   emits: ["update:modelValue"],
   setup(_, { emit }) {
