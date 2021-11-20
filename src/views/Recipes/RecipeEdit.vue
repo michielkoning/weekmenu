@@ -21,7 +21,7 @@
       />
     </form-fieldset>
     <button type="submit">Save</button>
-    <button type="button" @click="deleteR">Delete</button>
+    <button type="button" @click="deleteR" v-if="id">Delete</button>
   </form>
 </template>
 

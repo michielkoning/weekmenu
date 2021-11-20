@@ -18,6 +18,7 @@
       <icon-week-menu />
       <span class="title">Weekmenu</span>
     </router-link>
+    <btn-logout />
   </nav>
 </template>
 
@@ -25,12 +26,14 @@
 import { defineComponent } from "vue";
 import IconWeekMenu from "@/components/Icons/IconWeekMenu.vue";
 import IconRecipes from "@/components/Icons/IconRecipes.vue";
+import BtnLogout from "@/components/Layout/BtnLogout.vue";
 import { useRoute } from "vue-router";
 
 export default defineComponent({
   components: {
     IconWeekMenu,
     IconRecipes,
+    BtnLogout,
   },
 
   emits: ["close"],

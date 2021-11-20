@@ -1,24 +1,23 @@
 <template>
-  <router-link to="/inloggen">Go to login</router-link>
-  <form @submit.prevent="register">
-    <h2>Register</h2>
-    <input v-model="form.email" type="email" placeholder="Email address..." />
-    <input v-model="form.password" type="password" placeholder="password..." />
-    <button type="submit">Register</button>
-    <p v-if="error">{{ error }}</p>
-  </form>
+  <div>
+    <router-link to="/inloggen">Go to login</router-link>
+    <form-login @submit="register" :error="error" :register="true" />
+  </div>
 </template>
 
 <script lang="ts">
 import useUser from "@/composables/user";
 import { defineComponent } from "vue";
+import FormLogin from "@/components/Forms/FormLogin.vue";
 
 export default defineComponent({
+  components: {
+    FormLogin,
+  },
   setup() {
-    const { form, error, register } = useUser();
+    const { error, register } = useUser();
     return {
       error,
-      form,
       register,
     };
   },

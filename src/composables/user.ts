@@ -11,17 +11,14 @@ import {
 } from "firebase/auth";
 
 import { doc, setDoc } from "firebase/firestore";
-import { reactive, ref } from "vue";
+import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { ComponentOptions } from "vue";
+import { IUser} from '@/types/IUser'
 
 const user = ref(null as User | null);
 
 export default (): ComponentOptions => {
-  const form = reactive({
-    email: "michielasdkaoni12312n1g@gmail.com",
-    password: "michielkoning",
-  });
   const error = ref(null);
   const loading = ref(false);
   const router = useRouter();
@@ -39,23 +36,23 @@ export default (): ComponentOptions => {
     listener.value = null;
   };
 
-  const login = async () => {
+  const login = async (user: IUser) => {
     error.value = null;
     loading.value = true;
 
     try {
       const auth = getAuth();
       await setPersistence(auth, browserLocalPersistence);
-      await signInWithEmailAndPassword(auth, form.email, form.password);
+      await signInWithEmailAndPassword(auth, user.email, user.password);
       router.push("/");
-    } catch (err) {
-      // error.value = err.message;
+    } catch (err: any) {
+      error.value = err.message
     } finally {
       loading.value = false;
     }
   };
 
-  const register = async () => {
+  const register = async (user: IUser) => {
     error.value = null;
     loading.value = true;
     try {
@@ -64,14 +61,14 @@ export default (): ComponentOptions => {
       await getAuth(firebaseApp).setPersistence(browserLocalPersistence);
       const response = await createUserWithEmailAndPassword(
         auth,
-        form.email,
-        form.password
+        user.email,
+        user.password
       );
       await setDoc(doc(db, "users", response.user?.uid), {});
 
       router.push("/");
-    } catch (err) {
-      // error.value = err.message;
+    } catch (err: any) {
+       error.value = err.message;
     } finally {
       loading.value = false;
     }
@@ -81,9 +78,9 @@ export default (): ComponentOptions => {
     try {
       const auth = getAuth();
       await signOut(auth);
-      router.push("/inloggen");
     } catch (error) {
-      // alert(error.message);
+      // console.error(error.message);
+    } finally {
       router.push("/inloggen");
     }
   };
@@ -91,7 +88,6 @@ export default (): ComponentOptions => {
   return {
     user,
     error,
-    form,
     login,
     register,
     loading,

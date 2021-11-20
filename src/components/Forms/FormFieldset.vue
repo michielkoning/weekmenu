@@ -1,5 +1,5 @@
 <template>
-  <fieldset class="fieldset" :class="$style.fieldset">
+  <fieldset class="fieldset" :class="$style.fieldset" :aria-labelledby="title">
     <legend class="sr-only">{{ title }}</legend>
     <div class="fields" :class="$style.fields">
       <slot />
