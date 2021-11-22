@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Recipes from "../views/Recipes.vue";
+import Dashboard from "../views/Dashboard.vue";
 import { getCurrentUser } from "./../firebase";
 
 const routes = [
@@ -15,66 +16,77 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "Register" */ "../views/Register.vue"),
   },
-
   {
     path: "/",
-    name: "Recipes",
-    component: Recipes,
+    name: "Dashboard",
+    component: Dashboard,
     meta: {
       authRequired: true,
     },
     children: [
-      {
-        path: "add",
-        name: "RecipeAdd",
-        component: () =>
-          import(
-            /* webpackChunkName: "RecipeEdit" */ "../views/Recipes/RecipeEdit.vue"
-          ),
-        props: true,
-      },
+
 
       {
-        path: ":id/edit",
-        name: "RecipeEdit",
+        path: "/weekmenu",
+        name: "Weeks",
+        props: true,
         component: () =>
           import(
-            /* webpackChunkName: "RecipeEdit" */ "../views/Recipes/RecipeEdit.vue"
+            /* webpackChunkName: "WeeksHome" */ "../views/Weeks/WeeksHome.vue"
           ),
-        props: true,
+        children: [
+          {
+            path: ":id/:day?",
+            name: "WeeksDetails",
+            component: () =>
+              import(
+                /* webpackChunkName: "WeeksDetails" */ "../views/Weeks/WeeksDetails.vue"
+              ),
+            props: true,
+          },
+        ],
       },
       {
-        path: ":id?",
-        name: "RecipeDetails",
-        component: () =>
-          import(
-            /* webpackChunkName: "RecipeDetails" */ "../views/Recipes/RecipeDetails.vue"
-          ),
-        props: true,
-      },
-    ],
-  },
+        path: "",
+        name: "Recipes",
+        component: Recipes,
+        children: [
+          {
+            path: "add",
+            name: "RecipeAdd",
+            component: () =>
+              import(
+                /* webpackChunkName: "RecipeEdit" */ "../views/Recipes/RecipeEdit.vue"
+              ),
+          },
 
-  {
-    path: "/weekmenu",
-    name: "Weeks",
-    props: true,
-    meta: {
-      authRequired: true,
-    },
-    component: () =>
-      import(
-        /* webpackChunkName: "WeeksHome" */ "../views/Weeks/WeeksHome.vue"
-      ),
-    children: [
-      {
-        path: ":id/:day?",
-        name: "WeeksDetails",
-        component: () =>
-          import(
-            /* webpackChunkName: "WeeksDetails" */ "../views/Weeks/WeeksDetails.vue"
-          ),
-        props: true,
+          {
+            path: ":id/edit",
+            name: "RecipeEdit",
+            component: () =>
+              import(
+                /* webpackChunkName: "RecipeEdit" */ "../views/Recipes/RecipeEdit.vue"
+              ),
+            props: true,
+          },
+          {
+            path: ":id",
+            name: "RecipeDetails",
+            component: () =>
+              import(
+                /* webpackChunkName: "RecipeDetails" */ "../views/Recipes/RecipeDetails.vue"
+              ),
+            props: true,
+          },
+          {
+            path: "",
+            name: "RecipeHome",
+            component: () =>
+              import(
+                /* webpackChunkName: "RecipeDetails" */ "../views/Recipes/RecipeHome.vue"
+              ),
+          },
+        ],
       },
     ],
   },

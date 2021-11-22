@@ -24,11 +24,11 @@
 <script lang="ts">
 import useWeek from "@/composables/weeks";
 import { useRouter } from "vue-router";
-import { defineComponent, onMounted, onUnmounted } from "vue";
+import { defineComponent } from "vue";
 export default defineComponent({
   setup() {
     const router = useRouter();
-    const { createWeek, getWeeks, weeks, unsubscribe, copyWeek, deleteWeek } =
+    const { createWeek, weeks, copyWeek, deleteWeek } =
       useWeek();
 
     const goToWeek = (id: string) => {
@@ -60,16 +60,6 @@ export default defineComponent({
         name: "Weeks",
       });
     };
-
-    onMounted(async () => {
-      await getWeeks();
-    });
-
-    onUnmounted(() => {
-      if (unsubscribe) {
-        unsubscribe();
-      }
-    });
 
     return {
       // formData,

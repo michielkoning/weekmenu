@@ -9,6 +9,13 @@ export default (): ComponentOptions => {
   const { create, update, getAll, remove, get, unsubscribe } =
     useApi("recipes");
 
+  const unsubscribeRecipes = () => {
+    list.value = []
+    if (unsubscribe) {
+      unsubscribe()
+    }
+  }
+
   const formData = reactive({
     id: "",
     title: "",
@@ -61,6 +68,6 @@ export default (): ComponentOptions => {
     recipes: list,
     getRecipes,
     updateRecipe,
-    unsubscribe,
+    unsubscribeRecipes,
   };
 };

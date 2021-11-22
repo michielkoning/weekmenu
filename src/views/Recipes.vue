@@ -9,24 +9,11 @@
 
 <script lang="ts">
 import RecipeList from "@/components/Recipes/RecipeList.vue";
-import { defineComponent, onMounted, onUnmounted } from "vue";
-import useRecipes from "@/composables/recipes";
+import { defineComponent } from "vue";
 
 export default defineComponent({
   components: {
     RecipeList,
-  },
-  setup() {
-    const { getRecipes, unsubscribe } = useRecipes();
-
-    onMounted(() => {
-      getRecipes();
-    });
-    onUnmounted(() => {
-      if (unsubscribe) {
-        unsubscribe();
-      }
-    });
   },
 });
 </script>
@@ -35,7 +22,6 @@ export default defineComponent({
 .page {
   position: relative;
   padding-bottom: 2em;
-  overflow-x: hidden;
   padding: 0 var(--gutter);
   grid-gap: var(--gutter);
   display: grid;
@@ -45,13 +31,4 @@ export default defineComponent({
   }
 }
 
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity var(--animation);
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
 </style>

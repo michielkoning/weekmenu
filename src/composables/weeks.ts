@@ -8,6 +8,13 @@ const list = ref([] as IWeek[]);
 export default (): ComponentOptions => {
   const { getAll, unsubscribe, get, create, copy, remove } = useApi("weeks");
 
+  const unsubscribeWeekmenu = () => {
+    list.value = []
+    if (unsubscribe) {
+      unsubscribe()
+    }
+  }
+
   const formData = reactive({
     startDate: new Date(),
     days: new Array(7).fill(null),
@@ -37,7 +44,7 @@ export default (): ComponentOptions => {
 
   return {
     formData,
-    unsubscribe,
+    unsubscribeWeekmenu,
     copyWeek,
     getWeeks,
     getWeek,

@@ -1,20 +1,10 @@
 <template>
   <nav id="nav">
-    <router-link
-      :to="{ name: 'Recipes' }"
-      :class="{
-        active: router.name === 'Recipes',
-      }"
-    >
+    <router-link :to="{ name: 'RecipeHome' }">
       <icon-recipes />
       <span class="title">Recepten</span>
     </router-link>
-    <router-link
-      :to="{ name: 'Weeks' }"
-      :class="{
-        active: router.name === 'WeeksDetails' || router.name === 'Weeks',
-      }"
-    >
+    <router-link :to="{ name: 'Weeks' }">
       <icon-week-menu />
       <span class="title">Weekmenu</span>
     </router-link>
@@ -27,22 +17,12 @@ import { defineComponent } from "vue";
 import IconWeekMenu from "@/components/Icons/IconWeekMenu.vue";
 import IconRecipes from "@/components/Icons/IconRecipes.vue";
 import BtnLogout from "@/components/Layout/BtnLogout.vue";
-import { useRoute } from "vue-router";
 
 export default defineComponent({
   components: {
     IconWeekMenu,
     IconRecipes,
     BtnLogout,
-  },
-
-  emits: ["close"],
-  setup() {
-    const router = useRoute();
-
-    return {
-      router,
-    };
   },
 });
 </script>
@@ -103,7 +83,7 @@ a {
     }
   }
 
-  &.active {
+  &.router-link-active {
     background-color: var(--color-primary);
   }
 }
