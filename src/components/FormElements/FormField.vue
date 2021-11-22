@@ -2,16 +2,13 @@
   <div>
     <label :for="id" :class="$style.label">{{ title }}</label>
     <slot />
-    <error-message
-      :error-message="errorMessage"
-      :class="$style['error-message']"
-    />
+    <error-message :error="error" :class="$style.error" />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import ErrorMessage from "@/components/Forms/ErrorMessage.vue";
+import ErrorMessage from "@/components/FormElements/ErrorMessage.vue";
 
 export default defineComponent({
   components: {
@@ -26,7 +23,7 @@ export default defineComponent({
       type: String,
       required: true,
     },
-    errorMessage: {
+    error: {
       type: String,
       default: "",
     },
@@ -42,7 +39,7 @@ export default defineComponent({
   color: var(--color-text);
 }
 
-.error-message {
+.error {
   display: block;
   margin-top: var(--spacing-xxs);
 }

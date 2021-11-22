@@ -1,10 +1,12 @@
 <template>
-  <form-field :id="name || id" :error-message="errorMessage" :title="title">
-    <textarea
+  <form-field :id="name || id" :error="error" :title="title">
+    <input
       :id="name || id"
       :name="name || id"
       v-bind="$attrs"
       :value="modelValue"
+      :type="type"
+      :maxlength="maxlength"
       :class="$style.field"
       @input="$emit('update:modelValue', $event.target.value)"
     />
@@ -14,7 +16,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 
-import FormField from "@/components/Forms/FormField.vue";
+import FormField from "@/components/FormElements/FormField.vue";
 
 export default defineComponent({
   components: {
@@ -46,7 +48,7 @@ export default defineComponent({
       type: Number,
       default: 50,
     },
-    errorMessage: {
+    error: {
       type: String,
       default: null,
     },
@@ -58,7 +60,5 @@ export default defineComponent({
 <style lang="postcss" module>
 .field {
   @mixin form-field;
-
-  resize: vertical;
 }
 </style>

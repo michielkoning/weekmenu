@@ -1,5 +1,5 @@
 <template>
-  <span aria-live="assertive">{{ errorMessage }}</span>
+  <div aria-live="assertive">{{ error }}</div>
 </template>
 
 <script lang="ts">
@@ -7,7 +7,7 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
   props: {
-    errorMessage: {
+    error: {
       type: String,
       default: "",
     },

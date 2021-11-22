@@ -1,36 +1,36 @@
 <template>
-  <form @submit.prevent="submit">
+  <app-form :error="error" :button-title="title" @submit="submit">
     <form-fieldset :title="title">
       <h2>{{ title }}</h2>
       <form-input-text
-        type="email"
         v-model="user.email"
+        type="email"
         name="email"
         title="E-mailadres"
         autocomplete="email"
       />
       <form-input-text
-        type="password"
         v-model="user.password"
+        type="password"
         name="password"
         title="Wachtwoord"
         :autocomplete="passwordAutocomplete"
       />
-      <button type="submit">{{ title }}</button>
-      <p v-if="error">{{ error }}</p>
     </form-fieldset>
-  </form>
+  </app-form>
 </template>
 
 <script lang="ts">
 import { defineComponent, reactive, computed } from "vue";
-import FormInputText from "@/components/Forms/FormInputText.vue";
-import FormFieldset from "@/components/Forms/FormFieldset.vue";
+import FormInputText from "@/components/FormElements/FormInputText.vue";
+import FormFieldset from "@/components/FormElements/FormFieldset.vue";
+import AppForm from "@/components/FormElements/AppForm.vue";
 
 export default defineComponent({
   components: {
     FormInputText,
     FormFieldset,
+    AppForm,
   },
   props: {
     register: {

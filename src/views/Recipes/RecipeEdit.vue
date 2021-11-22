@@ -1,5 +1,5 @@
 <template>
-  <form class="recipe" @submit.prevent="save">
+  <app-form class="recipe" button-title="Save" @submit="save">
     <form-fieldset title="Recept bewerken">
       <form-input-text v-model="formData.title" name="title" title="Titel" />
       <form-input-text
@@ -20,9 +20,10 @@
         rows="10"
       />
     </form-fieldset>
-    <button type="submit">Save</button>
-    <button type="button" @click="deleteR" v-if="id">Delete</button>
-  </form>
+    <template #buttons>
+      <button v-if="id" type="button" @click="deleteR">Delete</button>
+    </template>
+  </app-form>
 </template>
 
 <script lang="ts">
@@ -30,14 +31,17 @@ import useRecipes from "@/composables/recipes";
 import { IIngredient } from "@/types/IIngredient";
 import { defineComponent, onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
-import FormInputText from "@/components/Forms/FormInputText.vue";
-import FormFieldset from "@/components/Forms/FormFieldset.vue";
-import FormTextarea from "@/components/Forms/FormTextarea.vue";
+import FormInputText from "@/components/FormElements/FormInputText.vue";
+import FormFieldset from "@/components/FormElements/FormFieldset.vue";
+import FormTextarea from "@/components/FormElements/FormTextarea.vue";
+import AppForm from "@/components/FormElements/AppForm.vue";
+
 export default defineComponent({
   components: {
     FormInputText,
     FormFieldset,
     FormTextarea,
+    AppForm,
   },
   props: {
     id: {
