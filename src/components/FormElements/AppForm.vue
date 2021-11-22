@@ -3,7 +3,7 @@
     <slot />
     <error-message :error="error" />
     <div class="buttons">
-      <button type="submit">{{ buttonTitle }}</button>
+      <button type="submit" class="btn btn-primary">{{ buttonTitle }}</button>
       <slot name="buttons" />
     </div>
   </form>
