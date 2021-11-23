@@ -17,7 +17,7 @@ export default (): ComponentOptions => {
 
   const formData = reactive({
     startDate: new Date(),
-    days: new Array(7).fill(null),
+    days: [],
   } as IWeek);
 
   const createWeek = async () => {

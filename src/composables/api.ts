@@ -22,6 +22,7 @@ export default (collectionId: string): ComponentOptions => {
   const user = auth.currentUser;
 
   const list = refVue([] as DocumentData[]);
+  let unsubscribe = null as Unsubscribe | null;
 
   const create = async (payload: any) => {
     try {
@@ -33,9 +34,7 @@ export default (collectionId: string): ComponentOptions => {
         ...payload,
         createdOn: new Date(),
       };
-      // const response = await collection.add(data);
 
-      // Add a new document in collection "cities"
       const docRef = await addDoc(
         collection(db, "users", user.uid, collectionId),
         data
@@ -46,7 +45,6 @@ export default (collectionId: string): ComponentOptions => {
     }
   };
 
-  let unsubscribe = null as Unsubscribe | null;
   const getAll = () => {
     if (!user) {
       return [];

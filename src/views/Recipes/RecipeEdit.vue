@@ -1,5 +1,5 @@
 <template>
-  <app-form class="recipe" button-title="Save" @submit="save">
+  <app-form class="recipe" button-title="Save" @submit="Opslaan">
     <form-fieldset title="Recept bewerken">
       <form-input-text v-model="formData.title" name="title" title="Titel" />
       <form-input-text
@@ -94,10 +94,14 @@ export default defineComponent({
       });
     };
 
+    const createArrayOfInput = (input: string) => {
+      const list = input.split("\n");
+      return list.filter((item) => item !== "");
+    }
+
     const createIngredients = () => {
-      const directionList = ingredients.value.split("\n");
-      const filledList = directionList.filter((direction) => direction !== "");
-      const filed = filledList.map((ingredient) => {
+      const list = createArrayOfInput(ingredients.value)
+      return list.map((ingredient) => {
         var matches = ingredient.split(/(\d+)/).filter(Boolean);
         if (matches.length > 0 && !isNaN(parseFloat(matches[0]))) {
           return {
@@ -109,13 +113,10 @@ export default defineComponent({
           title: ingredient,
         };
       });
-      return JSON.stringify(filed);
     };
 
     const createDirections = () => {
-      const directionList = directions.value.split("\n");
-      const filledList = directionList.filter((direction) => direction !== "");
-      return JSON.stringify(filledList);
+      return createArrayOfInput(directions.value)
     };
 
     const save = async () => {

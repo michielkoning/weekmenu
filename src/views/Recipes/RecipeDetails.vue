@@ -10,7 +10,7 @@
           params: { id: formData.id },
         }"
       >
-        edit
+        Wijzigen
       </router-link>
     </div>
     <recipe-ingredients
