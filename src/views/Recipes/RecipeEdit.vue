@@ -1,9 +1,10 @@
 <template>
-  <app-form class="recipe" button-title="Save" @submit="Opslaan">
+  <app-form class="recipe" button-title="Save" @submit="save">
     <form-fieldset title="Recept bewerken">
       <form-input-text v-model="formData.title" name="title" title="Titel" />
       <form-input-text
-        v-model="formData.preparationTime"
+        v-model.number="formData.preparationTime"
+        type="number"
         name="preparationTime"
         title="Bereidingstijd"
       />
@@ -122,6 +123,7 @@ export default defineComponent({
     const save = async () => {
       formData.directions = createDirections();
       formData.ingredients = createIngredients();
+      console.log(formData);
       let id = null;
       if (props.id) {
         id = props.id;
