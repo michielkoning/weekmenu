@@ -30,5 +30,4 @@ export default defineComponent({
     grid-template-columns: 20em auto;
   }
 }
-
 </style>

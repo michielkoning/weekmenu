@@ -28,8 +28,7 @@ import { defineComponent } from "vue";
 export default defineComponent({
   setup() {
     const router = useRouter();
-    const { createWeek, weeks, copyWeek, deleteWeek } =
-      useWeek();
+    const { createWeek, weeks, copyWeek, deleteWeek } = useWeek();
 
     const goToWeek = (id: string) => {
       router.push({

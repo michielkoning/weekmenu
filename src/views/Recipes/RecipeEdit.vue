@@ -21,7 +21,7 @@
       />
     </form-fieldset>
     <template #buttons>
-      <button v-if="id" type="button" @click="deleteR" class="btn btn-danger">
+      <button v-if="id" type="button" class="btn btn-danger" @click="deleteR">
         <svg
           aria-hidden="true"
           focusable="false"
@@ -97,10 +97,10 @@ export default defineComponent({
     const createArrayOfInput = (input: string) => {
       const list = input.split("\n");
       return list.filter((item) => item !== "");
-    }
+    };
 
     const createIngredients = () => {
-      const list = createArrayOfInput(ingredients.value)
+      const list = createArrayOfInput(ingredients.value);
       return list.map((ingredient) => {
         var matches = ingredient.split(/(\d+)/).filter(Boolean);
         if (matches.length > 0 && !isNaN(parseFloat(matches[0]))) {
@@ -116,7 +116,7 @@ export default defineComponent({
     };
 
     const createDirections = () => {
-      return createArrayOfInput(directions.value)
+      return createArrayOfInput(directions.value);
     };
 
     const save = async () => {

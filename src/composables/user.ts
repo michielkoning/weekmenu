@@ -14,7 +14,7 @@ import { doc, setDoc } from "firebase/firestore";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { ComponentOptions } from "vue";
-import { IUser} from '@/types/IUser'
+import { IUser } from "@/types/IUser";
 
 const user = ref(null as User | null);
 
@@ -46,7 +46,7 @@ export default (): ComponentOptions => {
       await signInWithEmailAndPassword(auth, user.email, user.password);
       router.push("/");
     } catch (err: any) {
-      error.value = err.message
+      error.value = err.message;
     } finally {
       loading.value = false;
     }
@@ -68,7 +68,7 @@ export default (): ComponentOptions => {
 
       router.push("/");
     } catch (err: any) {
-       error.value = err.message;
+      error.value = err.message;
     } finally {
       loading.value = false;
     }

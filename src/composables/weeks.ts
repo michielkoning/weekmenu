@@ -9,11 +9,11 @@ export default (): ComponentOptions => {
   const { getAll, unsubscribe, get, create, copy, remove } = useApi("weeks");
 
   const unsubscribeWeekmenu = () => {
-    list.value = []
+    list.value = [];
     if (unsubscribe) {
-      unsubscribe()
+      unsubscribe();
     }
-  }
+  };
 
   const formData = reactive({
     startDate: new Date(),

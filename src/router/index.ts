@@ -24,8 +24,6 @@ const routes = [
       authRequired: true,
     },
     children: [
-
-
       {
         path: "/weekmenu",
         name: "Weeks",

@@ -9,7 +9,6 @@ import useUser from "@/composables/user";
 import { onMounted, defineComponent, onUnmounted } from "vue";
 
 export default defineComponent({
-
   setup() {
     const { setUserEventListener, resetUserEventListener } = useUser();
     onMounted(() => {

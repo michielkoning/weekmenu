@@ -1,7 +1,7 @@
 <template>
   <div>
     <router-link to="/registreren">Registreren</router-link>
-    <form-login @submit="login" :error="error" />
+    <form-login :error="error" @submit="login" />
   </div>
 </template>
 
