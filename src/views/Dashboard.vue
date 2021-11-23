@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <center-wrapper>
     <the-menu />
     <router-view v-slot="{ Component }">
       <transition name="fade" mode="out-in">
         <component :is="Component" />
       </transition>
     </router-view>
-  </div>
+  </center-wrapper>
 </template>
 
 <script lang="ts">
@@ -14,10 +14,12 @@ import { defineComponent, onMounted, onUnmounted } from "vue";
 import useRecipes from "@/composables/recipes";
 import useWeek from "@/composables/weeks";
 import TheMenu from "@/components/Layout/TheMenu.vue";
+import CenterWrapper from "@/components/Layout/CenterWrapper.vue";
 
 export default defineComponent({
   components: {
     TheMenu,
+    CenterWrapper,
   },
   setup() {
     const { getRecipes, unsubscribeRecipes } = useRecipes();

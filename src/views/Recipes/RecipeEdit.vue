@@ -123,7 +123,6 @@ export default defineComponent({
     const save = async () => {
       formData.directions = createDirections();
       formData.ingredients = createIngredients();
-      console.log(formData);
       let id = null;
       if (props.id) {
         id = props.id;
