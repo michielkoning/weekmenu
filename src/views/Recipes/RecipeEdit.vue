@@ -1,5 +1,5 @@
 <template>
-  <app-form class="recipe" button-title="Save" @submit="save">
+  <app-form class="recipe" button-title="Opslaan" @submit="save">
     <form-fieldset title="Recept bewerken">
       <form-input-text v-model="formData.title" name="title" title="Titel" />
       <form-input-text
@@ -103,7 +103,7 @@ export default defineComponent({
     const createIngredients = () => {
       const list = createArrayOfInput(ingredients.value);
       return list.map((ingredient) => {
-        var matches = ingredient.split(/(\d+)/).filter(Boolean);
+        const matches = ingredient.split(/(\d+)/).filter(Boolean);
         if (matches.length > 0 && !isNaN(parseFloat(matches[0]))) {
           return {
             amount: parseFloat(matches[0]),

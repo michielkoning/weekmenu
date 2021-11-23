@@ -43,6 +43,6 @@ export default defineComponent({
 .buttons {
   margin-top: 1em;
   display: flex;
-  gap: 1em;
+  gap: 0.5em;
 }
 </style>
