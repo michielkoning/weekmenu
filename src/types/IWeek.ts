@@ -4,4 +4,5 @@ export interface IWeek {
   id?: string;
   startDate?: Date | null;
   days: IRecipe[] | null[];
+  recipes: IRecipe[] | null[];
 }

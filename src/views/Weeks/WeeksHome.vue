@@ -1,78 +1,105 @@
 <template>
-  <div>
-    <div v-for="(week, index) in weeks" :key="week.id">
-      <router-link
-        :to="{
-          name: 'WeeksDetails',
-          params: {
-            id: week.id,
-          },
-        }"
-      >
-        <span>Week {{ index }}</span>
-        <button @click="copy(week.id)">copy</button>
-        <button @click="remove(week.id)">remove</button>
-      </router-link>
+  <div class="page">
+    <div>
+      <ul>
+        <li
+          v-for="(recipe, index) in formData.recipes"
+          :key="index"
+          :class="{ active: index === selectedDay }"
+        >
+          <span @click="selectDay(index)">
+            dag {{ index + 1 }}:
+            <span v-if="recipe">
+              {{ recipe.title }}
+            </span>
+          </span>
+        </li>
+      </ul>
+      <add-remove
+        :show-remove="formData.recipes.length > -1"
+        @add="addRecipe"
+        @remove="removeRecipe"
+      />
     </div>
-    <button @click="create">Create</button>
-    <router-view v-slot="{ Component }">
-      <component :is="Component" />
-    </router-view>
+    <ul v-if="recipes.length">
+      <li v-for="recipe in recipes" :key="recipe" @click="selectRecipe(recipe)">
+        {{ recipe.title }}
+      </li>
+    </ul>
   </div>
 </template>
 
 <script lang="ts">
 import useWeek from "@/composables/weeks";
-import { useRouter } from "vue-router";
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
+import useRecipes from "@/composables/recipes";
+import { IRecipe } from "@/types/IRecipe";
+import AddRemove from "@/components/AddRemove.vue";
+
 export default defineComponent({
+  components: {
+    AddRemove,
+  },
   setup() {
-    const router = useRouter();
-    const { createWeek, weeks, copyWeek, deleteWeek } = useWeek();
+    const { weeks, formData, addRecipeToWeek } = useWeek();
+    const { recipes } = useRecipes();
+    const selectedDay = ref(0);
 
-    const goToWeek = (id: string) => {
-      router.push({
-        name: "WeeksDetails",
-        params: {
-          id,
-        },
-      });
+    const selectDay = (index: number) => {
+      selectedDay.value = index;
     };
 
-    const copy = async (id: string) => {
-      const response = await copyWeek(id);
-      if (response) {
-        goToWeek(response);
+    const selectRecipe = (recipe: IRecipe) => {
+      formData.recipes[selectedDay.value] = recipe;
+      if (selectedDay.value < formData.recipes.length - 1) {
+        selectedDay.value = selectedDay.value + 1;
+      } else {
+        selectedDay.value = 0;
       }
     };
 
-    const create = async () => {
-      const response = await createWeek();
-      if (response) {
-        goToWeek(response);
-      }
+    const addRecipe = () => {
+      formData.recipes = [...formData.recipes, null];
     };
 
-    const remove = async (id: string) => {
-      await deleteWeek(id);
-      router.push({
-        name: "Weeks",
-      });
+    const removeRecipe = () => {
+      formData.recipes.pop();
     };
 
     return {
-      // formData,
-      remove,
-      copy,
+      addRecipe,
+      removeRecipe,
+      selectedDay,
+      addRecipeToWeek,
+      recipes,
+      formData,
       weeks,
-      create,
+      selectDay,
+      selectRecipe,
     };
   },
 });
 </script>
 
+
 <style lang="postcss" scoped>
-.router-link-active {
+ul {
+  @mixin list-reset;
+}
+
+.page {
+  position: relative;
+  padding-bottom: 2em;
+  padding: 0 var(--gutter);
+  grid-gap: var(--gutter);
+  display: grid;
+
+  @media (--viewport-md) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.active {
   font-weight: bold;
 }
 </style>

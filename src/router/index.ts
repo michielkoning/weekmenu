@@ -32,17 +32,6 @@ const routes = [
           import(
             /* webpackChunkName: "WeeksHome" */ "../views/Weeks/WeeksHome.vue"
           ),
-        children: [
-          {
-            path: ":id/:day?",
-            name: "WeeksDetails",
-            component: () =>
-              import(
-                /* webpackChunkName: "WeeksDetails" */ "../views/Weeks/WeeksDetails.vue"
-              ),
-            props: true,
-          },
-        ],
       },
       {
         path: "",
