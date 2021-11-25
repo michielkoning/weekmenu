@@ -14,6 +14,7 @@ import {
   deleteDoc,
   orderBy,
   runTransaction,
+  serverTimestamp,
 } from "firebase/firestore";
 import { ComponentOptions } from "vue";
 
@@ -32,7 +33,7 @@ export default (collectionId: string): ComponentOptions => {
 
       const data = {
         ...payload,
-        createdOn: new Date(),
+        createdOn: serverTimestamp(),
       };
 
       const docRef = await addDoc(

@@ -59,7 +59,7 @@ export default defineComponent({
     };
 
     const addRecipe = () => {
-      formData.recipes = [...formData.recipes, null];
+      formData.recipes.push(null);
     };
 
     const removeRecipe = () => {
@@ -80,7 +80,6 @@ export default defineComponent({
   },
 });
 </script>
-
 
 <style lang="postcss" scoped>
 ul {

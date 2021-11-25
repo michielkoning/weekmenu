@@ -26,10 +26,6 @@ export default (): ComponentOptions => {
     return await create(formData);
   };
 
-  const addRecipeToWeek = (recipe: IRecipe) => {
-    formData.recipes = [...formData.recipes, recipe];
-  };
-
   const getWeeks = async () => {
     list.value = await getAll();
   };
@@ -49,7 +45,6 @@ export default (): ComponentOptions => {
   };
 
   return {
-    addRecipeToWeek,
     formData,
     unsubscribeWeekmenu,
     copyWeek,
