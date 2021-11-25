@@ -1,12 +1,14 @@
 <template>
-  <center-wrapper>
+  <div>
     <the-menu />
-    <router-view v-slot="{ Component }">
-      <transition name="fade" mode="out-in">
-        <component :is="Component" />
-      </transition>
-    </router-view>
-  </center-wrapper>
+    <center-wrapper>
+      <router-view v-slot="{ Component }">
+        <transition name="fade" mode="out-in">
+          <component :is="Component" />
+        </transition>
+      </router-view>
+    </center-wrapper>
+  </div>
 </template>
 
 <script lang="ts">

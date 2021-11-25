@@ -1,7 +1,6 @@
 import { ref, reactive } from "vue";
 import { ComponentOptions } from "vue";
 import { IWeek } from "@/types/IWeek";
-import { IRecipe } from "@/types/IRecipe";
 
 import useApi from "@/composables/api";
 
@@ -13,7 +12,7 @@ const formData = reactive({
 } as IWeek);
 
 export default (): ComponentOptions => {
-  const { getAll, unsubscribe, get, create, copy, remove } = useApi("weeks");
+  const { getAll, unsubscribe, get, create, remove } = useApi("weeks");
 
   const unsubscribeWeekmenu = () => {
     list.value = [];
@@ -36,10 +35,6 @@ export default (): ComponentOptions => {
     formData.days = response.days;
   };
 
-  const copyWeek = async (id: string) => {
-    return await copy(id);
-  };
-
   const deleteWeek = async (id: string) => {
     await remove(id);
   };
@@ -47,7 +42,6 @@ export default (): ComponentOptions => {
   return {
     formData,
     unsubscribeWeekmenu,
-    copyWeek,
     getWeeks,
     getWeek,
     weeks: list,

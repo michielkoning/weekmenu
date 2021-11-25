@@ -53,11 +53,11 @@ export default defineComponent({
 <style lang="postcss" scoped>
 .wrapper {
   display: flex;
-  margin-left: 0.5em;
+  margin-top: 1em;
 }
 
 button {
-  padding: 1em;
+  padding: 0.5em;
   border: 2px solid var(--color-green);
   color: var(--color-green-dark);
 
@@ -78,7 +78,7 @@ button {
 }
 
 svg {
-  width: 1.5em;
-  height: 1.5em;
+  width: 1em;
+  height: 1em;
 }
 </style>
