@@ -1,8 +1,8 @@
-import { ref, reactive } from "vue";
+import { reactive } from "vue";
 import { ComponentOptions } from "vue";
 import { IWeek } from "@/types/IWeek";
-import { getAuth } from "firebase/auth";
-import useApi from "@/composables/api";
+import { IRecipe } from "@/types/IRecipe";
+import useUser from "@/composables/user";
 import {
   getDoc,
   doc,
@@ -14,68 +14,73 @@ import {
   // addDoc,
   // deleteDoc,
   // orderBy,
-  // runTransaction,
+  runTransaction,
   // serverTimestamp,
 } from "firebase/firestore";
 import { db } from "@/firebase";
 
-const list = ref([] as IWeek[]);
 const formData = reactive({
   startDate: new Date(),
   days: [],
-  recipes: new Array(7).fill(null),
+  recipes: [],
 } as IWeek);
 
 export default (): ComponentOptions => {
-  const collectionId = "weeks";
-  const { getAll, unsubscribe, get, create, remove } = useApi("weeks");
-  const auth = getAuth();
-  const user = auth.currentUser;
+  const { getUser } = useUser();
 
-  const unsubscribeWeekmenu = () => {
-    list.value = [];
-    if (unsubscribe) {
-      unsubscribe();
+  const getWeek = async () => {
+    const user = getUser();
+
+    try {
+      if (!user) {
+        throw "Incorrect user ID";
+      }
+      const docRef = doc(db, "users", user.uid);
+
+      const docSnap = await getDoc(docRef);
+
+      if (!docSnap.exists()) {
+        throw "Document does not exist!";
+      }
+
+      const response = docSnap.data();
+      formData.recipes = response.weekMenu;
+    } catch (e) {
+      console.log("Transaction failed: ", e);
     }
   };
 
-  const createWeek = async () => {
-    return await create(formData);
-  };
+  const selectRecipe = async (recipe: IRecipe, selectedDay: number) => {
+    const user = getUser();
 
-  const getWeeks = async () => {
-    list.value = await getAll();
-  };
+    try {
+      if (!user) {
+        throw "Incorrect user ID";
+      }
 
-  const getWeek = async (id: string) => {
-    if (!user) {
-      return [];
+      const sfDocRef = doc(db, "users", user.uid);
+      const recipeRed = doc(db, "users", user.uid, "recipes", recipe.id);
+
+      formData.recipes[selectedDay] = recipeRed;
+      await runTransaction(db, async (transaction) => {
+        const sfDoc = await transaction.get(sfDocRef);
+
+        if (!sfDoc.exists()) {
+          throw "Document does not exist!";
+        }
+
+        transaction.update(sfDocRef, {
+          weekMenu: formData.recipes,
+        });
+      });
+    } catch (e) {
+      console.log("Transaction failed: ", e);
     }
-
-    const docRef = doc(db, "users", user.uid, collectionId, id);
-    const docSnap = await getDoc(docRef);
-
-    if (docSnap.exists()) {
-      return {
-        id: docSnap.id,
-        ...docSnap.data(),
-      };
-    }
-
-    return null;
-  };
-
-  const deleteWeek = async (id: string) => {
-    await remove(id);
   };
 
   return {
-    formData,
-    unsubscribeWeekmenu,
-    getWeeks,
+    selectRecipe,
     getWeek,
-    weeks: list,
-    createWeek,
-    deleteWeek,
+    formData,
   };
 };

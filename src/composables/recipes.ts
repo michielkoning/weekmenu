@@ -1,7 +1,6 @@
 import { reactive, ref } from "vue";
 import { ComponentOptions } from "vue";
 import { IRecipe } from "@/types/IRecipe";
-import { getAuth } from "firebase/auth";
 import {
   getDoc,
   doc,
@@ -16,14 +15,14 @@ import {
   serverTimestamp,
 } from "firebase/firestore";
 import { db } from "@/firebase";
+import useUser from "@/composables/user";
 
 const list = ref([] as IRecipe[]);
 let unsubscribe = null as Unsubscribe | null;
 
 export default (): ComponentOptions => {
+  const { getUser } = useUser();
   const collectionId = "recipes";
-  const auth = getAuth();
-  const user = auth.currentUser;
 
   const unsubscribeRecipes = () => {
     list.value = [];
@@ -41,6 +40,8 @@ export default (): ComponentOptions => {
   } as IRecipe);
 
   const createRecipe = async () => {
+    const user = getUser();
+
     try {
       if (!user) {
         return [];
@@ -62,6 +63,8 @@ export default (): ComponentOptions => {
   };
 
   const getRecipes = async () => {
+    const user = getUser();
+
     if (!user) {
       return [];
     }
@@ -96,6 +99,8 @@ export default (): ComponentOptions => {
   };
 
   const getRecipe = async (id: string) => {
+    const user = getUser();
+
     try {
       if (!user) {
         throw "Incorrect user ID";
@@ -120,6 +125,8 @@ export default (): ComponentOptions => {
   };
 
   const updateRecipe = async () => {
+    const user = getUser();
+
     try {
       if (!user) {
         throw "Incorrect user ID";
@@ -145,6 +152,8 @@ export default (): ComponentOptions => {
   };
 
   const deleteRecipe = async (id: string) => {
+    const user = getUser();
+
     try {
       if (!user) {
         throw "Incorrect user ID";

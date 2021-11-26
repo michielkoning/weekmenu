@@ -25,6 +25,11 @@ export default (): ComponentOptions => {
 
   const listener = ref(null as Unsubscribe | null);
 
+  const getUser = () => {
+    const auth = getAuth();
+    return auth.currentUser;
+  };
+
   const setUserEventListener = async () => {
     const auth = await getAuth();
     listener.value = auth.onAuthStateChanged((firebaseUser) => {
@@ -86,7 +91,6 @@ export default (): ComponentOptions => {
   };
 
   return {
-    user,
     error,
     login,
     register,
@@ -94,5 +98,6 @@ export default (): ComponentOptions => {
     logout,
     setUserEventListener,
     resetUserEventListener,
+    getUser,
   };
 };

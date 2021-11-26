@@ -14,7 +14,6 @@
 <script lang="ts">
 import { defineComponent, onMounted, onUnmounted } from "vue";
 import useRecipes from "@/composables/recipes";
-import useWeek from "@/composables/weeks";
 import TheMenu from "@/components/Layout/TheMenu.vue";
 import CenterWrapper from "@/components/Layout/CenterWrapper.vue";
 
@@ -25,18 +24,13 @@ export default defineComponent({
   },
   setup() {
     const { getRecipes, unsubscribeRecipes } = useRecipes();
-    const { getWeeks, unsubscribeWeeks } = useWeek();
 
     onMounted(() => {
       getRecipes();
-      getWeeks();
     });
     onUnmounted(() => {
       if (unsubscribeRecipes) {
         unsubscribeRecipes();
-      }
-      if (unsubscribeWeeks) {
-        unsubscribeWeeks();
       }
     });
   },

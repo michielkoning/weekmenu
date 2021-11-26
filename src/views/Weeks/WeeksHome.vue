@@ -22,7 +22,11 @@
       />
     </div>
     <ul v-if="recipes.length">
-      <li v-for="recipe in recipes" :key="recipe" @click="selectRecipe(recipe)">
+      <li
+        v-for="recipe in recipes"
+        :key="recipe"
+        @click="selectRecipe(recipe, selectedDay)"
+      >
         {{ recipe.title }}
       </li>
     </ul>
@@ -31,9 +35,8 @@
 
 <script lang="ts">
 import useWeek from "@/composables/weeks";
-import { defineComponent, ref } from "vue";
+import { defineComponent, onMounted, ref } from "vue";
 import useRecipes from "@/composables/recipes";
-import { IRecipe } from "@/types/IRecipe";
 import AddRemove from "@/components/AddRemove.vue";
 
 export default defineComponent({
@@ -41,7 +44,7 @@ export default defineComponent({
     AddRemove,
   },
   setup() {
-    const { weeks, formData, addRecipeToWeek } = useWeek();
+    const { weeks, formData, getWeek, selectRecipe } = useWeek();
     const { recipes } = useRecipes();
     const selectedDay = ref(0);
 
@@ -49,14 +52,7 @@ export default defineComponent({
       selectedDay.value = index;
     };
 
-    const selectRecipe = (recipe: IRecipe) => {
-      formData.recipes[selectedDay.value] = recipe;
-      if (selectedDay.value < formData.recipes.length - 1) {
-        selectedDay.value = selectedDay.value + 1;
-      } else {
-        selectedDay.value = 0;
-      }
-    };
+    onMounted(() => getWeek());
 
     const addRecipe = () => {
       formData.recipes.push(null);
@@ -70,7 +66,6 @@ export default defineComponent({
       addRecipe,
       removeRecipe,
       selectedDay,
-      addRecipeToWeek,
       recipes,
       formData,
       weeks,
