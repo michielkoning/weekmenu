@@ -1,8 +1,23 @@
 import { ref, reactive } from "vue";
 import { ComponentOptions } from "vue";
 import { IWeek } from "@/types/IWeek";
-
+import { getAuth } from "firebase/auth";
 import useApi from "@/composables/api";
+import {
+  getDoc,
+  doc,
+  // collection,
+  // query,
+  // onSnapshot,
+  // DocumentData,
+  // Unsubscribe,
+  // addDoc,
+  // deleteDoc,
+  // orderBy,
+  // runTransaction,
+  // serverTimestamp,
+} from "firebase/firestore";
+import { db } from "@/firebase";
 
 const list = ref([] as IWeek[]);
 const formData = reactive({
@@ -12,7 +27,10 @@ const formData = reactive({
 } as IWeek);
 
 export default (): ComponentOptions => {
+  const collectionId = "weeks";
   const { getAll, unsubscribe, get, create, remove } = useApi("weeks");
+  const auth = getAuth();
+  const user = auth.currentUser;
 
   const unsubscribeWeekmenu = () => {
     list.value = [];
@@ -30,9 +48,21 @@ export default (): ComponentOptions => {
   };
 
   const getWeek = async (id: string) => {
-    const response = await get(id);
-    formData.startDate = response.startDate;
-    formData.days = response.days;
+    if (!user) {
+      return [];
+    }
+
+    const docRef = doc(db, "users", user.uid, collectionId, id);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      return {
+        id: docSnap.id,
+        ...docSnap.data(),
+      };
+    }
+
+    return null;
   };
 
   const deleteWeek = async (id: string) => {
