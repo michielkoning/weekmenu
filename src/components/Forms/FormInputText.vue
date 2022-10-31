@@ -20,7 +20,6 @@ withDefaults(
   {
     type: "text",
     maxlength: 250,
-    value: "",
     errors: undefined,
   }
 );
@@ -37,7 +36,9 @@ defineEmits(["update:modelValue", "blur"]);
       :type="type"
       class="input"
       :maxlength="maxlength"
-      @input="$emit('update:modelValue', $event.target.value)"
+      @input="
+        $emit('update:modelValue', ($event.target as HTMLInputElement).value)
+      "
       @blur="$emit('blur')"
     />
   </form-field>
