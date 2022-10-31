@@ -1,0 +1,41 @@
+<script lang="ts" setup>
+import { defineProps } from "vue";
+import type { IIngredient } from "@/types/IRecipe";
+import useEaters from "@/composables/useEaters";
+
+defineProps<{
+  ingredients: IIngredient[];
+}>();
+const { totalEaters } = useEaters();
+</script>
+
+<template>
+  <section :aria-labelled="$t('details.ingredients')" class="ingredients">
+    <h2>{{ $t("details.ingredients") }}</h2>
+    <ul>
+      <li v-for="ingredient in ingredients" :key="ingredient.title">
+        <span v-if="ingredient.amount">
+          {{ $n(ingredient.amount * totalEaters, "decimal") }}
+        </span>
+        {{ ingredient.title }}
+      </li>
+    </ul>
+  </section>
+</template>
+
+<style lang="postcss" scoped>
+h2 {
+  padding-bottom: 0.5em;
+}
+
+ul {
+  list-style: none outside;
+  padding-left: 0;
+  border-top: 1px dashed var(--black);
+}
+
+li {
+  padding-block: 0.25em;
+  border-bottom: 1px dashed var(--black);
+}
+</style>

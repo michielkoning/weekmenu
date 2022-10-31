@@ -1,0 +1,41 @@
+<script lang="ts" setup>
+import AppButton from "@/components/Shared/AppButton.vue";
+import FormErrorMessage from "@/components/Forms/FormErrorMessage.vue";
+
+withDefaults(
+  defineProps<{
+    buttonTitle?: string;
+    loading?: boolean;
+    error?: string | null;
+  }>(),
+  {
+    buttonTitle: "Verzenden",
+    loading: false,
+    error: null,
+  }
+);
+
+defineEmits(["submit"]);
+</script>
+
+<template>
+  <form
+    action=""
+    method="post"
+    novalidate
+    @submit.prevent="$emit('submit')"
+    class="form"
+  >
+    <slot />
+    <form-error-message :error="error" />
+    <app-button class="btn" type="submit" :loading="loading">
+      {{ buttonTitle }}
+    </app-button>
+  </form>
+</template>
+
+<style lang="postcss" scoped>
+.form {
+  margin-bottom: 1em;
+}
+</style>

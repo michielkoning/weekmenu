@@ -1,7 +1,0 @@
-:root {
-  --nuxt-loader-color: var(--color-white);
-
-  @media (--navigation-md) {
-    --nuxt-loader-color: var(--color-primary);
-  }
-}

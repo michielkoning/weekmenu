@@ -1,0 +1,10 @@
+:root {
+  --font-size-base: clamp(16px, 2.75vw, 18px);
+  --font-family-base: 'Roboto', sans-serif;
+  --line-height-base: 1.5;
+
+  --font-weight-normal: 400;
+  --font-weight-bold: 700;
+
+  --font-family-headings: var(--font-family-base);
+}

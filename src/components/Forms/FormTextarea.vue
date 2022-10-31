@@ -1,0 +1,47 @@
+<script lang="ts">
+export default {
+  inheritAttrs: false,
+};
+</script>
+
+<script lang="ts" setup>
+import FormField from "@/components/Forms/FormField.vue";
+import type { ErrorObject } from "@vuelidate/core";
+
+withDefaults(
+  defineProps<{
+    title: string;
+    id: string;
+    modelValue: string | number;
+    rows?: number;
+    errors?: ErrorObject[];
+  }>(),
+  {
+    type: "text",
+    rows: 8,
+    value: "",
+    errors: undefined,
+  }
+);
+
+defineEmits(["update:modelValue"]);
+</script>
+
+<template>
+  <form-field :id="id" :errors="errors" :title="title" class="field">
+    <textarea
+      :id="id"
+      class="textarea"
+      v-bind="$attrs"
+      :value="modelValue"
+      :rows="rows"
+      @input="$emit('update:modelValue', $event.target.value)"
+    />
+  </form-field>
+</template>
+
+<style lang="postcss" scoped>
+.textarea {
+  resize: vertical;
+}
+</style>

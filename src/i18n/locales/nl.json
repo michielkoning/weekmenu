@@ -1,0 +1,33 @@
+{
+  "meta": {
+    "pageTitle": " | Recepten van Maaike & Michiel"
+  },
+  "list": {
+    "pageTitle": "Overzicht",
+    "title": "Recepten",
+    "no-results": "Er zijn geen recepten gevonden.",
+    "categories": "Categoriën",
+    "search": "Zoeken",
+    "search-for-recipes": "Zoek naar recepten",
+    "reset-search": "Opnieuw zoeken"
+  },
+  "details": {
+    "back-to-list": "Terug naar alle recepten",
+    "source": "Bron",
+    "minutes": "minuten",
+    "preparation": "Bereiding",
+    "preparation-time": "Bereidingstijd",
+    "ingredients": "Ingredienten",
+    "persons": "persoon | personen",
+    "category": "Categorie"
+  },
+  "validations": {
+    "email": "Value is not a valid email address",
+    "maxLength": "The maximum value is {max}",
+    "minLength": "This field should be at least {min} long",
+    "numeric": "Value must be numeric",
+    "required": "Het veld {property} is verplicht",
+    "form": "Enkele velden zijn niet correct ingevuld",
+    "submit": "Er ging iets mis bij het verzenden"
+  }
+}

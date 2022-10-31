@@ -1,27 +1,31 @@
-<template>
-  <router-view v-slot="{ Component }">
-    <component :is="Component" />
-  </router-view>
-</template>
+<script setup lang="ts">
+import { onMounted, ref, type Ref } from "vue";
+import TheHeader from "@/components/Shared/TheHeader.vue";
+import { supabase } from "@/supabase";
+import CenterWrapper from "@/components/Shared/CenterWrapper.vue";
+import { getUser } from "./db/user";
+import type { User } from "@supabase/gotrue-js";
 
-<script lang="ts">
-import useUser from "@/composables/user";
-import { onMounted, defineComponent, onUnmounted } from "vue";
+const session: Ref<User | null> = ref(null);
 
-export default defineComponent({
-  setup() {
-    const { setUserEventListener, resetUserEventListener } = useUser();
-    onMounted(() => {
-      setUserEventListener();
-    });
+onMounted(async () => {
+  session.value = await getUser();
 
-    onUnmounted(() => {
-      resetUserEventListener();
-    });
-  },
+  supabase.auth.onAuthStateChange((_, _session) => {
+    if (_session) {
+      session.value = _session.user;
+    } else {
+      session.value = null;
+    }
+  });
 });
 </script>
 
-<style>
-@import "./styles/base.css";
-</style>
+<template>
+  <main>
+    <the-header v-if="session" />
+    <center-wrapper>
+      <router-view />
+    </center-wrapper>
+  </main>
+</template>
