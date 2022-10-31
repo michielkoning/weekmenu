@@ -11,7 +11,7 @@ import useBreadCrumb from "@/composables/useBreadCrumb";
 import { ROUTES } from "@/enums/routes";
 
 const { add: addToBreadCrumb, remove: removeFromBreadCrumb } = useBreadCrumb();
-const error: Ref<Error | null> = ref(null);
+const error: Ref<string | null> = ref(null);
 
 const formData = reactive<IFormData>({
   title: "",
@@ -38,7 +38,7 @@ onMounted(async () => {
   if (props.id) {
     try {
       loading.value = true;
-      const response = await getDetails(props.id);
+      const response: any = await getDetails(props.id);
       if (!response) {
         throw "No Response";
       }
@@ -90,7 +90,7 @@ const submit = async () => {
   } catch (err) {
     console.log(err instanceof Error);
     if (err instanceof Error) {
-      error.value = err;
+      error.value = err.message;
     }
   } finally {
     loading.value = false;

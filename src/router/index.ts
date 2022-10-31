@@ -44,6 +44,7 @@ const router = createRouter({
 
 router.beforeEach(async (to, from, next) => {
   const guardRouters = [ROUTES.login, ROUTES.register];
+  // @ts-ignore
   if (!guardRouters.includes(to.name) && !(await getUser())) {
     next({ name: "login" });
   } else {

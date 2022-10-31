@@ -3,7 +3,7 @@ export interface IIngredient {
   amount?: number;
 }
 
-interface IRecipeBase {
+export interface IRecipeBase {
   id?: string;
   user_id?: string;
   title: string;

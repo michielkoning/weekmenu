@@ -1,5 +1,5 @@
 import { supabase } from "@/supabase";
-import type { IFormData, IRecipe } from "@/types/IRecipe";
+import type { IFormData, IRecipe, IRecipeBase } from "@/types/IRecipe";
 import { getUser } from "@/db/user";
 
 const createArrayOfInput = (input: string) => {
@@ -37,7 +37,7 @@ export const getAll = async () => {
 
   if (error && status !== 406) throw new Error(error.message);
 
-  return data;
+  return data as IRecipeBase[];
 };
 
 export const getDetails = async (id: string) => {
@@ -87,7 +87,7 @@ export const edit = async (formData: IFormData) => {
 
   if (error && status !== 406) throw new Error(error.message);
 
-  return data;
+  return data as IRecipe;
 };
 
 export const remove = async (id: string) => {

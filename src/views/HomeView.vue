@@ -11,12 +11,14 @@ const recipes = ref<IRecipe[]>([]);
 onMounted(async () => {
   try {
     loading.value = true;
-    const response = await getAll();
+    const response: any = await getAll();
     if (response) {
       recipes.value = response;
     }
-  } catch (error: Error | unknown) {
-    alert(error?.message);
+  } catch (err: Error | unknown) {
+    if (err instanceof Error) {
+      alert(err.message);
+    }
   } finally {
     loading.value = false;
   }
