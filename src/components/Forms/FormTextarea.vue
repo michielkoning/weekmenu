@@ -12,19 +12,18 @@ withDefaults(
   defineProps<{
     title: string;
     id: string;
-    modelValue: string | number;
+    modelValue: string;
     rows?: number;
     errors?: ErrorObject[];
   }>(),
   {
     type: "text",
     rows: 8,
-    value: "",
     errors: undefined,
   }
 );
 
-defineEmits(["update:modelValue"]);
+const emit = defineEmits(["update:modelValue"]);
 </script>
 
 <template>
@@ -35,7 +34,9 @@ defineEmits(["update:modelValue"]);
       v-bind="$attrs"
       :value="modelValue"
       :rows="rows"
-      @input="$emit('update:modelValue', $event.target.value)"
+      @input="
+        $emit('update:modelValue', ($event.target as HTMLTextAreaElement).value)
+      "
     />
   </form-field>
 </template>
