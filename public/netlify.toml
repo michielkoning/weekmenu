@@ -1,6 +1,3 @@
-[build.environment]
-  NODE_VERSION = "18"
-
 [[redirects]]
   from = "/*"
   to = "/index.html"
@@ -11,24 +8,21 @@
   [headers.values]
     cache-control = '''
     max-age=31536000,
-    immutable
-    '''
+    immutable'''
 
 [[headers]]
   for = "/*.css"
   [headers.values]
     cache-control = '''
     max-age=31536000,
-    immutable
-    '''
+    immutable'''
 
 [[headers]]
   for = "/*.js"
   [headers.values]
     cache-control = '''
     max-age=31536000,
-    immutable
-    '''
+    immutable'''
 
 [[headers]]
   for = "/*"
