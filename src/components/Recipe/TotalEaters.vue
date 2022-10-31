@@ -14,7 +14,7 @@ const { totalEaters, changeAmountofEaters } = useEaters();
       -
     </button>
     <div class="amount">
-      {{ totalEaters }} {{ $tc("details.persons", totalEaters) }}
+      {{ totalEaters }} {{ $t("details.persons", totalEaters) }}
     </div>
     <button class="substract" @click="changeAmountofEaters(totalEaters + 1)">
       +

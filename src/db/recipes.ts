@@ -54,7 +54,7 @@ export const getDetails = async (id: string) => {
 
   if (error && status !== 406) throw new Error(error.message);
 
-  return data;
+  return data as IRecipe;
 };
 
 export const edit = async (formData: IFormData) => {
