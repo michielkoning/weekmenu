@@ -1,23 +1,25 @@
 <script setup lang="ts">
 import type { IRecipe } from "@/types/IRecipe";
-import { onMounted, ref } from "vue";
+import { onMounted, ref, type Ref } from "vue";
 import { getAll } from "@/db/recipes";
 import AppButton from "@/components/Shared/AppButton.vue";
 import { ROUTES } from "@/enums/routes";
 
 const loading = ref(true);
+const error: Ref<null | string> = ref(null);
 const recipes = ref<IRecipe[]>([]);
 
 onMounted(async () => {
   try {
     loading.value = true;
+    error.value = null;
     const response: any = await getAll();
     if (response) {
       recipes.value = response;
     }
   } catch (err: Error | unknown) {
     if (err instanceof Error) {
-      alert(err.message);
+      error.value = err.message;
     }
   } finally {
     loading.value = false;
@@ -29,6 +31,7 @@ onMounted(async () => {
   <div class="home">
     <h1>{{ $t("list.title") }}</h1>
     <div v-if="loading" />
+    <p v-else-if="error">{{ error }}</p>
     <div v-else>
       <ul v-if="recipes.length" class="list">
         <li v-for="recipe in recipes" :key="recipe.title">

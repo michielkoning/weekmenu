@@ -1,3 +1,6 @@
+[build.environment]
+  NODE_VERSION = "18"
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
@@ -7,24 +10,32 @@
   for = "/img/*"
   [headers.values]
     cache-control = '''
-    max-age=604800,
-    public'''
+    max-age=31536000,
+    immutable
+    '''
 
 [[headers]]
   for = "/*.css"
   [headers.values]
     cache-control = '''
-    max-age=604800,
-    public'''
+    max-age=31536000,
+    immutable
+    '''
 
 [[headers]]
   for = "/*.js"
   [headers.values]
     cache-control = '''
-    max-age=604800,
-    public'''
+    max-age=31536000,
+    immutable
+    '''
 
 [[headers]]
   for = "/*"
   [headers.values]
     Permissions-Policy = "interest-cohort=()"
+
+[[headers]]
+  for = "/manifest.webmanifest"
+  [headers.values]
+    Content-Type = "application/manifest+json"
