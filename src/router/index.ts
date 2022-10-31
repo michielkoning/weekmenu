@@ -43,9 +43,9 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
-  const guardRouters = [ROUTES.login, ROUTES.register];
-  // @ts-ignore
-  if (!guardRouters.includes(to.name) && !(await getUser())) {
+  const publicRoutes = [ROUTES.login.toString(), ROUTES.register.toString()];
+  const toName = to.name ? to.name.toString() : "";
+  if (!publicRoutes.includes(toName) && !(await getUser())) {
     next({ name: "login" });
   } else {
     next();
