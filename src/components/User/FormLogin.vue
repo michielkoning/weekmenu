@@ -4,8 +4,13 @@ import FormInputText from "@/components/Forms/FormInputText.vue";
 import AppForm from "@/components/Forms/AppForm.vue";
 import { reactive, computed, toRef } from "vue";
 import { useVuelidate } from "@vuelidate/core";
-import { email, required } from "@/i18n/validators";
+import { email, required, minLength } from "@/i18n/validators";
 import useValidate from "@/composables/useValidate";
+
+const formData = reactive({
+  email: "",
+  password: "",
+});
 
 const rules = computed(() => ({
   email: {
@@ -14,13 +19,9 @@ const rules = computed(() => ({
   },
   password: {
     required,
+    minLength: minLength(6),
   },
 }));
-
-const formData = reactive({
-  email: "",
-  password: "",
-});
 
 const props = withDefaults(
   defineProps<{

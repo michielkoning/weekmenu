@@ -22,11 +22,11 @@
     "category": "Categorie"
   },
   "validations": {
-    "email": "Value is not a valid email address",
+    "email": "Dit is geen geldig e-mailadres",
     "maxLength": "The maximum value is {max}",
-    "minLength": "This field should be at least {min} long",
+    "minLength": "Dit veld moet minimaal {min} karakters hebben",
     "numeric": "Value must be numeric",
-    "required": "Het veld {property} is verplicht",
+    "required": "Dit veld is verplicht",
     "form": "Enkele velden zijn niet correct ingevuld",
     "submit": "Er ging iets mis bij het verzenden"
   }
