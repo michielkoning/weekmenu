@@ -4,6 +4,7 @@ import { getDetails, remove } from "@/db/recipes";
 import type { IRecipe } from "@/types/IRecipe";
 import IngredientsList from "@/components/Recipe/IngredientsList.vue";
 import RecipePreperation from "@/components/Recipe/RecipePreperation.vue";
+import RecipeMetaData from "@/components/Recipe/RecipeMetaData.vue";
 import TotalEaters from "@/components/Recipe/TotalEaters.vue";
 import { useRouter } from "vue-router";
 import AppButton from "@/components/Shared/AppButton.vue";
@@ -87,7 +88,7 @@ const deleteRecipe = async () => {
           v-if="recipe.ingredients"
           :ingredients="recipe.ingredients"
         />
-        {{ recipe.preperationTime }}
+        <recipe-meta-data :recipe="recipe" />
       </aside>
     </div>
   </div>
