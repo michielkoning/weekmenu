@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "@/views/HomeView.vue";
 import { getSession } from "@/db/user";
+import HomeView from "@/views/Recipes/RecipesListView.vue";
 import { ROUTES } from "@/enums/routes";
 
 const router = createRouter({
@@ -14,45 +14,45 @@ const router = createRouter({
     {
       path: "/add/",
       name: ROUTES.add,
-      component: () => import("../views/FormRecipesView.vue"),
+      component: () => import("../views/Recipes/RecipesEditView.vue"),
     },
 
     {
       path: "/:id",
       name: ROUTES.details,
       props: true,
-      component: () => import("../views/RecipeDetailsView.vue"),
+      component: () => import("../views/Recipes/RecipeDetailsView.vue"),
     },
     {
       path: "/:id/edit",
       name: ROUTES.edit,
       props: true,
-      component: () => import("../views/FormRecipesView.vue"),
+      component: () => import("../views/Recipes/RecipesEditView.vue"),
     },
     {
       path: "/login",
       name: ROUTES.login,
-      component: () => import("../views/LoginView.vue"),
+      component: () => import("../views/User/LoginView.vue"),
     },
     {
       path: "/register",
       name: ROUTES.register,
-      component: () => import("../views/RegisterView.vue"),
+      component: () => import("../views/User/RegisterView.vue"),
     },
     {
       path: "/reset-password",
       name: ROUTES.resetPassword,
-      component: () => import("../views/ResetPasswordView.vue"),
+      component: () => import("../views/User/ResetPasswordView.vue"),
     },
     {
       path: "/update-password",
       name: ROUTES.updatePassword,
-      component: () => import("../views/UpdatePasswordView.vue"),
+      component: () => import("../views/User/UpdatePasswordView.vue"),
     },
   ],
 });
 
-router.beforeEach(async (to, from, next) => {
+router.beforeEach(async (to, _, next) => {
   const publicRoutes = [
     ROUTES.login.toString(),
     ROUTES.register.toString(),
@@ -60,7 +60,9 @@ router.beforeEach(async (to, from, next) => {
   ];
   const toName = to.name ? to.name.toString() : "";
   if (!publicRoutes.includes(toName) && !(await getSession())) {
-    next({ name: "login" });
+    next({ name: ROUTES.login });
+  } else if (publicRoutes.includes(toName) && (await getSession())) {
+    next({ name: ROUTES.home });
   } else {
     next();
   }

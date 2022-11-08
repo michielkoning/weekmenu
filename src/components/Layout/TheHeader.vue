@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import CenterWrapper from "@/components/Shared/CenterWrapper.vue";
+import CenterWrapper from "@/components/Layout/CenterWrapper.vue";
 import BtnLogout from "@/components/User/BtnLogout.vue";
-import BreadCrumb from "@/components/Shared/BreadCrumb.vue";
+import BreadCrumb from "@/components/Layout/BreadCrumb.vue";
 </script>
 
 <template>

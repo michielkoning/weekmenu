@@ -7,6 +7,7 @@ import FormFieldset from "@/components/Forms/Elements/FormFieldset.vue";
 import FormInputText from "@/components/Forms/Elements/FormInputText.vue";
 import FormTextarea from "@/components/Forms/Elements/FormTextarea.vue";
 import AppForm from "@/components/Forms/Elements/AppForm.vue";
+import TheDashboard from "@/components/Layout/TheDashboard.vue";
 import useBreadCrumb from "@/composables/useBreadCrumb";
 import { ROUTES } from "@/enums/routes";
 
@@ -99,34 +100,36 @@ const submit = async () => {
 </script>
 
 <template>
-  <h1>{{ pageTitle }}</h1>
-  <app-form
-    :submitted="false"
-    :button-title="pageTitle"
-    :error="error"
-    @submit="submit"
-  >
-    <form-fieldset title="Recept">
-      <form-input-text id="title" v-model="formData.title" title="Title" />
-      <form-input-text
-        id="preperationTime"
-        v-model="formData.preperationTime"
-        title="Bereidingstijd"
-        type="number"
-      />
-      <form-textarea
-        id="content"
-        v-model="formData.content"
-        :rows="8"
-        title="Content"
-      />
+  <the-dashboard>
+    <h1>{{ pageTitle }}</h1>
+    <app-form
+      :submitted="false"
+      :button-title="pageTitle"
+      :error="error"
+      @submit="submit"
+    >
+      <form-fieldset title="Recept">
+        <form-input-text id="title" v-model="formData.title" title="Title" />
+        <form-input-text
+          id="preperationTime"
+          v-model="formData.preperationTime"
+          title="Bereidingstijd"
+          type="number"
+        />
+        <form-textarea
+          id="content"
+          v-model="formData.content"
+          :rows="8"
+          title="Content"
+        />
 
-      <form-textarea
-        id="ingredients"
-        v-model="formData.ingredients"
-        :rows="8"
-        title="Ingredients"
-      />
-    </form-fieldset>
-  </app-form>
+        <form-textarea
+          id="ingredients"
+          v-model="formData.ingredients"
+          :rows="8"
+          title="Ingredients"
+        />
+      </form-fieldset>
+    </app-form>
+  </the-dashboard>
 </template>

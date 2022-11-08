@@ -26,6 +26,10 @@ withDefaults(
   }
 }
 
+.wrapper-sm {
+  --wrapper-width: var(--container-width-sm);
+}
+
 .wrapper-md {
   --wrapper-width: var(--container-width-md);
 }

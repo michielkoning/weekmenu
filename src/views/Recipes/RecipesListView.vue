@@ -2,8 +2,9 @@
 import type { IRecipe } from "@/types/IRecipe";
 import { onMounted, ref, type Ref } from "vue";
 import { getAll } from "@/db/recipes";
-import AppButton from "@/components/Shared/AppButton.vue";
 import { ROUTES } from "@/enums/routes";
+import AppButton from "@/components/Shared/AppButton.vue";
+import TheDashboard from "@/components/Layout/TheDashboard.vue";
 
 const loading = ref(true);
 const error: Ref<null | string> = ref(null);
@@ -28,7 +29,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="home">
+  <the-dashboard>
     <h1>{{ $t("list.title") }}</h1>
     <div v-if="loading" />
     <p v-else-if="error">{{ error }}</p>
@@ -48,7 +49,7 @@ onMounted(async () => {
       </p>
       <p><app-button :to="{ name: ROUTES.add }">Nieuw</app-button></p>
     </div>
-  </div>
+  </the-dashboard>
 </template>
 
 <style lang="postcss" scoped>
