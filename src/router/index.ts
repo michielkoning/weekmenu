@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "@/views/Recipes/HomeView.vue";
+import HomeView from "@/views/Recipes/RecipesListView.vue";
 import { getUser } from "@/db/user";
 import { ROUTES } from "@/enums/routes";
 
@@ -14,7 +14,7 @@ const router = createRouter({
     {
       path: "/add/",
       name: ROUTES.add,
-      component: () => import("../views/Recipes/FormRecipesView.vue"),
+      component: () => import("../views/Recipes/RecipesEditView.vue"),
     },
 
     {
@@ -27,17 +27,17 @@ const router = createRouter({
       path: "/:id/edit",
       name: ROUTES.edit,
       props: true,
-      component: () => import("../views/Recipes/FormRecipesView.vue"),
+      component: () => import("../views/Recipes/RecipesEditView.vue"),
     },
     {
       path: "/login",
       name: ROUTES.login,
-      component: () => import("../views/LoginView.vue"),
+      component: () => import("../views/User/LoginView.vue"),
     },
     {
       path: "/register",
       name: ROUTES.register,
-      component: () => import("../views/RegisterView.vue"),
+      component: () => import("../views/User/RegisterView.vue"),
     },
   ],
 });
