@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import AppButton from "@/components/Shared/AppButton.vue";
-import FormErrorMessage from "@/components/Forms/FormErrorMessage.vue";
+import FormErrorMessage from "@/components/Forms/Elements/FormErrorMessage.vue";
 
 withDefaults(
   defineProps<{

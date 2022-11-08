@@ -12,5 +12,5 @@ const logout = async () => {
 </script>
 
 <template>
-  <button @click="logout" class="btn-link">Uitloggen</button>
+  <button class="btn-link" @click="logout">Uitloggen</button>
 </template>

@@ -5,7 +5,7 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import FormField from "@/components/Forms/FormField.vue";
+import FormField from "@/components/Forms/Elements/FormField.vue";
 import type { ErrorObject } from "@vuelidate/core";
 
 withDefaults(

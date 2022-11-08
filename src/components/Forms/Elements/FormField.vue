@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import FormErrorMessage from "@/components/Forms/FormErrorMessage.vue";
+import FormErrorMessage from "@/components/Forms/Elements/FormErrorMessage.vue";
 import type { ErrorObject } from "@vuelidate/core";
 import { computed } from "vue";
 

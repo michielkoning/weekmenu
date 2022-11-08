@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import FormRegister from "@/components/Forms/FormRegister.vue";
+import FormResetPassword from "@/components/Forms/FormResetPassword.vue";
 import { ROUTES } from "@/enums/routes";
 </script>
 
 <template>
-  <h1>Registreren</h1>
-  <form-register />
+  <h1>Reset wachtwoord</h1>
+  <form-reset-password />
   <router-link :to="{ name: ROUTES.login }">Ga naar inloggen</router-link>
 </template>

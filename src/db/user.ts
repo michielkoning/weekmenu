@@ -1,9 +1,9 @@
 import { supabase } from "@/supabase";
 
-export const getUser = async () => {
+export const getSession = async () => {
   const { data, error } = await supabase.auth.getSession();
   if (data.session) {
-    return data.session.user;
+    return data.session;
   }
   if (error) throw error;
   return null;
@@ -22,6 +22,18 @@ export const register = async (email: string, password: string) => {
     email,
     password,
   });
+  if (error) throw error;
+};
+
+export const resetPassword = async (email: string) => {
+  const { error } = await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: "http://localhost:5173/update-password",
+  });
+  if (error) throw error;
+};
+
+export const updatePassword = async (password: string) => {
+  const { error } = await supabase.auth.updateUser({ password });
   if (error) throw error;
 };
 

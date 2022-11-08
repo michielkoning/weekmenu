@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import FormFieldset from "@/components/Forms/FormFieldset.vue";
-import FormInputText from "@/components/Forms/FormInputText.vue";
-import AppForm from "@/components/Forms/AppForm.vue";
-import { reactive, computed, toRef } from "vue";
+import FormFieldset from "@/components/Forms/Elements/FormFieldset.vue";
+import FormInputText from "@/components/Forms/Elements/FormInputText.vue";
+import AppForm from "@/components/Forms/Elements/AppForm.vue";
+import { reactive, computed } from "vue";
 import { useVuelidate } from "@vuelidate/core";
 import { email, required, minLength } from "@/i18n/validators";
 import useValidate from "@/composables/useValidate";
+import useUser from "@/composables/useUser";
+const { register, loading, error, success } = useUser();
 
 const formData = reactive({
   email: "",
@@ -23,21 +25,7 @@ const rules = computed(() => ({
   },
 }));
 
-const props = withDefaults(
-  defineProps<{
-    loading: boolean;
-    title: string;
-    error: null | string;
-    isLogin?: boolean;
-  }>(),
-  {
-    loading: false,
-    isLogin: true,
-  }
-);
-const emit = defineEmits(["submit"]);
 const v$ = useVuelidate(rules, formData, { $lazy: true });
-const error = toRef(props, "error");
 
 const { formError } = useValidate(v$, error);
 
@@ -46,18 +34,20 @@ const submit = async () => {
   if (!isFormCorrect) {
     return;
   }
-  emit("submit", { email: formData.email, password: formData.password });
+  await register(formData.email, formData.password);
 };
 </script>
 
 <template>
+  <p v-if="success">Success</p>
   <app-form
+    v-else
     :loading="loading"
-    :button-title="title"
+    button-title="Registeren"
     :error="formError"
     @submit="submit"
   >
-    <form-fieldset :title="title">
+    <form-fieldset title="Registeren">
       <form-input-text
         id="email"
         v-model="formData.email"
@@ -73,7 +63,7 @@ const submit = async () => {
         :errors="v$.password.$errors"
         type="password"
         title="Wachtwoord"
-        :autocomplete="isLogin ? 'current-password' : 'new-password'"
+        autocomplete="new-password"
         @blur="v$.password.$touch"
       />
     </form-fieldset>

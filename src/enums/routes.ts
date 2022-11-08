@@ -5,4 +5,6 @@ export enum ROUTES {
   details = "details",
   login = "login",
   register = "register",
+  resetPassword = "reset-password",
+  updatePassword = "update-password",
 }

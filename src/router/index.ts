@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "@/views/HomeView.vue";
-import { getUser } from "@/db/user";
+import { getSession } from "@/db/user";
 import { ROUTES } from "@/enums/routes";
 
 const router = createRouter({
@@ -39,13 +39,27 @@ const router = createRouter({
       name: ROUTES.register,
       component: () => import("../views/RegisterView.vue"),
     },
+    {
+      path: "/reset-password",
+      name: ROUTES.resetPassword,
+      component: () => import("../views/ResetPasswordView.vue"),
+    },
+    {
+      path: "/update-password",
+      name: ROUTES.updatePassword,
+      component: () => import("../views/UpdatePasswordView.vue"),
+    },
   ],
 });
 
 router.beforeEach(async (to, from, next) => {
-  const publicRoutes = [ROUTES.login.toString(), ROUTES.register.toString()];
+  const publicRoutes = [
+    ROUTES.login.toString(),
+    ROUTES.register.toString(),
+    ROUTES.resetPassword.toString(),
+  ];
   const toName = to.name ? to.name.toString() : "";
-  if (!publicRoutes.includes(toName) && !(await getUser())) {
+  if (!publicRoutes.includes(toName) && !(await getSession())) {
     next({ name: "login" });
   } else {
     next();

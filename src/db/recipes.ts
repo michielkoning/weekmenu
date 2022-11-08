@@ -1,6 +1,6 @@
 import { supabase } from "@/supabase";
 import type { IFormData, IRecipe, IRecipeBase } from "@/types/IRecipe";
-import { getUser } from "@/db/user";
+import { getSession } from "@/db/user";
 
 const createArrayOfInput = (input: string) => {
   const list = input.split("\n");
@@ -24,15 +24,15 @@ const createIngredients = (input: string) => {
 };
 
 export const getAll = async () => {
-  const user = await getUser();
-  if (!user) {
+  const session = await getSession();
+  if (!session) {
     throw "No user";
   }
 
   const { data, error, status } = await supabase
     .from("recipes")
     .select(`title, id`)
-    .eq("user_id", user.id)
+    .eq("user_id", session.user.id)
     .order("title");
 
   if (error && status !== 406) throw new Error(error.message);
@@ -41,15 +41,15 @@ export const getAll = async () => {
 };
 
 export const getDetails = async (id: string) => {
-  const user = await getUser();
-  if (!user) {
+  const session = await getSession();
+  if (!session) {
     throw "No user";
   }
 
   const { data, error, status } = await supabase
     .from("recipes")
     .select(`title, id, content, ingredients, preperationTime`)
-    .match({ id, user_id: user.id })
+    .match({ id, user_id: session.user.id })
     .single();
 
   if (error && status !== 406) throw new Error(error.message);
@@ -58,15 +58,15 @@ export const getDetails = async (id: string) => {
 };
 
 export const edit = async (formData: IFormData) => {
-  const user = await getUser();
-  if (!user) {
+  const session = await getSession();
+  if (!session) {
     throw "No user";
   }
   const content = createArrayOfInput(formData.content);
   const ingredients = createIngredients(formData.ingredients);
 
   let updates: IRecipe = {
-    user_id: user.id,
+    user_id: session.user.id,
     title: formData.title,
     preperationTime: formData.preperationTime,
     content,
@@ -91,15 +91,15 @@ export const edit = async (formData: IFormData) => {
 };
 
 export const remove = async (id: string) => {
-  const user = await getUser();
-  if (!user) {
+  const session = await getSession();
+  if (!session) {
     throw "No user";
   }
 
   const { error, status } = await supabase
     .from("recipes")
     .delete()
-    .match({ id, user_id: user.id });
+    .match({ id, user_id: session.user.id });
 
   if (error && status !== 406) throw new Error(error.message);
 };

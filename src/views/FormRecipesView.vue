@@ -3,10 +3,10 @@ import { computed, onMounted, onUnmounted, reactive, ref, type Ref } from "vue";
 import { getDetails, edit } from "@/db/recipes";
 import type { IFormData, IIngredient } from "@/types/IRecipe";
 import { useRouter } from "vue-router";
-import FormFieldset from "@/components/Forms/FormFieldset.vue";
-import FormInputText from "@/components/Forms/FormInputText.vue";
-import FormTextarea from "@/components/Forms/FormTextarea.vue";
-import AppForm from "@/components/Forms/AppForm.vue";
+import FormFieldset from "@/components/Forms/Elements/FormFieldset.vue";
+import FormInputText from "@/components/Forms/Elements/FormInputText.vue";
+import FormTextarea from "@/components/Forms/Elements/FormTextarea.vue";
+import AppForm from "@/components/Forms/Elements/AppForm.vue";
 import useBreadCrumb from "@/composables/useBreadCrumb";
 import { ROUTES } from "@/enums/routes";
 
