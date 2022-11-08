@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { onMounted, ref, type Ref } from "vue";
-import TheHeader from "@/components/Shared/TheHeader.vue";
+import TheHeader from "@/components/Layout/TheHeader.vue";
 import { supabase } from "@/supabase";
-import CenterWrapper from "@/components/Shared/CenterWrapper.vue";
+import CenterWrapper from "@/components/Layout/CenterWrapper.vue";
 import { getUser } from "./db/user";
 import type { User } from "@supabase/gotrue-js";
 
