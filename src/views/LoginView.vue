@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import FormLogin from "@/components/User/FormLogin.vue";
+import LoginWrapper from "@/components/Layout/LoginWrapper.vue";
 import { useRouter } from "vue-router";
 import { ROUTES } from "@/enums/routes";
 import useUser from "@/composables/useUser";
+
 const { login, loading, error, success } = useUser();
 
 const router = useRouter();
@@ -22,12 +24,17 @@ const submit = async ({
 </script>
 
 <template>
-  <h1>Inloggen</h1>
-  <form-login
-    :loading="loading"
-    title="Inloggen"
-    :error="error"
-    @submit="submit"
-  />
-  <router-link :to="{ name: ROUTES.register }">Ga naar registreren</router-link>
+  <login-wrapper title="Inloggen">
+    <form-login
+      :loading="loading"
+      title="Inloggen"
+      :error="error"
+      @submit="submit"
+    />
+    <template #footer>
+      <router-link :to="{ name: ROUTES.register }">
+        Ga naar registreren
+      </router-link>
+    </template>
+  </login-wrapper>
 </template>

@@ -24,8 +24,6 @@ onMounted(async () => {
 <template>
   <main>
     <the-header v-if="session" />
-    <center-wrapper>
-      <router-view />
-    </center-wrapper>
+    <router-view />
   </main>
 </template>
