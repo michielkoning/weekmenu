@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "@/views/HomeView.vue";
+import HomeView from "@/views/Recipes/HomeView.vue";
 import { getUser } from "@/db/user";
 import { ROUTES } from "@/enums/routes";
 
@@ -14,20 +14,20 @@ const router = createRouter({
     {
       path: "/add/",
       name: ROUTES.add,
-      component: () => import("../views/FormRecipesView.vue"),
+      component: () => import("../views/Recipes/FormRecipesView.vue"),
     },
 
     {
       path: "/:id",
       name: ROUTES.details,
       props: true,
-      component: () => import("../views/RecipeDetailsView.vue"),
+      component: () => import("../views/Recipes/RecipeDetailsView.vue"),
     },
     {
       path: "/:id/edit",
       name: ROUTES.edit,
       props: true,
-      component: () => import("../views/FormRecipesView.vue"),
+      component: () => import("../views/Recipes/FormRecipesView.vue"),
     },
     {
       path: "/login",
@@ -42,11 +42,13 @@ const router = createRouter({
   ],
 });
 
-router.beforeEach(async (to, from, next) => {
+router.beforeEach(async (to, _, next) => {
   const publicRoutes = [ROUTES.login.toString(), ROUTES.register.toString()];
   const toName = to.name ? to.name.toString() : "";
   if (!publicRoutes.includes(toName) && !(await getUser())) {
-    next({ name: "login" });
+    next({ name: ROUTES.login });
+  } else if (publicRoutes.includes(toName) && (await getUser())) {
+    next({ name: ROUTES.home });
   } else {
     next();
   }
