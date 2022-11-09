@@ -57,7 +57,7 @@ const deleteRecipe = async () => {
   try {
     loading.value = true;
     await remove(props.id);
-    router.push({ name: ROUTES.home });
+    router.push({ name: ROUTES.recipes_home });
   } catch (error) {
     console.error(error);
   } finally {
@@ -78,7 +78,7 @@ const deleteRecipe = async () => {
             :preperation="recipe.content"
           />
           <div class="buttons">
-            <app-button :to="{ name: ROUTES.edit, params: { id } }">
+            <app-button :to="{ name: ROUTES.recipes_edit, params: { id } }">
               Edit
             </app-button>
             <app-button @click="deleteRecipe">Delete</app-button>

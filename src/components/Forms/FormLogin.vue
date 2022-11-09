@@ -39,7 +39,7 @@ const submit = async () => {
   }
   await login(formData.email, formData.password);
   if (success.value) {
-    router.push({ name: ROUTES.home });
+    router.push({ name: ROUTES.recipes_home });
   }
 };
 </script>

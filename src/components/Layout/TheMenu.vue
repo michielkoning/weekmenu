@@ -9,7 +9,9 @@ import CenterWrapper from "@/components/Layout/CenterWrapper.vue";
     <center-wrapper>
       <ul>
         <li>
-          <router-link :to="{ name: ROUTES.home }">Recepten</router-link>
+          <router-link :to="{ name: ROUTES.recipes_home }">
+            Recepten
+          </router-link>
         </li>
         <li>
           <router-link to="test">Weekmenu</router-link>

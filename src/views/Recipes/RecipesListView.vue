@@ -37,7 +37,7 @@ onMounted(async () => {
       <ul v-if="recipes.length" class="list">
         <li v-for="recipe in recipes" :key="recipe.title">
           <router-link
-            :to="{ name: ROUTES.details, params: { id: recipe.id } }"
+            :to="{ name: ROUTES.recipes_details, params: { id: recipe.id } }"
           >
             {{ recipe.title }}
           </router-link>
@@ -47,7 +47,7 @@ onMounted(async () => {
       <p v-else>
         {{ $t("list.no-results") }}
       </p>
-      <p><app-button :to="{ name: ROUTES.add }">Nieuw</app-button></p>
+      <p><app-button :to="{ name: ROUTES.recipes_add }">Nieuw</app-button></p>
     </div>
   </the-dashboard>
 </template>

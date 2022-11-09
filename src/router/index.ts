@@ -8,61 +8,61 @@ const router = createRouter({
   routes: [
     {
       path: "/",
-      name: ROUTES.home,
+      name: ROUTES.recipes_home,
       component: HomeView,
     },
     {
       path: "/add/",
-      name: ROUTES.add,
+      name: ROUTES.recipes_add,
       component: () => import("../views/Recipes/RecipesEditView.vue"),
     },
 
     {
       path: "/:id",
-      name: ROUTES.details,
+      name: ROUTES.recipes_details,
       props: true,
       component: () => import("../views/Recipes/RecipeDetailsView.vue"),
     },
     {
       path: "/:id/edit",
-      name: ROUTES.edit,
+      name: ROUTES.recipes_edit,
       props: true,
       component: () => import("../views/Recipes/RecipesEditView.vue"),
     },
     {
       path: "/login",
-      name: ROUTES.login,
-      component: () => import("../views/User/LoginView.vue"),
+      name: ROUTES.auth_login,
+      component: () => import("../views/Auth/LoginView.vue"),
     },
     {
       path: "/register",
-      name: ROUTES.register,
-      component: () => import("../views/User/RegisterView.vue"),
+      name: ROUTES.auth_register,
+      component: () => import("../views/Auth/RegisterView.vue"),
     },
     {
       path: "/reset-password",
-      name: ROUTES.resetPassword,
-      component: () => import("../views/User/ResetPasswordView.vue"),
+      name: ROUTES.auth_resetPassword,
+      component: () => import("../views/Auth/ResetPasswordView.vue"),
     },
     {
       path: "/update-password",
-      name: ROUTES.updatePassword,
-      component: () => import("../views/User/UpdatePasswordView.vue"),
+      name: ROUTES.auth_updatePassword,
+      component: () => import("../views/Auth/UpdatePasswordView.vue"),
     },
   ],
 });
 
 router.beforeEach(async (to, _, next) => {
   const publicRoutes = [
-    ROUTES.login.toString(),
-    ROUTES.register.toString(),
-    ROUTES.resetPassword.toString(),
+    ROUTES.auth_login.toString(),
+    ROUTES.auth_register.toString(),
+    ROUTES.auth_resetPassword.toString(),
   ];
   const toName = to.name ? to.name.toString() : "";
   if (!publicRoutes.includes(toName) && !(await getSession())) {
-    next({ name: ROUTES.login });
+    next({ name: ROUTES.auth_login });
   } else if (publicRoutes.includes(toName) && (await getSession())) {
-    next({ name: ROUTES.home });
+    next({ name: ROUTES.recipes_home });
   } else {
     next();
   }

@@ -8,10 +8,10 @@ import { ROUTES } from "@/enums/routes";
   <login-wrapper title="Inloggen">
     <form-login />
     <template #footer>
-      <router-link :to="{ name: ROUTES.register }"
+      <router-link :to="{ name: ROUTES.auth_register }"
         >Ga naar registreren</router-link
       ><br />
-      <router-link :to="{ name: ROUTES.resetPassword }">
+      <router-link :to="{ name: ROUTES.auth_resetPassword }">
         Wachtwoord vergeten
       </router-link>
     </template>

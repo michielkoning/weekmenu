@@ -7,7 +7,7 @@ const router = useRouter();
 
 const logout = async () => {
   await logoutUser();
-  router.push({ name: ROUTES.login });
+  router.push({ name: ROUTES.auth_login });
 };
 </script>
 

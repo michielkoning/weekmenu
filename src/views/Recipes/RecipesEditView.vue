@@ -58,7 +58,7 @@ onMounted(async () => {
         .join("\n");
       formData.ingredients = ingredients;
       addToBreadCrumb(formData.title, {
-        name: ROUTES.details,
+        name: ROUTES.recipes_details,
         params: { id: props.id },
       });
     } catch (error) {
@@ -83,7 +83,7 @@ const submit = async () => {
       throw "No Response";
     }
     router.push({
-      name: ROUTES.details,
+      name: ROUTES.recipes_details,
       params: {
         id: response.id,
       },

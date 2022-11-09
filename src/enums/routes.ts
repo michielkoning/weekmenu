@@ -1,10 +1,11 @@
 export enum ROUTES {
-  add = "add",
-  edit = "edit",
-  home = "home",
-  details = "details",
-  login = "login",
-  register = "register",
-  resetPassword = "reset-password",
-  updatePassword = "update-password",
+  auth_login = "auth/login",
+  auth_register = "rauth/egister",
+  auth_resetPassword = "auth/reset-password",
+  auth_updatePassword = "auth/update-password",
+
+  recipes_home = "recipes/home",
+  recipes_details = "recipes/details",
+  recipes_add = "recipes/add",
+  recipes_edit = "recipes/edit",
 }
