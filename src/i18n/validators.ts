@@ -16,6 +16,7 @@ export const minLength = withI18nMessage(validators.minLength, {
   withArguments: true,
 });
 export const email = withI18nMessage(validators.email);
+export const numeric = withI18nMessage(validators.numeric);
 
 // or you can provide the param at definition, statically
 export const maxLength = withI18nMessage(validators.maxLength(10));

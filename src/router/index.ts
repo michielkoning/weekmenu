@@ -18,7 +18,7 @@ const router = createRouter({
         {
           path: "add/",
           name: ROUTES.recipes_add,
-          component: () => import("../views/Recipes/RecipesEditView.vue"),
+          component: () => import("../views/Recipes/RecipesUpsertView.vue"),
         },
 
         {
@@ -31,7 +31,7 @@ const router = createRouter({
           path: ":id/edit",
           name: ROUTES.recipes_edit,
           props: true,
-          component: () => import("../views/Recipes/RecipesEditView.vue"),
+          component: () => import("../views/Recipes/RecipesUpsertView.vue"),
         },
       ],
     },

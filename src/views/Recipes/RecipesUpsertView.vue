@@ -12,7 +12,7 @@ const recipe = reactive<IRecipeDetails>({
   title: "",
   content: [],
   ingredients: [],
-  preperationTime: 60,
+  preperationTime: 0,
 });
 
 const loading = ref(false);
@@ -40,7 +40,7 @@ onMounted(async () => {
       recipe.title = response.title;
       recipe.preperationTime = response.preperationTime;
       recipe.content = response.content;
-      recipe.ingredients = response.ingredients;
+      recipe.ingredients = response.ingredients || [];
       addToBreadCrumb(recipe.title, {
         name: ROUTES.recipes_details,
         params: { id: props.id },

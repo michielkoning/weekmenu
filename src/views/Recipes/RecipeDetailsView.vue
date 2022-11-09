@@ -35,7 +35,7 @@ onMounted(async () => {
     }
     recipe.title = response.title;
     recipe.content = response.content;
-    recipe.ingredients = response.ingredients;
+    recipe.ingredients = response.ingredients || [];
     recipe.preperationTime = response.preperationTime;
 
     addToBreadCrumb(recipe.title);
@@ -83,11 +83,10 @@ const deleteRecipe = async () => {
         </div>
       </div>
       <aside>
-        <total-eaters />
-        <ingredients-list
-          v-if="recipe.ingredients"
-          :ingredients="recipe.ingredients"
-        />
+        <template v-if="recipe.ingredients.length">
+          <total-eaters />
+          <ingredients-list :ingredients="recipe.ingredients" />
+        </template>
         <recipe-meta-data :recipe="recipe" />
       </aside>
     </div>
