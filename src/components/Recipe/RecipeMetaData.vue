@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import type { IRecipe } from "@/types/IRecipe";
+import type { IRecipeDetails } from "@/types/IRecipe";
 import IconClock from "@/components/Icons/IconClock.vue";
 import AppIcon from "@/components/Icons/AppIcon.vue";
 
 defineProps<{
-  recipe: IRecipe;
+  recipe: IRecipeDetails;
 }>();
 </script>
 

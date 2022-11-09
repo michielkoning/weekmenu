@@ -1,27 +1,6 @@
 import { supabase } from "@/supabase";
-import type { IFormData, IRecipe, IRecipeBase } from "@/types/IRecipe";
+import type { IRecipe, IRecipeDetails } from "@/types/IRecipe";
 import { getSession } from "@/db/user";
-
-const createArrayOfInput = (input: string) => {
-  const list = input.split("\n");
-  return list.filter((item) => item !== "");
-};
-
-const createIngredients = (input: string) => {
-  const list = createArrayOfInput(input);
-  return list.map((ingredient) => {
-    const matches = ingredient.split(/(\d+)/).filter(Boolean);
-    if (matches.length > 0 && !isNaN(parseFloat(matches[0]))) {
-      return {
-        amount: parseFloat(matches[0]),
-        title: matches[1],
-      };
-    }
-    return {
-      title: ingredient,
-    };
-  });
-};
 
 export const getAll = async () => {
   const session = await getSession();
@@ -37,7 +16,7 @@ export const getAll = async () => {
 
   if (error && status !== 406) throw new Error(error.message);
 
-  return data as IRecipeBase[];
+  return data as IRecipe[];
 };
 
 export const getDetails = async (id: string) => {
@@ -54,23 +33,21 @@ export const getDetails = async (id: string) => {
 
   if (error && status !== 406) throw new Error(error.message);
 
-  return data as IRecipe;
+  return data as IRecipeDetails;
 };
 
-export const upsert = async (formData: IFormData) => {
+export const upsert = async (formData: IRecipeDetails) => {
   const session = await getSession();
   if (!session) {
     throw "No user";
   }
-  const content = createArrayOfInput(formData.content);
-  const ingredients = createIngredients(formData.ingredients);
 
-  let updates: IRecipe = {
+  let updates: IRecipeDetails = {
     user_id: session.user.id,
     title: formData.title,
     preperationTime: formData.preperationTime,
-    content,
-    ingredients,
+    content: formData.content,
+    ingredients: formData.ingredients,
   };
 
   if (formData.id) {
@@ -87,7 +64,7 @@ export const upsert = async (formData: IFormData) => {
 
   if (error && status !== 406) throw new Error(error.message);
 
-  return data as IRecipe;
+  return data as IRecipeDetails;
 };
 
 export const remove = async (id: string) => {

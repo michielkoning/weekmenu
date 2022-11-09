@@ -36,6 +36,27 @@ const { formError } = useValidate(v$, error);
 const loading = ref(false);
 const router = useRouter();
 
+const createArrayOfInput = (input: string) => {
+  const list = input.split("\n");
+  return list.filter((item) => item !== "");
+};
+
+const createIngredients = (input: string) => {
+  const list = createArrayOfInput(input);
+  return list.map((ingredient) => {
+    const matches = ingredient.split(/(\d+)/).filter(Boolean);
+    if (matches.length > 0 && !isNaN(parseFloat(matches[0]))) {
+      return {
+        amount: parseFloat(matches[0]),
+        title: matches[1],
+      };
+    }
+    return {
+      title: ingredient,
+    };
+  });
+};
+
 const props = defineProps<{
   title: string;
   recipe?: IRecipeDetails;
@@ -50,7 +71,15 @@ const submit = async () => {
 
   try {
     loading.value = true;
-    const response = await upsert(formData);
+
+    const content = createArrayOfInput(formData.content);
+    const ingredients = createIngredients(formData.ingredients);
+
+    const response = await upsert({
+      ...formData,
+      ingredients,
+      content,
+    });
     if (!response) {
       throw "No Response";
     }

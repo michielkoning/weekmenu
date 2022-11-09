@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, reactive, ref } from "vue";
 import { getDetails, remove } from "@/db/recipes";
-import type { IRecipe } from "@/types/IRecipe";
+import type { IRecipeDetails } from "@/types/IRecipe";
 import IngredientsList from "@/components/Recipe/IngredientsList.vue";
 import RecipePreperation from "@/components/Recipe/RecipePreperation.vue";
 import RecipeMetaData from "@/components/Recipe/RecipeMetaData.vue";
@@ -13,7 +13,7 @@ import { ROUTES } from "@/enums/routes";
 
 const { add: addToBreadCrumb, remove: removeFromBreadCrumb } = useBreadCrumb();
 
-const recipe = reactive<IRecipe>({
+const recipe = reactive<IRecipeDetails>({
   title: "",
   content: [],
   ingredients: [],
