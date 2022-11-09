@@ -1,0 +1,110 @@
+<script setup lang="ts">
+import { reactive, ref, toRef, watchEffect, type Ref } from "vue";
+import { upsert } from "@/db/recipes";
+import type { IFormData, IIngredient, IRecipeDetails } from "@/types/IRecipe";
+import { useRouter } from "vue-router";
+import FormFieldset from "@/components/Forms/Elements/FormFieldset.vue";
+import FormInputText from "@/components/Forms/Elements/FormInputText.vue";
+import FormTextarea from "@/components/Forms/Elements/FormTextarea.vue";
+import AppForm from "@/components/Forms/Elements/AppForm.vue";
+import { ROUTES } from "@/enums/routes";
+
+const error: Ref<string | null> = ref(null);
+
+const formData = reactive<IFormData>({
+  title: "",
+  content: "",
+  ingredients: "",
+  preperationTime: 60,
+});
+
+const loading = ref(false);
+const router = useRouter();
+
+const props = defineProps<{
+  title: string;
+  recipe?: IRecipeDetails;
+}>();
+const recipe = toRef(props, "recipe");
+
+const submit = async () => {
+  try {
+    loading.value = true;
+    const response = await upsert(formData);
+    if (!response) {
+      throw "No Response";
+    }
+    router.push({
+      name: ROUTES.recipes_details,
+      params: {
+        id: response.id,
+      },
+    });
+  } catch (err) {
+    console.log(err instanceof Error);
+    if (err instanceof Error) {
+      error.value = err.message;
+    }
+  } finally {
+    loading.value = false;
+  }
+};
+
+const setFormData = () => {
+  if (!recipe.value) {
+    return;
+  }
+  formData.id = recipe.value.id;
+  formData.title = recipe.value.title;
+  formData.preperationTime = recipe.value.preperationTime;
+  if (recipe.value.content) {
+    formData.content = recipe.value.content.join("\n\n");
+  }
+  formData.ingredients = recipe.value.ingredients
+    .map((ingredient: IIngredient) => {
+      if (ingredient.amount) {
+        return `${ingredient.amount} ${ingredient.title}`;
+      }
+      return ingredient.title;
+    })
+    .join("\n");
+};
+
+watchEffect(() => {
+  if (recipe.value) {
+    setFormData();
+  }
+});
+</script>
+
+<template>
+  <app-form
+    :submitted="false"
+    :button-title="title"
+    :error="error"
+    @submit="submit"
+  >
+    <form-fieldset title="Recept">
+      <form-input-text id="title" v-model="formData.title" title="Title" />
+      <form-input-text
+        id="preperationTime"
+        v-model="formData.preperationTime"
+        title="Bereidingstijd"
+        type="number"
+      />
+      <form-textarea
+        id="content"
+        v-model="formData.content"
+        :rows="8"
+        title="Content"
+      />
+
+      <form-textarea
+        id="ingredients"
+        v-model="formData.ingredients"
+        :rows="8"
+        title="Ingredients"
+      />
+    </form-fieldset>
+  </app-form>
+</template>

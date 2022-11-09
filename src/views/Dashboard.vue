@@ -7,7 +7,7 @@ import TheHeader from "@/components/Layout/TheHeader.vue";
   <the-header />
   <main>
     <center-wrapper>
-      <slot />
+      <router-view />
     </center-wrapper>
   </main>
 </template>

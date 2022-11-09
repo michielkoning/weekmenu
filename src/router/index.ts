@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { getSession } from "@/db/user";
-import HomeView from "@/views/Recipes/RecipesListView.vue";
+import HomeView from "@/views/Dashboard.vue";
 import { ROUTES } from "@/enums/routes";
 
 const router = createRouter({
@@ -8,27 +8,34 @@ const router = createRouter({
   routes: [
     {
       path: "/",
-      name: ROUTES.recipes_home,
       component: HomeView,
-    },
-    {
-      path: "/add/",
-      name: ROUTES.recipes_add,
-      component: () => import("../views/Recipes/RecipesEditView.vue"),
+      children: [
+        {
+          path: "",
+          name: ROUTES.recipes_home,
+          component: () => import("../views/Recipes/RecipesListView.vue"),
+        },
+        {
+          path: "add/",
+          name: ROUTES.recipes_add,
+          component: () => import("../views/Recipes/RecipesEditView.vue"),
+        },
+
+        {
+          path: ":id",
+          name: ROUTES.recipes_details,
+          props: true,
+          component: () => import("../views/Recipes/RecipeDetailsView.vue"),
+        },
+        {
+          path: ":id/edit",
+          name: ROUTES.recipes_edit,
+          props: true,
+          component: () => import("../views/Recipes/RecipesEditView.vue"),
+        },
+      ],
     },
 
-    {
-      path: "/:id",
-      name: ROUTES.recipes_details,
-      props: true,
-      component: () => import("../views/Recipes/RecipeDetailsView.vue"),
-    },
-    {
-      path: "/:id/edit",
-      name: ROUTES.recipes_edit,
-      props: true,
-      component: () => import("../views/Recipes/RecipesEditView.vue"),
-    },
     {
       path: "/login",
       name: ROUTES.auth_login,

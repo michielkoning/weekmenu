@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import type { IRecipe } from "@/types/IRecipe";
-import { onMounted, ref, type Ref } from "vue";
+import { onMounted, ref, type Ref, toRef } from "vue";
 import { getAll } from "@/db/recipes";
 import { ROUTES } from "@/enums/routes";
 import AppButton from "@/components/Shared/AppButton.vue";
-import TheDashboard from "@/components/Layout/TheDashboard.vue";
 
 const loading = ref(true);
 const error: Ref<null | string> = ref(null);
@@ -29,27 +28,24 @@ onMounted(async () => {
 </script>
 
 <template>
-  <the-dashboard>
-    <h1>{{ $t("list.title") }}</h1>
-    <div v-if="loading" />
-    <p v-else-if="error">{{ error }}</p>
-    <div v-else>
-      <ul v-if="recipes.length" class="list">
-        <li v-for="recipe in recipes" :key="recipe.title">
-          <router-link
-            :to="{ name: ROUTES.recipes_details, params: { id: recipe.id } }"
-          >
-            {{ recipe.title }}
-          </router-link>
-        </li>
-      </ul>
+  <h1>{{ $t("list.title") }}</h1>
+  <p v-if="error">{{ error }}</p>
+  <div v-else>
+    <ul v-if="recipes.length" class="list">
+      <li v-for="recipe in recipes" :key="recipe.title">
+        <router-link
+          :to="{ name: ROUTES.recipes_details, params: { id: recipe.id } }"
+        >
+          {{ recipe.title }}
+        </router-link>
+      </li>
+    </ul>
 
-      <p v-else>
-        {{ $t("list.no-results") }}
-      </p>
-      <p><app-button :to="{ name: ROUTES.recipes_add }">Nieuw</app-button></p>
-    </div>
-  </the-dashboard>
+    <p v-else>
+      {{ $t("list.no-results") }}
+    </p>
+    <p><app-button :to="{ name: ROUTES.recipes_add }">Nieuw</app-button></p>
+  </div>
 </template>
 
 <style lang="postcss" scoped>

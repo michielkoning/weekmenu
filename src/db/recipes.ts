@@ -57,7 +57,7 @@ export const getDetails = async (id: string) => {
   return data as IRecipe;
 };
 
-export const edit = async (formData: IFormData) => {
+export const upsert = async (formData: IFormData) => {
   const session = await getSession();
   if (!session) {
     throw "No user";

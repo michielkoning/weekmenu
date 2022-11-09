@@ -15,6 +15,12 @@ export interface IRecipe extends IRecipeBase {
   preperationTime: number;
 }
 
+export interface IRecipeDetails extends IRecipeBase {
+  content: string[];
+  ingredients: IIngredient[];
+  preperationTime: number;
+}
+
 export interface IFormData extends IRecipeBase {
   content: string;
   ingredients: string;

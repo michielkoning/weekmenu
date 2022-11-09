@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, reactive, ref } from "vue";
+import { computed, onMounted, onUnmounted, reactive, ref } from "vue";
 import { getDetails, remove } from "@/db/recipes";
 import type { IRecipe } from "@/types/IRecipe";
 import IngredientsList from "@/components/Recipe/IngredientsList.vue";
@@ -7,7 +7,6 @@ import RecipePreperation from "@/components/Recipe/RecipePreperation.vue";
 import RecipeMetaData from "@/components/Recipe/RecipeMetaData.vue";
 import TotalEaters from "@/components/Recipe/TotalEaters.vue";
 import AppButton from "@/components/Shared/AppButton.vue";
-import TheDashboard from "@/components/Layout/TheDashboard.vue";
 import { useRouter } from "vue-router";
 import useBreadCrumb from "@/composables/useBreadCrumb";
 import { ROUTES } from "@/enums/routes";
@@ -67,34 +66,32 @@ const deleteRecipe = async () => {
 </script>
 
 <template>
-  <the-dashboard>
-    <div v-if="loading"></div>
-    <div v-else>
-      <h1 class="title">{{ recipe.title }}</h1>
-      <div class="details">
-        <div>
-          <recipe-preperation
-            v-if="recipe.content"
-            :preperation="recipe.content"
-          />
-          <div class="buttons">
-            <app-button :to="{ name: ROUTES.recipes_edit, params: { id } }">
-              Edit
-            </app-button>
-            <app-button @click="deleteRecipe">Delete</app-button>
-          </div>
+  <div v-if="loading" />
+  <div v-else-if="recipe">
+    <h1>{{ recipe.title }}</h1>
+    <div class="details">
+      <div>
+        <recipe-preperation
+          v-if="recipe.content"
+          :preperation="recipe.content"
+        />
+        <div class="buttons">
+          <app-button :to="{ name: ROUTES.recipes_edit, params: { id } }">
+            Edit
+          </app-button>
+          <app-button @click="deleteRecipe">Delete</app-button>
         </div>
-        <aside>
-          <total-eaters />
-          <ingredients-list
-            v-if="recipe.ingredients"
-            :ingredients="recipe.ingredients"
-          />
-          <recipe-meta-data :recipe="recipe" />
-        </aside>
       </div>
+      <aside>
+        <total-eaters />
+        <ingredients-list
+          v-if="recipe.ingredients"
+          :ingredients="recipe.ingredients"
+        />
+        <recipe-meta-data :recipe="recipe" />
+      </aside>
     </div>
-  </the-dashboard>
+  </div>
 </template>
 
 <style lang="postcss" scoped>
