@@ -1,9 +1,9 @@
-import type { IBreadCrumbItem } from "@/views/Auth/types/IBreadCrumb";
+import type { IRecipeItem } from "@/types/IRecipe";
 import { ref, type Ref } from "vue";
 import { useRoute } from "vue-router";
 import type { RouteLocationNamedRaw } from "vue-router";
 
-const breadcrumb: Ref<IBreadCrumbItem[]> = ref([
+const breadcrumb: Ref<IRecipeItem[]> = ref([
   {
     title: "Home",
     link: "/",

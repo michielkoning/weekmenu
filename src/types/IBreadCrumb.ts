@@ -1,6 +1,6 @@
 import type { RouteLocationNamedRaw } from "vue-router";
 
-export interface IBreadCrumbItem {
+export interface IRecipeItem {
   title: string;
   link: string | RouteLocationNamedRaw;
 }

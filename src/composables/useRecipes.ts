@@ -1,4 +1,4 @@
-import type { IRecipe, IRecipeDetails } from "@/views/Auth/types/IRecipe";
+import type { IRecipe, IRecipeDetails } from "@/types/IRecipe";
 import { reactive, ref, type Ref } from "vue";
 import { getAll, getDetails, remove } from "@/db/recipes";
 
