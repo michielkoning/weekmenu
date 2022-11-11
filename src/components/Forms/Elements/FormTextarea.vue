@@ -23,7 +23,7 @@ withDefaults(
   }
 );
 
-const emit = defineEmits(["update:modelValue"]);
+defineEmits(["update:modelValue", "blur"]);
 </script>
 
 <template>
@@ -37,6 +37,7 @@ const emit = defineEmits(["update:modelValue"]);
       @input="
         $emit('update:modelValue', ($event.target as HTMLTextAreaElement).value)
       "
+      @blur="$emit('blur')"
     />
   </form-field>
 </template>

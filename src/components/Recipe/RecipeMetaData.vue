@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import type { IRecipeDetails } from "@/types/IRecipe";
-import IconClock from "@/components/Icons/IconClock.vue";
 import AppIcon from "@/components/Icons/AppIcon.vue";
 
 defineProps<{

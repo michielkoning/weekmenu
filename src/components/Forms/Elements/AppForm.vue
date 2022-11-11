@@ -23,8 +23,8 @@ defineEmits(["submit"]);
     action=""
     method="post"
     novalidate
-    @submit.prevent="$emit('submit')"
     class="form"
+    @submit.prevent="$emit('submit')"
   >
     <slot />
     <form-error-message :error="error" />

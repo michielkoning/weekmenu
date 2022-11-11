@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { IRecipe } from "@/types/IRecipe";
-import { onMounted, ref, type Ref, toRef } from "vue";
-import { getAll } from "@/db/recipes";
+import { onMounted, ref, type Ref } from "vue";
 import { ROUTES } from "@/enums/routes";
 import AppButton from "@/components/Shared/AppButton.vue";
 import useRecipes from "@/composables/useRecipes";

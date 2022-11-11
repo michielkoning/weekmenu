@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, reactive, ref } from "vue";
-import { getDetails } from "@/db/recipes";
-import type { IFormData, IRecipeDetails } from "@/types/IRecipe";
+import { computed, onMounted, onUnmounted } from "vue";
 import FormRecipeUpsert from "@/components/Forms/FormRecipeUpsert.vue";
 import useBreadCrumb from "@/composables/useBreadCrumb";
 import { ROUTES } from "@/enums/routes";
@@ -9,7 +7,7 @@ import useRecipes from "@/composables/useRecipes";
 
 const { add: addToBreadCrumb, remove: removeFromBreadCrumb } = useBreadCrumb();
 
-const { loading, error, getRecipe, recipe } = useRecipes();
+const { getRecipe, recipe } = useRecipes();
 
 const props = defineProps<{
   id?: string;

@@ -1,13 +1,5 @@
 <script setup lang="ts">
-import {
-  computed,
-  onMounted,
-  onUnmounted,
-  reactive,
-  ref,
-  watchEffect,
-} from "vue";
-import type { IRecipeDetails } from "@/types/IRecipe";
+import { onMounted, onUnmounted, watchEffect } from "vue";
 import IngredientsList from "@/components/Recipe/IngredientsList.vue";
 import RecipePreperation from "@/components/Recipe/RecipePreperation.vue";
 import RecipeMetaData from "@/components/Recipe/RecipeMetaData.vue";
@@ -25,7 +17,7 @@ const props = defineProps<{
   id: string;
 }>();
 
-const { loading, error, getRecipe, recipe, deleteRecipe } = useRecipes();
+const { loading, getRecipe, recipe, deleteRecipe } = useRecipes();
 
 onMounted(async () => {
   await getRecipe(props.id);
