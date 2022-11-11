@@ -1,5 +1,5 @@
 import { supabase } from "@/supabase";
-import type { IRecipe, IRecipeDetails } from "@/types/IRecipe";
+import type { IRecipe, IRecipeDetails } from "@/views/Auth/types/IRecipe";
 import { getSession } from "@/db/user";
 
 export const getAll = async () => {

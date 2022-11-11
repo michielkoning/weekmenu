@@ -14,7 +14,10 @@ import CenterWrapper from "@/components/Layout/CenterWrapper.vue";
           </router-link>
         </li>
         <li>
-          <router-link to="test">Weekmenu</router-link>
+          <a>Weekmenu</a>
+        </li>
+        <li>
+          <a>Boodschappenlijst</a>
         </li>
         <li>
           <btn-logout />

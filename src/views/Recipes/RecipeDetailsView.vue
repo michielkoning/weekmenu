@@ -1,6 +1,12 @@
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, reactive, ref } from "vue";
-import { getDetails, remove } from "@/db/recipes";
+import {
+  computed,
+  onMounted,
+  onUnmounted,
+  reactive,
+  ref,
+  watchEffect,
+} from "vue";
 import type { IRecipeDetails } from "@/types/IRecipe";
 import IngredientsList from "@/components/Recipe/IngredientsList.vue";
 import RecipePreperation from "@/components/Recipe/RecipePreperation.vue";
@@ -10,40 +16,19 @@ import AppButton from "@/components/Shared/AppButton.vue";
 import { useRouter } from "vue-router";
 import useBreadCrumb from "@/composables/useBreadCrumb";
 import { ROUTES } from "@/enums/routes";
+import useRecipes from "@/composables/useRecipes";
 
 const { add: addToBreadCrumb, remove: removeFromBreadCrumb } = useBreadCrumb();
 
-const recipe = reactive<IRecipeDetails>({
-  title: "",
-  content: [],
-  ingredients: [],
-  preperationTime: 0,
-});
-
-const loading = ref(false);
 const router = useRouter();
 const props = defineProps<{
   id: string;
 }>();
 
-onMounted(async () => {
-  try {
-    loading.value = true;
-    const response = await getDetails(props.id);
-    if (!response) {
-      throw "No Response";
-    }
-    recipe.title = response.title;
-    recipe.content = response.content;
-    recipe.ingredients = response.ingredients || [];
-    recipe.preperationTime = response.preperationTime;
+const { loading, error, getRecipe, recipe, deleteRecipe } = useRecipes();
 
-    addToBreadCrumb(recipe.title);
-  } catch (error) {
-    console.error(error);
-  } finally {
-    loading.value = false;
-  }
+onMounted(async () => {
+  await getRecipe(props.id);
 });
 
 onUnmounted(() => {
@@ -52,17 +37,16 @@ onUnmounted(() => {
   }
 });
 
-const deleteRecipe = async () => {
-  try {
-    loading.value = true;
-    await remove(props.id);
-    router.push({ name: ROUTES.recipes_home });
-  } catch (error) {
-    console.error(error);
-  } finally {
-    loading.value = false;
-  }
+const remove = async () => {
+  await deleteRecipe(props.id);
+  router.push({ name: ROUTES.recipes_home });
 };
+
+watchEffect(() => {
+  if (recipe.title) {
+    addToBreadCrumb(recipe.title);
+  }
+});
 </script>
 
 <template>
@@ -79,7 +63,7 @@ const deleteRecipe = async () => {
           <app-button :to="{ name: ROUTES.recipes_edit, params: { id } }">
             Edit
           </app-button>
-          <app-button @click="deleteRecipe">Delete</app-button>
+          <app-button @click="remove">Delete</app-button>
         </div>
       </div>
       <aside>

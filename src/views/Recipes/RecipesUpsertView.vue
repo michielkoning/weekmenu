@@ -5,17 +5,11 @@ import type { IFormData, IRecipeDetails } from "@/types/IRecipe";
 import FormRecipeUpsert from "@/components/Forms/FormRecipeUpsert.vue";
 import useBreadCrumb from "@/composables/useBreadCrumb";
 import { ROUTES } from "@/enums/routes";
+import useRecipes from "@/composables/useRecipes";
 
 const { add: addToBreadCrumb, remove: removeFromBreadCrumb } = useBreadCrumb();
 
-const recipe = reactive<IRecipeDetails>({
-  title: "",
-  content: [],
-  ingredients: [],
-  preperationTime: 0,
-});
-
-const loading = ref(false);
+const { loading, error, getRecipe, recipe } = useRecipes();
 
 const props = defineProps<{
   id?: string;
@@ -30,32 +24,19 @@ const pageTitle = computed(() => {
 
 onMounted(async () => {
   if (props.id) {
-    try {
-      loading.value = true;
-      const response: any = await getDetails(props.id);
-      if (!response) {
-        throw "No Response";
-      }
-      recipe.id = props.id;
-      recipe.title = response.title;
-      recipe.preperationTime = response.preperationTime;
-      recipe.content = response.content;
-      recipe.ingredients = response.ingredients || [];
-      addToBreadCrumb(recipe.title, {
-        name: ROUTES.recipes_details,
-        params: { id: props.id },
-      });
-    } catch (error) {
-      console.error(error);
-    } finally {
-      loading.value = false;
-    }
+    await getRecipe(props.id);
+    addToBreadCrumb(recipe.title, {
+      name: ROUTES.recipes_details,
+      params: { id: props.id },
+    });
   }
   addToBreadCrumb(pageTitle.value);
 });
 
 onUnmounted(() => {
-  removeFromBreadCrumb(recipe.title);
+  if (props.id) {
+    removeFromBreadCrumb(recipe.title);
+  }
   removeFromBreadCrumb(pageTitle.value);
 });
 </script>

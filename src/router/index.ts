@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { getSession } from "@/db/user";
-import HomeView from "@/views/Dashboard.vue";
+import DashboardView from "@/views/DashboardView.vue";
 import { ROUTES } from "@/enums/routes";
 
 const router = createRouter({
@@ -8,7 +8,7 @@ const router = createRouter({
   routes: [
     {
       path: "/",
-      component: HomeView,
+      component: DashboardView,
       children: [
         {
           path: "",
