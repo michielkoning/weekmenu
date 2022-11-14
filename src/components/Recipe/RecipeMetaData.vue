@@ -1,10 +1,22 @@
 <script lang="ts" setup>
+import { computed } from "vue";
 import type { IRecipeDetails } from "@/types/IRecipe";
 import AppIcon from "@/components/Icons/AppIcon.vue";
 
-defineProps<{
+const props = defineProps<{
   recipe: IRecipeDetails;
 }>();
+
+const host = computed(() => {
+  if (props.recipe.source) {
+    const url = new URL(props.recipe.source);
+    if (url) {
+      return url.hostname;
+    }
+    return props.recipe.source;
+  }
+  return null;
+});
 </script>
 
 <template>
@@ -16,6 +28,16 @@ defineProps<{
       <dd>
         {{ recipe.preperationTime }}
         {{ $t("details.minutes") }}
+      </dd>
+    </template>
+    <template v-if="recipe.source">
+      <dt>
+        <app-icon name="Source" class="icon" />
+      </dt>
+      <dd>
+        <a :href="recipe.source" target="_blank" rel="nofollow">
+          {{ host }}
+        </a>
       </dd>
     </template>
   </dl>

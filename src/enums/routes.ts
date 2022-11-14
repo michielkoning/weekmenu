@@ -8,4 +8,6 @@ export enum ROUTES {
   recipes_details = "recipes/details",
   recipes_add = "recipes/add",
   recipes_edit = "recipes/edit",
+
+  weekmenu_home = "weekmenu/home",
 }

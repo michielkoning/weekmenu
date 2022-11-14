@@ -33,6 +33,11 @@ const router = createRouter({
           props: true,
           component: () => import("../views/Recipes/RecipesUpsertView.vue"),
         },
+        {
+          path: "weekmenu",
+          name: ROUTES.weekmenu_home,
+          component: () => import("../views/WeekMenu/WeekMenuHome.vue"),
+        },
       ],
     },
 

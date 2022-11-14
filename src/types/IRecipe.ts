@@ -9,14 +9,18 @@ export interface IRecipe {
   title: string;
 }
 
-export interface IRecipeDetails extends IRecipe {
-  content: string[];
-  ingredients: IIngredient[];
+export interface IRecipeDetailsBase extends IRecipe {
   preperationTime: number;
+  persons: number;
+  source: string;
 }
 
-export interface IFormData extends IRecipe {
+export interface IRecipeDetails extends IRecipeDetailsBase {
+  content: string[];
+  ingredients: IIngredient[];
+}
+
+export interface IFormData extends IRecipeDetailsBase {
   content: string;
   ingredients: string;
-  preperationTime: number;
 }

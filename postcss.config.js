@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 module.exports = {
   "postcss-mixins": {
     mixinsDir: "./src/assets/css/mixins/",

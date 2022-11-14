@@ -1,16 +1,19 @@
 import type { IRecipe, IRecipeDetails } from "@/types/IRecipe";
 import { reactive, ref, type Ref } from "vue";
-import { getAll, getDetails, remove } from "@/db/recipes";
+import { getAll, getDetails, remove, upsert } from "@/db/recipes";
 
 export default () => {
   const loading = ref(false);
   const error: Ref<null | string> = ref(null);
 
   const recipe = reactive<IRecipeDetails>({
+    id: undefined,
     title: "",
     content: [],
     ingredients: [],
     preperationTime: 0,
+    persons: 2,
+    source: "",
   });
 
   const getList = async (): Promise<IRecipe[]> => {
@@ -36,11 +39,26 @@ export default () => {
       if (!response) {
         throw new Error("");
       }
-      recipe.title = response.title;
-      recipe.content = response.content;
+      recipe.id = response.id;
+      recipe.title = response.title || "";
+      recipe.content = response.content || [];
       recipe.ingredients = response.ingredients || [];
-      recipe.preperationTime = response.preperationTime;
+      recipe.preperationTime = response.preperationTime || 0;
+      recipe.persons = response.persons || 2;
+      recipe.source = response.source || "";
     } catch (err: Error | unknown) {
+      if (err instanceof Error) {
+        error.value = err.message;
+      }
+    } finally {
+      loading.value = false;
+    }
+  };
+
+  const upsertRecipe = async (formData: IRecipeDetails) => {
+    try {
+      return await upsert(formData);
+    } catch (err) {
       if (err instanceof Error) {
         error.value = err.message;
       }
@@ -67,6 +85,7 @@ export default () => {
     getList,
     getRecipe,
     deleteRecipe,
+    upsertRecipe,
     recipe,
   };
 };

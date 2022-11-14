@@ -14,7 +14,9 @@ import CenterWrapper from "@/components/Layout/CenterWrapper.vue";
           </router-link>
         </li>
         <li>
-          <a>Weekmenu</a>
+          <router-link :to="{ name: ROUTES.weekmenu_home }">
+            Weekmenu
+          </router-link>
         </li>
         <li>
           <a>Boodschappenlijst</a>

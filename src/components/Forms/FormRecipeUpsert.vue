@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { reactive, ref, toRef, watchEffect, type Ref, computed } from "vue";
-import { upsert } from "@/db/recipes";
+import { reactive, toRef, computed, onMounted } from "vue";
 import type { IFormData, IIngredient, IRecipeDetails } from "@/types/IRecipe";
 import { useRouter } from "vue-router";
 import FormFieldset from "@/components/Forms/Elements/FormFieldset.vue";
@@ -11,14 +10,19 @@ import { ROUTES } from "@/enums/routes";
 import { required, numeric } from "@/i18n/validators";
 import useVuelidate from "@vuelidate/core";
 import useValidate from "@/composables/useValidate";
+import FormPersons from "@/components/Forms/Elements/FormPersons.vue";
+import useRecipes from "@/composables/useRecipes";
 
-const error: Ref<string | null> = ref(null);
+const { error, upsertRecipe } = useRecipes();
 
 const formData = reactive<IFormData>({
+  id: undefined,
   title: "",
   content: "",
   ingredients: "",
   preperationTime: 0,
+  persons: 2,
+  source: "",
 });
 
 const rules = computed(() => ({
@@ -28,12 +32,14 @@ const rules = computed(() => ({
   preperationTime: {
     numeric,
   },
+  persons: {
+    numeric,
+  },
 }));
 const v$ = useVuelidate(rules, formData, { $lazy: true });
 
 const { formError } = useValidate(v$, error);
 
-const loading = ref(false);
 const router = useRouter();
 
 const createArrayOfInput = (input: string) => {
@@ -44,10 +50,11 @@ const createArrayOfInput = (input: string) => {
 const createIngredients = (input: string) => {
   const list = createArrayOfInput(input);
   return list.map((ingredient) => {
-    const matches = ingredient.split(/(\d+)/).filter(Boolean);
+    const matches = ingredient.split(/(\d+ )/).filter(Boolean);
     if (matches.length > 0 && !isNaN(parseFloat(matches[0]))) {
+      const amount = parseFloat(matches[0]) / formData.persons;
       return {
-        amount: parseFloat(matches[0]),
+        amount,
         title: matches[1],
       };
     }
@@ -69,34 +76,25 @@ const submit = async () => {
     return;
   }
 
-  try {
-    loading.value = true;
+  const content = createArrayOfInput(formData.content);
+  const ingredients = createIngredients(formData.ingredients);
 
-    const content = createArrayOfInput(formData.content);
-    const ingredients = createIngredients(formData.ingredients);
+  const response = await upsertRecipe({
+    ...formData,
+    ingredients,
+    content,
+  });
 
-    const response = await upsert({
-      ...formData,
-      ingredients,
-      content,
-    });
-    if (!response) {
-      throw "No Response";
-    }
-    router.push({
-      name: ROUTES.recipes_details,
-      params: {
-        id: response.id,
-      },
-    });
-  } catch (err) {
-    console.log(err instanceof Error);
-    if (err instanceof Error) {
-      error.value = err.message;
-    }
-  } finally {
-    loading.value = false;
+  if (!response) {
+    return;
   }
+
+  router.push({
+    name: ROUTES.recipes_details,
+    params: {
+      id: response.id,
+    },
+  });
 };
 
 const setFormData = () => {
@@ -109,20 +107,23 @@ const setFormData = () => {
   if (recipe.value.content) {
     formData.content = recipe.value.content.join("\n\n");
   }
+  if (recipe.value.persons) {
+    formData.persons = recipe.value.persons;
+  }
+  formData.source = recipe.value.source;
   formData.ingredients = recipe.value.ingredients
     .map((ingredient: IIngredient) => {
       if (ingredient.amount) {
-        return `${ingredient.amount} ${ingredient.title}`;
+        const amount = ingredient.amount * formData.persons;
+        return `${amount} ${ingredient.title}`;
       }
       return ingredient.title;
     })
     .join("\n");
 };
 
-watchEffect(() => {
-  if (recipe.value) {
-    setFormData();
-  }
+onMounted(() => {
+  setFormData();
 });
 </script>
 
@@ -162,6 +163,8 @@ watchEffect(() => {
         :rows="8"
         title="Ingredients"
       />
+      <form-persons v-model.number="formData.persons" />
+      <form-input-text id="source" v-model="formData.source" title="Bron" />
     </form-fieldset>
   </app-form>
 </template>

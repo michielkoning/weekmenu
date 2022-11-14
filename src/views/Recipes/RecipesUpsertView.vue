@@ -7,7 +7,7 @@ import useRecipes from "@/composables/useRecipes";
 
 const { add: addToBreadCrumb, remove: removeFromBreadCrumb } = useBreadCrumb();
 
-const { getRecipe, recipe } = useRecipes();
+const { getRecipe, recipe, loading } = useRecipes();
 
 const props = defineProps<{
   id?: string;
@@ -41,5 +41,10 @@ onUnmounted(() => {
 
 <template>
   <h1>{{ pageTitle }}</h1>
-  <form-recipe-upsert :title="pageTitle" :recipe="recipe" />
+  <form-recipe-upsert
+    v-if="id && !loading"
+    :title="pageTitle"
+    :recipe="recipe"
+  />
+  <form-recipe-upsert v-else :title="pageTitle" />
 </template>

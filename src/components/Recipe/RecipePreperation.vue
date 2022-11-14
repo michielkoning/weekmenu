@@ -22,15 +22,15 @@ defineProps<{
 
 .item {
   position: relative;
-  padding: 0 0 1em 1.75em;
+  padding: 0 0 1.25em 0;
+  display: flex;
+  gap: 0.75em;
 
   &::before {
     font-family: var(--font-family-headings);
     font-size: 1.75em;
     line-height: 1;
-    position: absolute;
-    top: 0.1em;
-    left: 0;
+    transform: translateY(0.1em);
     counter-increment: preperation;
     content: counter(preperation);
   }

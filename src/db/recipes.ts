@@ -27,7 +27,7 @@ export const getDetails = async (id: string) => {
 
   const { data, error, status } = await supabase
     .from("recipes")
-    .select(`title, id, content, ingredients, preperationTime`)
+    .select(`title, id, content, ingredients, preperationTime, persons, source`)
     .match({ id, user_id: session.user.id })
     .single();
 
@@ -45,9 +45,11 @@ export const upsert = async (formData: IRecipeDetails) => {
   let updates: IRecipeDetails = {
     user_id: session.user.id,
     title: formData.title,
+    persons: formData.persons,
     preperationTime: formData.preperationTime,
     content: formData.content,
     ingredients: formData.ingredients,
+    source: formData.source,
   };
 
   if (formData.id) {
