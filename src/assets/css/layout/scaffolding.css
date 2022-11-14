@@ -17,6 +17,6 @@ html {
 
 body {
   margin: 0;
-  padding: 0;
+  padding: 0 0 4em;
   background-color: var(--white);
 }

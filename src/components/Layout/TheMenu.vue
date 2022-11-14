@@ -19,9 +19,6 @@ import CenterWrapper from "@/components/Layout/CenterWrapper.vue";
           </router-link>
         </li>
         <li>
-          <a>Boodschappenlijst</a>
-        </li>
-        <li>
           <btn-logout />
         </li>
       </ul>
