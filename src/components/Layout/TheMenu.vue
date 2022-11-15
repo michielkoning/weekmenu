@@ -73,7 +73,7 @@ ul {
 }
 
 li {
-  padding: 0 0 env(safe-area-inset-bottom);
+  padding: 0 0 calc(2 / env(safe-area-inset-bottom));
 
   &:not(:last-child) {
     border-right: 1px solid hsla(0, 0%, 100%, 0.12);
