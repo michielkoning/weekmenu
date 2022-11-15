@@ -145,14 +145,6 @@ onMounted(async () => {
         title="Title"
         @blur="v$.title.$touch"
       />
-      <form-input-text
-        id="preperationTime"
-        v-model.number="formData.preperationTime"
-        :errors="v$.preperationTime.$errors"
-        title="Bereidingstijd"
-        type="number"
-        @blur="v$.preperationTime.$touch"
-      />
       <form-textarea
         id="content"
         v-model="formData.content"
@@ -167,6 +159,14 @@ onMounted(async () => {
         title="Ingredients"
       />
       <form-persons v-model.number="formData.persons" />
+      <form-input-text
+        id="preperationTime"
+        v-model.number="formData.preperationTime"
+        :errors="v$.preperationTime.$errors"
+        title="Bereidingstijd"
+        type="number"
+        @blur="v$.preperationTime.$touch"
+      />
       <form-input-text id="source" v-model="formData.source" title="Bron" />
     </form-fieldset>
   </app-form>

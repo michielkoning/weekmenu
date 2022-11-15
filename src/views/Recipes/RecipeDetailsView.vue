@@ -1,14 +1,16 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, watchEffect } from "vue";
+import { onMounted, onUnmounted, watchEffect, ref, type Ref } from "vue";
 import IngredientsList from "@/components/Recipe/IngredientsList.vue";
 import RecipePreperation from "@/components/Recipe/RecipePreperation.vue";
 import RecipeMetaData from "@/components/Recipe/RecipeMetaData.vue";
 import TotalEaters from "@/components/Recipe/TotalEaters.vue";
+import AppTabs from "@/components/Layout/AppTabs.vue";
 import AppButton from "@/components/Shared/AppButton.vue";
 import { useRouter } from "vue-router";
 import useBreadCrumb from "@/composables/useBreadCrumb";
 import { ROUTES } from "@/enums/routes";
 import useRecipes from "@/composables/useRecipes";
+import type { ITab } from "@/types/ITab";
 
 const { add: addToBreadCrumb, remove: removeFromBreadCrumb } = useBreadCrumb();
 
@@ -19,8 +21,27 @@ const props = defineProps<{
 
 const { loading, getRecipe, recipe, deleteRecipe } = useRecipes();
 
+const tabs: Ref<ITab[]> = ref([]);
+const activeTab: Ref<string> = ref("");
+
 onMounted(async () => {
   await getRecipe(props.id);
+
+  if (recipe.value?.content.length) {
+    tabs.value.push({
+      title: "Bereiding",
+      key: "preperation",
+    });
+  }
+  if (recipe.value?.ingredients.length) {
+    tabs.value.push({
+      title: "Ingredienten",
+      key: "ingredients",
+    });
+  }
+  if (tabs.value.length) {
+    activeTab.value = tabs.value[0].key;
+  }
 });
 
 onUnmounted(() => {
@@ -46,8 +67,10 @@ watchEffect(() => {
   <div v-else-if="recipe">
     <h1>{{ recipe.title }}</h1>
 
+    <app-tabs v-model="activeTab" :tabs="tabs" class="tabs" />
+
     <div class="details">
-      <div>
+      <div v-show="activeTab === 'preperation'" class="tab">
         <recipe-preperation
           v-if="recipe.content"
           :preperation="recipe.content"
@@ -59,11 +82,13 @@ watchEffect(() => {
           <app-button @click="remove">Delete</app-button>
         </div>
       </div>
-      <aside>
-        <template v-if="recipe.ingredients.length">
-          <total-eaters />
-          <ingredients-list :ingredients="recipe.ingredients" />
-        </template>
+      <aside
+        v-if="recipe.ingredients.length"
+        v-show="activeTab === 'ingredients'"
+        class="tab"
+      >
+        <ingredients-list :ingredients="recipe.ingredients" />
+        <total-eaters />
         <recipe-meta-data :recipe="recipe" />
       </aside>
     </div>
@@ -87,5 +112,14 @@ watchEffect(() => {
   display: flex;
   gap: 1em;
   margin-bottom: 1em;
+}
+
+@media (--viewport-md) {
+  .tabs {
+    display: none;
+  }
+  .tab {
+    display: block !important;
+  }
 }
 </style>

@@ -25,11 +25,17 @@ const { totalEaters } = useEaters();
 <style lang="postcss" scoped>
 h2 {
   padding-bottom: 0.5em;
+  display: none;
+
+  @media (--viewport-md) {
+    display: block;
+  }
 }
 
 ul {
   list-style: none outside;
   padding-left: 0;
+  margin-bottom: 2em;
   border-top: 1px dashed var(--black);
 }
 
