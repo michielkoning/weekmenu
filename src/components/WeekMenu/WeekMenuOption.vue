@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-import type { IRecipeDetails } from "@/types/IRecipe";
+import type { IRecipe } from "@/types/IRecipe";
 import FormSelect from "@/components/Forms/Elements/FormSelect.vue";
 import { computed, type ComputedRef } from "vue";
 import type { IOption } from "@/types/IOption";
 
 const props = defineProps<{
   modelValue: string | number;
-  recipes: IRecipeDetails[];
+  recipes: IRecipe[];
 }>();
 
 const options: ComputedRef<IOption[]> = computed(() => {
