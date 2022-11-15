@@ -1,14 +1,9 @@
 <script setup lang="ts">
-import { onMounted } from "vue";
 import { ROUTES } from "@/enums/routes";
 import AppButton from "@/components/Shared/AppButton.vue";
 import useRecipes from "@/composables/useRecipes";
 
-const { loading, error, getList, recipes } = useRecipes();
-
-onMounted(async () => {
-  await getList();
-});
+const { loading, error, recipes } = useRecipes();
 </script>
 
 <template>
@@ -29,8 +24,8 @@ onMounted(async () => {
     <p v-else>
       {{ $t("list.no-results") }}
     </p>
-    <p><app-button :to="{ name: ROUTES.recipes_add }">Nieuw</app-button></p>
   </div>
+  <p><app-button :to="{ name: ROUTES.recipes_add }">Nieuw</app-button></p>
 </template>
 
 <style lang="postcss" scoped>

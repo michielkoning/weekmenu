@@ -1,22 +1,16 @@
 <script setup lang="ts">
-import type { IRecipe } from "@/types/IRecipe";
-import { onMounted, ref, type Ref } from "vue";
+import { ref } from "vue";
 import AppButton from "@/components/Shared/AppButton.vue";
 import WeekMenuOption from "@/components/WeekMenu/WeekMenuOption.vue";
 import useRecipes from "@/composables/useRecipes";
 
-const recipes: Ref<IRecipe[]> = ref([]);
-const { getList } = useRecipes();
+const { recipes } = useRecipes();
 const weekmenuDefaults = [];
 for (let i = 0; i < 3; i++) {
   weekmenuDefaults.push("string");
 }
 const weekmenu = ref(weekmenuDefaults);
-const option = ref(null);
-
-onMounted(async () => {
-  recipes.value = await getList();
-});
+const option = ref("");
 
 const add = () => {
   weekmenu.value.push("string");

@@ -13,7 +13,7 @@ withDefaults(
   defineProps<{
     title: string;
     id: string;
-    modelValue: string | null;
+    modelValue: string | number;
     options: IOption[];
     errors?: ErrorObject[];
   }>(),
@@ -46,9 +46,3 @@ defineEmits(["update:modelValue"]);
     </select>
   </form-field>
 </template>
-
-<style lang="postcss" scoped>
-.textarea {
-  resize: vertical;
-}
-</style>
