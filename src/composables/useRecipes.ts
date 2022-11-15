@@ -1,15 +1,15 @@
-import type { IRecipeDetails } from "@/types/IRecipe";
+import type { IRecipe } from "@/types/IRecipe";
 import { ref, type Ref } from "vue";
 import { getAll, remove, upsert } from "@/db/recipes";
 
-const recipes: Ref<IRecipeDetails[]> = ref([]);
+const recipes: Ref<IRecipe[]> = ref([]);
 const hasFetched = ref(false);
 
 export default () => {
   const loading = ref(false);
   const error: Ref<null | string> = ref(null);
 
-  const recipe: Ref<IRecipeDetails | null> = ref(null);
+  const recipe: Ref<IRecipe | null> = ref(null);
 
   const getList = async () => {
     if (hasFetched.value) {
@@ -53,7 +53,7 @@ export default () => {
     }
   };
 
-  const upsertRecipe = async (formData: IRecipeDetails) => {
+  const upsertRecipe = async (formData: IRecipe) => {
     try {
       const response = await upsert(formData);
       recipe.value = response;

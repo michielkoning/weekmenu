@@ -12,7 +12,7 @@ export interface IRecipeBase {
   source: string;
 }
 
-export interface IRecipeDetails extends IRecipeBase {
+export interface IRecipe extends IRecipeBase {
   content: string[];
   ingredients: IIngredient[];
 }
