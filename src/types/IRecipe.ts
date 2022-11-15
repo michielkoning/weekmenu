@@ -3,24 +3,21 @@ export interface IIngredient {
   amount?: number;
 }
 
-export interface IRecipe {
-  id?: string;
+export interface IRecipeBase {
+  id?: number;
   user_id?: string;
   title: string;
-}
-
-export interface IRecipeDetailsBase extends IRecipe {
   preperationTime: number;
   persons: number;
   source: string;
 }
 
-export interface IRecipeDetails extends IRecipeDetailsBase {
+export interface IRecipeDetails extends IRecipeBase {
   content: string[];
   ingredients: IIngredient[];
 }
 
-export interface IFormData extends IRecipeDetailsBase {
+export interface IFormData extends IRecipeBase {
   content: string;
   ingredients: string;
 }

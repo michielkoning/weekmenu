@@ -19,23 +19,6 @@ export const getAll = async () => {
   return data as IRecipeDetails[];
 };
 
-export const getDetails = async (id: string) => {
-  const session = await getSession();
-  if (!session) {
-    throw "No user";
-  }
-
-  const { data, error, status } = await supabase
-    .from("recipes")
-    .select(`title, id, content, ingredients, preperationTime, persons, source`)
-    .match({ id, user_id: session.user.id })
-    .single();
-
-  if (error && status !== 406) throw new Error(error.message);
-
-  return data as IRecipeDetails;
-};
-
 export const upsert = async (formData: IRecipeDetails) => {
   const session = await getSession();
   if (!session) {

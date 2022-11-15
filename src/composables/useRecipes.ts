@@ -38,7 +38,7 @@ export default () => {
 
     try {
       const response = recipes.value.find((r) => {
-        return r.id?.toString() === id;
+        return r.id === Number(id);
       });
       if (!response) {
         throw new Error("");
@@ -76,7 +76,7 @@ export default () => {
   const deleteRecipe = async (id: string) => {
     try {
       await remove(id);
-      recipes.value = recipes.value.filter((r) => r.id?.toString() !== id);
+      recipes.value = recipes.value.filter((r) => r.id !== Number(id));
     } catch (err) {
       if (err instanceof Error) {
         error.value = err.message;
