@@ -24,8 +24,8 @@ onMounted(async () => {
 });
 
 onUnmounted(() => {
-  if (recipe.title) {
-    removeFromBreadCrumb(recipe.title);
+  if (recipe.value) {
+    removeFromBreadCrumb(recipe.value.title);
   }
 });
 
@@ -35,8 +35,8 @@ const remove = async () => {
 };
 
 watchEffect(() => {
-  if (recipe.title) {
-    addToBreadCrumb(recipe.title);
+  if (recipe.value) {
+    addToBreadCrumb(recipe.value.title);
   }
 });
 </script>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { reactive, toRef, computed, onMounted } from "vue";
-import type { IFormData, IIngredient, IRecipeDetails } from "@/types/IRecipe";
+import { reactive, computed, onMounted } from "vue";
+import type { IFormData, IIngredient } from "@/types/IRecipe";
 import { useRouter } from "vue-router";
 import FormFieldset from "@/components/Forms/Elements/FormFieldset.vue";
 import FormInputText from "@/components/Forms/Elements/FormInputText.vue";
@@ -13,7 +13,7 @@ import useValidate from "@/composables/useValidate";
 import FormPersons from "@/components/Forms/Elements/FormPersons.vue";
 import useRecipes from "@/composables/useRecipes";
 
-const { error, upsertRecipe } = useRecipes();
+const { error, upsertRecipe, recipe, getRecipe } = useRecipes();
 
 const formData = reactive<IFormData>({
   id: undefined,
@@ -66,9 +66,8 @@ const createIngredients = (input: string) => {
 
 const props = defineProps<{
   title: string;
-  recipe?: IRecipeDetails;
+  id?: string;
 }>();
-const recipe = toRef(props, "recipe");
 
 const submit = async () => {
   const isFormCorrect = await v$.value.$validate();
@@ -92,12 +91,16 @@ const submit = async () => {
   router.push({
     name: ROUTES.recipes_details,
     params: {
-      id: response.id,
+      id: response,
     },
   });
 };
 
-const setFormData = () => {
+const setFormData = async () => {
+  if (!props.id) {
+    return;
+  }
+  await getRecipe(props.id);
   if (!recipe.value) {
     return;
   }
@@ -122,8 +125,8 @@ const setFormData = () => {
     .join("\n");
 };
 
-onMounted(() => {
-  setFormData();
+onMounted(async () => {
+  await setFormData();
 });
 </script>
 

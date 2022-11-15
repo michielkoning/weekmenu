@@ -1,6 +1,6 @@
-import type { IRecipe, IRecipeDetails } from "@/types/IRecipe";
-import { reactive, ref, type Ref } from "vue";
-import { getAll, getDetails, remove, upsert } from "@/db/recipes";
+import type { IRecipeDetails } from "@/types/IRecipe";
+import { ref, type Ref } from "vue";
+import { getAll, remove, upsert } from "@/db/recipes";
 
 const recipes: Ref<IRecipeDetails[]> = ref([]);
 const hasFetched = ref(false);
@@ -9,15 +9,7 @@ export default () => {
   const loading = ref(false);
   const error: Ref<null | string> = ref(null);
 
-  const recipe = reactive<IRecipeDetails>({
-    id: undefined,
-    title: "",
-    content: [],
-    ingredients: [],
-    preperationTime: 0,
-    persons: 2,
-    source: "",
-  });
+  const recipe: Ref<IRecipeDetails | null> = ref(null);
 
   const getList = async () => {
     if (hasFetched.value) {
@@ -51,13 +43,7 @@ export default () => {
       if (!response) {
         throw new Error("");
       }
-      recipe.id = response.id;
-      recipe.title = response.title || "";
-      recipe.content = response.content || [];
-      recipe.ingredients = response.ingredients || [];
-      recipe.preperationTime = response.preperationTime || 0;
-      recipe.persons = response.persons || 2;
-      recipe.source = response.source || "";
+      recipe.value = response;
     } catch (err: Error | unknown) {
       if (err instanceof Error) {
         error.value = err.message;
@@ -69,7 +55,15 @@ export default () => {
 
   const upsertRecipe = async (formData: IRecipeDetails) => {
     try {
-      return await upsert(formData);
+      const response = await upsert(formData);
+      recipe.value = response;
+      const index = recipes.value.findIndex((r) => response.id === r.id);
+      if (index > -1) {
+        recipes.value[index] = response;
+      } else {
+        recipes.value.push(response);
+      }
+      return response.id;
     } catch (err) {
       if (err instanceof Error) {
         error.value = err.message;
@@ -82,6 +76,7 @@ export default () => {
   const deleteRecipe = async (id: string) => {
     try {
       await remove(id);
+      recipes.value = recipes.value.filter((r) => r.id?.toString() !== id);
     } catch (err) {
       if (err instanceof Error) {
         error.value = err.message;

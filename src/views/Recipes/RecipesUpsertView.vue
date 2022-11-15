@@ -7,7 +7,7 @@ import useRecipes from "@/composables/useRecipes";
 
 const { add: addToBreadCrumb, remove: removeFromBreadCrumb } = useBreadCrumb();
 
-const { getRecipe, recipe, loading } = useRecipes();
+const { getRecipe, recipe } = useRecipes();
 
 const props = defineProps<{
   id?: string;
@@ -23,17 +23,19 @@ const pageTitle = computed(() => {
 onMounted(async () => {
   if (props.id) {
     await getRecipe(props.id);
-    addToBreadCrumb(recipe.title, {
-      name: ROUTES.recipes_details,
-      params: { id: props.id },
-    });
+    if (recipe.value) {
+      addToBreadCrumb(recipe.value.title, {
+        name: ROUTES.recipes_details,
+        params: { id: props.id },
+      });
+    }
   }
   addToBreadCrumb(pageTitle.value);
 });
 
 onUnmounted(() => {
-  if (props.id) {
-    removeFromBreadCrumb(recipe.title);
+  if (recipe.value) {
+    removeFromBreadCrumb(recipe.value.title);
   }
   removeFromBreadCrumb(pageTitle.value);
 });
@@ -41,11 +43,5 @@ onUnmounted(() => {
 
 <template>
   <h1>{{ pageTitle }}</h1>
-  {{ id && !loading }}
-  <form-recipe-upsert
-    v-if="id && !loading"
-    :title="pageTitle"
-    :recipe="recipe"
-  />
-  <form-recipe-upsert v-else :title="pageTitle" />
+  <form-recipe-upsert :id="id" :title="pageTitle" />
 </template>
