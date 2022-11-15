@@ -1,4 +1,5 @@
+@import './animation.css';
 @import './colors.css';
 @import './grid.css';
 @import './typography.css';
-@import './animation.css';
+@import './z-index.css';

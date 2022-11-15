@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import BtnLogout from "@/components/User/BtnLogout.vue";
 import { ROUTES } from "@/enums/routes";
 import CenterWrapper from "@/components/Layout/CenterWrapper.vue";
 import AppIcon from "@/components/Icons/AppIcon.vue";
@@ -47,6 +46,7 @@ nav {
   inset: auto 0 0;
   background-color: #272727;
   border-top: thin solid hsla(0, 0%, 100%, 0.12);
+  z-index: var(--z-index-menu);
 
   @media (--viewport-md) {
     border-bottom: thin solid hsla(0, 0%, 100%, 0.12);
@@ -58,13 +58,13 @@ ul {
   margin: 0 calc(-1 * var(--gutter));
   list-style: none outside;
   padding: 0;
-  gap: 1em;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   text-align: center;
 
   @media (--viewport-md) {
-    margin: 0;
+    gap: 1em;
+    margin-inline: 0;
     display: flex;
     text-align: left;
     justify-content: flex-start;
@@ -73,11 +73,13 @@ ul {
 }
 
 li {
-  padding: 0.5em 0;
-  border-right: 1px solid hsla(0, 0%, 100%, 0.12);
+  padding: 0 0 env(safe-area-inset-bottom);
+
+  &:not(:last-child) {
+    border-right: 1px solid hsla(0, 0%, 100%, 0.12);
+  }
 
   @media (--viewport-md) {
-    padding: 0.75em 0;
     border-right: 0;
     &:last-child {
       margin-left: auto;
@@ -93,13 +95,14 @@ li {
   align-items: center;
   text-decoration: none;
   color: var(--color-white);
-  gap: 0em;
+  padding: 0.5em 0.25em;
 
   &:not(.router-link-active) {
     color: var(--color-primary);
   }
 
   @media (--viewport-md) {
+    padding: 0.75em 0;
     color: var(--color-primary);
     text-decoration: underline;
     &:not(.router-link-active) {
