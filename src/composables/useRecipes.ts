@@ -4,12 +4,17 @@ import { getAll, remove, upsert } from "@/db/recipes";
 
 const recipes: Ref<IRecipe[]> = ref([]);
 const hasFetched = ref(false);
+const loading = ref(false);
 
 export default () => {
-  const loading = ref(false);
   const error: Ref<null | string> = ref(null);
 
   const recipe: Ref<IRecipe | null> = ref(null);
+
+  const reset = () => {
+    recipes.value = [];
+    hasFetched.value = false;
+  };
 
   const getList = async () => {
     if (hasFetched.value) {
@@ -20,13 +25,13 @@ export default () => {
     error.value = null;
     try {
       recipes.value = await getAll();
+      hasFetched.value = true;
     } catch (err: Error | unknown) {
       if (err instanceof Error) {
         error.value = err.message;
       }
       return [];
     } finally {
-      hasFetched.value = true;
       loading.value = false;
     }
   };
@@ -48,12 +53,11 @@ export default () => {
       if (err instanceof Error) {
         error.value = err.message;
       }
-    } finally {
-      loading.value = false;
     }
   };
 
   const upsertRecipe = async (formData: IRecipe) => {
+    loading.value = true;
     try {
       const response = await upsert(formData);
       recipe.value = response;
@@ -74,6 +78,7 @@ export default () => {
   };
 
   const deleteRecipe = async (id: string) => {
+    loading.value = true;
     try {
       await remove(id);
       recipes.value = recipes.value.filter((r) => r.id !== Number(id));
@@ -90,6 +95,7 @@ export default () => {
     recipes,
     loading,
     error,
+    reset,
     getList,
     getRecipe,
     deleteRecipe,
