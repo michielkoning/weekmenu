@@ -12,7 +12,7 @@ const host = computed(() => {
     try {
       const url = new URL(props.recipe.source);
       if (url) {
-        return url.hostname;
+        return url.hostname.replace("www.", "");
       }
     } catch (error) {
       return null;
@@ -73,6 +73,10 @@ dd {
     margin-inline: 0.75em;
     content: "|";
   }
+}
+
+a {
+  color: currentColor;
 }
 
 .icon {
