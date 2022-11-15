@@ -29,6 +29,7 @@ const options: ComputedRef<IOption[]> = computed(() => {
 
 const value = computed(() => {
   if (weekmenu.value.length && weekmenu.value[props.index]) {
+    // @ts-ignore
     return weekmenu.value[props.index].id || "";
   }
   return "";
