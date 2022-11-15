@@ -45,6 +45,7 @@ watchEffect(() => {
   <div v-if="loading" />
   <div v-else-if="recipe">
     <h1>{{ recipe.title }}</h1>
+
     <div class="details">
       <div>
         <recipe-preperation

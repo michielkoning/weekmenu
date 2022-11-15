@@ -10,13 +10,13 @@ export const getAll = async () => {
 
   const { data, error, status } = await supabase
     .from("recipes")
-    .select(`title, id`)
+    .select(`title, id, content, ingredients, preperationTime, persons, source`)
     .eq("user_id", session.user.id)
     .order("title");
 
   if (error && status !== 406) throw new Error(error.message);
 
-  return data as IRecipe[];
+  return data as IRecipeDetails[];
 };
 
 export const getDetails = async (id: string) => {

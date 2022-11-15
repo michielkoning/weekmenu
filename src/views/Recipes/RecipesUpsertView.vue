@@ -41,6 +41,7 @@ onUnmounted(() => {
 
 <template>
   <h1>{{ pageTitle }}</h1>
+  {{ id && !loading }}
   <form-recipe-upsert
     v-if="id && !loading"
     :title="pageTitle"

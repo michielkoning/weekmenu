@@ -2,6 +2,9 @@ import type { IRecipe, IRecipeDetails } from "@/types/IRecipe";
 import { reactive, ref, type Ref } from "vue";
 import { getAll, getDetails, remove, upsert } from "@/db/recipes";
 
+const recipes: Ref<IRecipeDetails[]> = ref([]);
+const hasFetched = ref(false);
+
 export default () => {
   const loading = ref(false);
   const error: Ref<null | string> = ref(null);
@@ -16,26 +19,35 @@ export default () => {
     source: "",
   });
 
-  const getList = async (): Promise<IRecipe[]> => {
+  const getList = async () => {
+    if (hasFetched.value) {
+      return;
+    }
+
     loading.value = true;
     error.value = null;
     try {
-      return await getAll();
+      recipes.value = await getAll();
     } catch (err: Error | unknown) {
       if (err instanceof Error) {
         error.value = err.message;
       }
       return [];
     } finally {
+      hasFetched.value = true;
       loading.value = false;
     }
   };
 
   const getRecipe = async (id: string) => {
-    loading.value = true;
-    error.value = null;
+    if (!hasFetched.value) {
+      await getList();
+    }
+
     try {
-      const response = await getDetails(id);
+      const response = recipes.value.find((r) => {
+        return r.id?.toString() === id;
+      });
       if (!response) {
         throw new Error("");
       }
@@ -80,6 +92,7 @@ export default () => {
   };
 
   return {
+    recipes,
     loading,
     error,
     getList,

@@ -1,15 +1,13 @@
 <script setup lang="ts">
-import type { IRecipe } from "@/types/IRecipe";
-import { onMounted, ref, type Ref } from "vue";
+import { onMounted } from "vue";
 import { ROUTES } from "@/enums/routes";
 import AppButton from "@/components/Shared/AppButton.vue";
 import useRecipes from "@/composables/useRecipes";
 
-const recipes: Ref<IRecipe[]> = ref([]);
-const { loading, error, getList } = useRecipes();
+const { loading, error, getList, recipes } = useRecipes();
 
 onMounted(async () => {
-  recipes.value = await getList();
+  await getList();
 });
 </script>
 
