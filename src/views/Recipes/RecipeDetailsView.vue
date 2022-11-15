@@ -70,9 +70,11 @@ watchEffect(() => {
     <app-tabs v-model="activeTab" :tabs="tabs" class="tabs" />
 
     <div class="details">
-      <div v-show="activeTab === 'preperation'" class="tab">
+      <div>
         <recipe-preperation
           v-if="recipe.content"
+          v-show="activeTab === 'preperation'"
+          class="tab preperation"
           :preperation="recipe.content"
         />
         <div class="buttons">
@@ -85,7 +87,7 @@ watchEffect(() => {
       <aside
         v-if="recipe.ingredients.length"
         v-show="activeTab === 'ingredients'"
-        class="tab"
+        class="tab ingredients"
       >
         <ingredients-list :ingredients="recipe.ingredients" />
         <total-eaters />
@@ -104,7 +106,7 @@ watchEffect(() => {
   display: grid;
   grid-gap: 2em;
   @media (--viewport-md) {
-    grid-template-columns: 3fr 1fr;
+    grid-template-columns: 2fr 1fr;
   }
 }
 
@@ -112,6 +114,13 @@ watchEffect(() => {
   display: flex;
   gap: 1em;
   margin-bottom: 1em;
+}
+
+.ingredients {
+  order: -1;
+  @media (--viewport-md) {
+    order: 0;
+  }
 }
 
 @media (--viewport-md) {
