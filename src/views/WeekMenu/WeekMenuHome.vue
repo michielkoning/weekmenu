@@ -16,8 +16,8 @@ onMounted(async () => {
 
 <template>
   <week-menu-details />
-  <h1>{{ $t("list.title") }}</h1>
-  <ul class="list">
+  <h1>Weekmenu</h1>
+  <ul v-if="weekmenu.length" class="list">
     <li v-for="(item, index) in weekmenu" :key="index">
       <week-menu-option :index="index" :recipes="recipes" />
     </li>

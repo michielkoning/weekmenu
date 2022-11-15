@@ -41,9 +41,13 @@ const router = createRouter({
           name: ROUTES.weekmenu_home,
           component: () => import("../views/WeekMenu/WeekMenuHome.vue"),
         },
+        {
+          path: "account",
+          name: ROUTES.account_home,
+          component: () => import("../views/Account/AccountHomeView.vue"),
+        },
       ],
     },
-
     {
       path: "/login",
       name: ROUTES.auth_login,

@@ -2,15 +2,35 @@
 import { ROUTES } from "@/enums/routes";
 import CenterWrapper from "@/components/Layout/CenterWrapper.vue";
 import AppIcon from "@/components/Icons/AppIcon.vue";
-import { logout as logoutUser } from "@/db/user";
-import { useRouter } from "vue-router";
+import { useRoute } from "vue-router";
+import { computed } from "vue";
 
-const router = useRouter();
+const route = useRoute();
 
-const logout = async () => {
-  await logoutUser();
-  router.push({ name: ROUTES.auth_login });
+const checkRoutes = (routes: ROUTES[]) => {
+  const check = routes.map((r) => r.toString());
+  if (!route.name) {
+    return false;
+  }
+  return check.includes(route.name.toString());
 };
+
+const isRecipe = computed(() => {
+  return checkRoutes([
+    ROUTES.recipes_add,
+    ROUTES.recipes_details,
+    ROUTES.recipes_edit,
+    ROUTES.recipes_home,
+  ]);
+});
+
+const isWeekmenu = computed(() => {
+  return checkRoutes([ROUTES.weekmenu_home]);
+});
+
+const isAccount = computed(() => {
+  return checkRoutes([ROUTES.account_home]);
+});
 </script>
 
 <template>
@@ -18,22 +38,34 @@ const logout = async () => {
     <center-wrapper>
       <ul>
         <li>
-          <router-link class="link" :to="{ name: ROUTES.recipes_home }">
+          <router-link
+            class="link"
+            :to="{ name: ROUTES.recipes_home }"
+            :class="{ active: isRecipe }"
+          >
             <app-icon name="Recipes" class="icon" />
             <span class="title">Recepten</span>
           </router-link>
         </li>
         <li>
-          <router-link class="link" :to="{ name: ROUTES.weekmenu_home }">
+          <router-link
+            class="link"
+            :to="{ name: ROUTES.weekmenu_home }"
+            :class="{ active: isWeekmenu }"
+          >
             <app-icon name="Weekmenu" class="icon" />
             <span class="title">Weekmenu</span>
           </router-link>
         </li>
         <li>
-          <button class="btn-link link" @click="logout">
-            <app-icon name="Clock" class="icon" />
-            <span class="title">Uitloggen</span>
-          </button>
+          <router-link
+            class="link"
+            :to="{ name: ROUTES.account_home }"
+            :class="{ active: isAccount }"
+          >
+            <app-icon name="User" class="icon" />
+            <span class="title">Account</span>
+          </router-link>
         </li>
       </ul>
     </center-wrapper>
@@ -97,7 +129,7 @@ li {
   color: var(--color-white);
   padding: 0.5em 0.25em;
 
-  &:not(.router-link-active) {
+  &:not(.active) {
     color: var(--color-primary);
   }
 
@@ -105,14 +137,14 @@ li {
     padding: 0.75em 0;
     color: var(--color-primary);
     text-decoration: underline;
-    &:not(.router-link-active) {
+    &:not(.active) {
       text-decoration: none;
     }
   }
 }
 
 .icon {
-  font-size: 1.5em;
+  font-size: 1.25em;
 
   @media (--viewport-md) {
     display: none;

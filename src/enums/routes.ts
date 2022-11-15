@@ -10,4 +10,6 @@ export enum ROUTES {
   recipes_edit = "recipes/edit",
 
   weekmenu_home = "weekmenu/home",
+
+  account_home = "account/home",
 }
