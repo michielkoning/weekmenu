@@ -9,18 +9,26 @@ const props = defineProps<{
 
 const host = computed(() => {
   if (props.recipe.source) {
-    const url = new URL(props.recipe.source);
-    if (url) {
-      return url.hostname;
+    try {
+      const url = new URL(props.recipe.source);
+      if (url) {
+        return url.hostname;
+      }
+    } catch (error) {
+      return null;
     }
     return props.recipe.source;
   }
   return null;
 });
+
+const hasMeta = computed(() => {
+  return props.recipe.preperationTime || props.recipe.source;
+});
 </script>
 
 <template>
-  <dl>
+  <dl v-if="hasMeta">
     <template v-if="recipe.preperationTime">
       <dt>
         <app-icon name="Clock" class="icon" />
@@ -35,9 +43,10 @@ const host = computed(() => {
         <app-icon name="Source" class="icon" />
       </dt>
       <dd>
-        <a :href="recipe.source" target="_blank" rel="nofollow">
+        <a v-if="host" :href="recipe.source" target="_blank" rel="nofollow">
           {{ host }}
         </a>
+        <span v-else>{{ recipe.source }}</span>
       </dd>
     </template>
   </dl>
@@ -45,16 +54,30 @@ const host = computed(() => {
 
 <style lang="postcss" scoped>
 dl {
-  display: grid;
-  grid-gap: 0.25em;
-  grid-template-columns: 1.5em auto;
+  font-size: 0.8em;
+  margin-bottom: 1.5em;
+}
+
+dt,
+dd {
+  display: inline-block;
 }
 
 dt {
   padding-top: 0.1em;
 }
 
+dd {
+  &:not(:last-child)::after {
+    display: inline-block;
+    margin-inline: 0.75em;
+    content: "|";
+  }
+}
+
 .icon {
+  margin-right: 0.5em;
+  transform: translateY(0.25em);
   width: 1.25em;
   height: 1.25em;
 }

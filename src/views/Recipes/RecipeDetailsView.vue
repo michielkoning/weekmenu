@@ -66,6 +66,7 @@ watchEffect(() => {
   <div v-if="loading" />
   <div v-else-if="recipe">
     <h1>{{ recipe.title }}</h1>
+    <recipe-meta-data :recipe="recipe" />
 
     <app-tabs v-model="activeTab" :tabs="tabs" class="tabs" />
 
@@ -91,17 +92,12 @@ watchEffect(() => {
       >
         <ingredients-list :ingredients="recipe.ingredients" />
         <total-eaters />
-        <recipe-meta-data :recipe="recipe" />
       </aside>
     </div>
   </div>
 </template>
 
 <style lang="postcss" scoped>
-.title {
-  margin-bottom: 1em;
-}
-
 .details {
   display: grid;
   grid-gap: 2em;
