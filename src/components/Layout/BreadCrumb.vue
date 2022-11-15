@@ -21,7 +21,7 @@ const { breadcrumb } = useBreadCrumb();
   list-style: none;
   display: flex;
   gap: 0.5em;
-  padding: 0;
+  padding: 1em 0 0;
   margin: 0;
   flex-wrap: wrap;
 }

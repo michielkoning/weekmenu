@@ -16,6 +16,8 @@ const dynamicComponent = computed(() => {
 
 <style lang="postcss" scoped>
 .icon {
+  width: 1em;
+  height: 1em;
   fill: currentColor;
 }
 </style>

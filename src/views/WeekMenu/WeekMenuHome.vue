@@ -1,30 +1,28 @@
 <script setup lang="ts">
-import { ref } from "vue";
 import AppButton from "@/components/Shared/AppButton.vue";
 import WeekMenuOption from "@/components/WeekMenu/WeekMenuOption.vue";
+import WeekMenuDetails from "@/components/WeekMenu/WeekMenuDetails.vue";
 import useRecipes from "@/composables/useRecipes";
+import useWeekmenu from "@/composables/useWeekmenu";
+import { onMounted } from "vue";
 
-const { recipes } = useRecipes();
-const weekmenuDefaults = [];
-for (let i = 0; i < 3; i++) {
-  weekmenuDefaults.push("string");
-}
-const weekmenu = ref(weekmenuDefaults);
-const option = ref("");
+const { add, weekmenu } = useWeekmenu();
+const { recipes, getList } = useRecipes();
 
-const add = () => {
-  weekmenu.value.push("string");
-};
+onMounted(async () => {
+  await getList();
+});
 </script>
 
 <template>
+  <week-menu-details />
   <h1>{{ $t("list.title") }}</h1>
   <ul class="list">
-    <li v-for="item in weekmenu" :key="item">
-      <week-menu-option v-model="option" :recipes="recipes" />
+    <li v-for="(item, index) in weekmenu" :key="index">
+      <week-menu-option :index="index" :recipes="recipes" />
     </li>
   </ul>
-  <p><app-button @click="add">Nieuw</app-button></p>
+  <p><app-button @click="add">Nieuwe dag</app-button></p>
 </template>
 
 <style lang="postcss" scoped>

@@ -36,7 +36,7 @@ export default () => {
     }
   };
 
-  const getRecipe = async (id: string) => {
+  const getRecipe = async (id: string | number) => {
     if (!hasFetched.value) {
       await getList();
     }
