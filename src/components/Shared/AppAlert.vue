@@ -11,7 +11,6 @@ defineProps<{
 <template>
   <slide-in-animation direction="down">
     <div v-if="show" class="alert" role="alert">
-      {{ show }}
       <center-wrapper>
         <p>{{ text }}</p>
 

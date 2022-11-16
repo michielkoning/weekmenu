@@ -44,7 +44,7 @@ const isAccount = computed(() => {
             :class="{ active: isRecipe }"
           >
             <app-icon name="Recipes" class="icon" />
-            <span class="title">Receptenj</span>
+            <span class="title">Recepten</span>
           </router-link>
         </li>
         <li>
