@@ -83,9 +83,10 @@ router.beforeEach(async (to, _, next) => {
     return;
   }
   const routeName = to.name.toString();
-  if (!publicRoutes.includes(routeName) && !(await getSession())) {
+  const session = await getSession();
+  if (!publicRoutes.includes(routeName) && !session) {
     next({ name: ROUTES.auth_login });
-  } else if (publicRoutes.includes(routeName) && (await getSession())) {
+  } else if (publicRoutes.includes(routeName) && session) {
     next({ name: ROUTES.recipes_home });
   } else {
     next();
