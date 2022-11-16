@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted } from "vue";
 import useRecipes from "@/composables/useRecipes";
-import ReloadPrompt from "@/components/ReloadPrompt.vue";
+import PwaUpdateAlert from "@/components/Pwa/PwaUpdateAlert.vue";
 import { supabase } from "./supabase";
 
 const { getList, reset } = useRecipes();
@@ -21,5 +21,5 @@ onMounted(async () => {
 
 <template>
   <router-view />
-  <reload-prompt />
+  <pwa-update-alert />
 </template>

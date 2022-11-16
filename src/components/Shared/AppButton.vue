@@ -8,6 +8,7 @@ const props = withDefaults(
     type?: string;
     loading?: boolean;
     color?: string;
+    size?: string | null;
   }>(),
   {
     to: null,
@@ -15,6 +16,7 @@ const props = withDefaults(
     type: "button",
     loading: false,
     color: "primary",
+    size: null,
   }
 );
 
@@ -32,6 +34,13 @@ const generatedType = computed(() => {
   return null;
 });
 
+const sizeClass = computed(() => {
+  if (props.size) {
+    return `btn-${props.size}`;
+  }
+  return null;
+});
+
 defineEmits(["click"]);
 </script>
 
@@ -41,7 +50,7 @@ defineEmits(["click"]);
     :type="generatedType"
     :to="to"
     class="btn"
-    :class="color"
+    :class="[color, sizeClass]"
     :disabled="loading"
     @click="$emit('click')"
   >
@@ -62,6 +71,10 @@ defineEmits(["click"]);
   appearance: button;
   padding: 0.5em 2em;
   color: var(--black);
+}
+
+.btn-sm {
+  padding: 0.1em 1em;
 }
 
 .primary {
