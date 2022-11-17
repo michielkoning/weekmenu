@@ -11,11 +11,13 @@ defineProps<{
 <template>
   <slide-in-animation direction="down">
     <div v-if="show" class="alert" role="alert">
-      <center-wrapper>
-        <p>{{ text }}</p>
+      <div class="safe-area">
+        <center-wrapper>
+          <p>{{ text }}</p>
 
-        <slot />
-      </center-wrapper>
+          <slot />
+        </center-wrapper>
+      </div>
     </div>
   </slide-in-animation>
 </template>
@@ -28,5 +30,9 @@ defineProps<{
   z-index: var(--z-index-toast);
   background-color: #272727;
   border-top: thin solid hsla(0, 0%, 100%, 0.12);
+}
+
+.safe-area {
+  padding-bottom: var(--save-area-bottom);
 }
 </style>
