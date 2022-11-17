@@ -8,6 +8,6 @@ const { needRefresh, updateServiceWorker } = useRegisterSW();
 
 <template>
   <app-alert :show="needRefresh" text="Er is een nieuwe content beschikbaar.">
-    <app-button size="sm" @click="updateServiceWorker">Verversen</app-button>
+    <app-button size="sm" @click="updateServiceWorker()">Verversen</app-button>
   </app-alert>
 </template>
