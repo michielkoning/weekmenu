@@ -17,11 +17,12 @@ onMounted(async () => {
 <template>
   <week-menu-details />
   <h1>Weekmenu</h1>
-  <ul v-if="weekmenu.length" class="list">
-    <li v-for="(item, index) in weekmenu" :key="index">
+  <ul v-if="weekmenu.recipes.length" class="list">
+    <li v-for="(item, index) in weekmenu.recipes" :key="index">
       <week-menu-option :index="index" :recipes="recipes" />
     </li>
   </ul>
+
   <p><app-button @click="add">Nieuwe dag</app-button></p>
 </template>
 

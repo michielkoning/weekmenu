@@ -1,29 +1,94 @@
-import type { IRecipe } from "@/types/IRecipe";
-import { ref, type Ref } from "vue";
+import { reactive, ref, type Ref } from "vue";
 import useRecipes from "@/composables/useRecipes";
 
-const weekmenu: Ref<(null | IRecipe)[]> = ref([]);
+import { getAll, upsert } from "@/db/weekmenu";
+import type { IWeekMenu, IWeekMenuResponse } from "@/types/IWeekMenu";
+
+const hasFetched = ref(false);
+const loading = ref(false);
+const id: Ref<undefined | string> = ref(undefined);
+
+const weekmenu: IWeekMenu = reactive({
+  id: undefined,
+  recipes: [],
+});
 
 export default () => {
   const { recipes } = useRecipes();
+  const error: Ref<null | string> = ref(null);
+
+  const getWeekMenu = async () => {
+    if (hasFetched.value) {
+      return;
+    }
+
+    loading.value = true;
+    error.value = null;
+    try {
+      const response = await getAll();
+      console.log(response);
+      id.value = response.id;
+      weekmenu.recipes = response.recipes.map((r) => {
+        if (!r) {
+          return null;
+        }
+        const recipe = getRecipe(r);
+        if (!recipe) {
+          return null;
+        }
+        return recipe;
+      });
+      hasFetched.value = true;
+    } catch (err: Error | unknown) {
+      if (err instanceof Error) {
+        error.value = err.message;
+      }
+      return [];
+    } finally {
+      loading.value = false;
+    }
+  };
 
   const add = () => {
-    weekmenu.value.push(null);
+    weekmenu.recipes.push(null);
   };
 
   const getRecipe = (id: Number) => {
     return recipes.value.find((r) => r.id === id);
   };
 
-  const update = (index: number, id: string) => {
-    if (id) {
-      weekmenu.value[index] = getRecipe(Number(id)) || null;
+  const update = async (index: number, recipeId: string) => {
+    if (recipeId) {
+      weekmenu.recipes[index] = getRecipe(Number(recipeId)) || null;
     } else {
-      weekmenu.value[index] = null;
+      weekmenu.recipes[index] = null;
+    }
+
+    const recipes = weekmenu.recipes.map((r) => {
+      if (!r) {
+        return null;
+      }
+      return Number(r.id);
+    });
+    const formData: IWeekMenuResponse = {
+      id: id.value,
+      recipes,
+    };
+
+    loading.value = true;
+    try {
+      await upsert(formData);
+    } catch (err) {
+      if (err instanceof Error) {
+        error.value = err.message;
+      }
+    } finally {
+      loading.value = false;
     }
   };
 
   return {
+    getWeekMenu,
     update,
     add,
     weekmenu,

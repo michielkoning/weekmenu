@@ -77,10 +77,16 @@ router.beforeEach(async (to, _, next) => {
     ROUTES.auth_register.toString(),
     ROUTES.auth_resetPassword.toString(),
   ];
-  const toName = to.name ? to.name.toString() : "";
-  if (!publicRoutes.includes(toName) && !(await getSession())) {
+
+  if (!to.name) {
+    next();
+    return;
+  }
+  const routeName = to.name.toString();
+  const session = await getSession();
+  if (!publicRoutes.includes(routeName) && !session) {
     next({ name: ROUTES.auth_login });
-  } else if (publicRoutes.includes(toName) && (await getSession())) {
+  } else if (publicRoutes.includes(routeName) && session) {
     next({ name: ROUTES.recipes_home });
   } else {
     next();
