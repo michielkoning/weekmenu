@@ -58,7 +58,7 @@ const submit = async () => {
         :errors="v$.email.$errors"
         type="email"
         title="Email"
-        autocomplete="email"
+        autocomplete="username"
         @blur="v$.email.$touch"
       />
       <form-input-text
