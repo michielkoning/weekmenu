@@ -64,6 +64,7 @@ const submit = async () => {
         type="password"
         title="Wachtwoord"
         autocomplete="new-password"
+        minlength="6"
         @blur="v$.password.$touch"
       />
     </form-fieldset>

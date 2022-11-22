@@ -53,7 +53,7 @@ const submit = async () => {
   >
     <form-fieldset title="Inloggen">
       <form-input-text
-        id="email"
+        id="username"
         v-model="formData.email"
         :errors="v$.email.$errors"
         type="email"
