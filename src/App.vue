@@ -44,7 +44,7 @@ const install = async () => {
 </script>
 
 <template>
-  <app-button v-if="!eventPrompt" @click="install">Install</app-button>
+  <app-button v-if="eventPrompt" @click="install">Install</app-button>
   <router-view />
   <pwa-update-alert />
 </template>
