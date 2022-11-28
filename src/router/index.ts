@@ -78,6 +78,14 @@ router.beforeEach(async (to, _, next) => {
     ROUTES.auth_resetPassword.toString(),
   ];
 
+  const protocol = "web+weekmenu://";
+  if (to.fullPath.includes(encodeURIComponent(protocol))) {
+    const decodedUrl = decodeURIComponent(to.fullPath);
+    const url = decodedUrl.replace(`/${protocol}`, "");
+    next(url);
+    return;
+  }
+
   if (!to.name) {
     next();
     return;
