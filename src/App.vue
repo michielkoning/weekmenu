@@ -5,6 +5,7 @@ import useRecipes from "@/composables/useRecipes";
 import PwaUpdateAlert from "@/components/Pwa/PwaUpdateAlert.vue";
 import { supabase } from "./supabase";
 import useWeekmenu from "./composables/useWeekmenu";
+import { useRoute } from "vue-router";
 
 const { getList, reset } = useRecipes();
 const { getWeekMenu } = useWeekmenu();
@@ -15,6 +16,7 @@ const fetchData = async () => {
 };
 const eventPrompt: Ref<Event | null> = ref(null);
 const hasAppInstalled = ref(false);
+const route = useRoute();
 onMounted(async () => {
   await fetchData();
 
@@ -48,9 +50,6 @@ const install = async () => {
   const choiceResult = await eventPrompt.value.userChoice;
   if (choiceResult.outcome === "accepted") {
     localStorage.setItem("pwa", "1");
-    console.log("User accepted the A2HS prompt");
-  } else {
-    console.log("User dismissed the A2HS prompt");
   }
   eventPrompt.value = null;
 };
@@ -58,7 +57,9 @@ const install = async () => {
 
 <template>
   <app-button v-if="eventPrompt" @click="install">Install</app-button>
-  <a href="web+weekmenu://">Open app {{ hasAppInstalled }}</a>
+  <a v-if="hasAppInstalled" :href="`web+weekmenu://${route.fullPath}`">
+    Open app {{ hasAppInstalled }}
+  </a>
   <router-view />
   <pwa-update-alert />
 </template>
