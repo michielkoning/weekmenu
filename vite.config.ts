@@ -31,6 +31,12 @@ export default defineConfig({
             type: "image/png",
           },
         ],
+        protocol_handlers: [
+          {
+            protocol: "web+weekmenu",
+            url: "/%s",
+          },
+        ],
       },
     }),
   ],
