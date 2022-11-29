@@ -1,6 +1,6 @@
 import { supabase } from "@/supabase";
 import { getSession } from "@/db/user";
-import type { IWeekMenuResponse } from "@/types/IWeekMenu";
+import type { IWeekMenuResponse } from "@/interfaces/IWeekMenu";
 
 export const getAll = async () => {
   const session = await getSession();

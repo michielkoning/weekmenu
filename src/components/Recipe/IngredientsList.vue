@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { IIngredient } from "@/types/IRecipe";
+import type { IIngredient } from "@/interfaces/IRecipe";
 import useEaters from "@/composables/useEaters";
 
 defineProps<{

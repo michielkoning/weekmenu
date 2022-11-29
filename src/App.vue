@@ -6,6 +6,7 @@ import PwaUpdateAlert from "@/components/Pwa/PwaUpdateAlert.vue";
 import { supabase } from "./supabase";
 import useWeekmenu from "./composables/useWeekmenu";
 import { useRoute } from "vue-router";
+import type { IBeforeInstallPromptEvent } from "./interfaces/IBeforeInstallPromptEvent";
 
 const { getList, reset } = useRecipes();
 const { getWeekMenu } = useWeekmenu();
@@ -14,7 +15,7 @@ const fetchData = async () => {
   await getList();
   await getWeekMenu();
 };
-const eventPrompt: Ref<Event | null> = ref(null);
+const eventPrompt: Ref<IBeforeInstallPromptEvent | null> = ref(null);
 const hasAppInstalled = ref(false);
 const route = useRoute();
 onMounted(async () => {
@@ -32,21 +33,20 @@ onMounted(async () => {
     hasAppInstalled.value = true;
   }
 
-  window.addEventListener("beforeinstallprompt", (e) => {
+  window.addEventListener("beforeinstallprompt", (event) => {
+    const beforeInstallPromptEvent = event as IBeforeInstallPromptEvent;
     localStorage.removeItem("pwa");
     // Prevent Chrome 67 and earlier from automatically showing the prompt
-    e.preventDefault();
+    event.preventDefault();
     // Stash the event so it can be triggered later.
-    eventPrompt.value = e;
+    eventPrompt.value = beforeInstallPromptEvent;
   });
 });
 const install = async () => {
   if (!eventPrompt.value) {
     return;
   }
-  // @ts-ignore
   eventPrompt.value.prompt();
-  // @ts-ignore
   const choiceResult = await eventPrompt.value.userChoice;
   if (choiceResult.outcome === "accepted") {
     localStorage.setItem("pwa", "1");

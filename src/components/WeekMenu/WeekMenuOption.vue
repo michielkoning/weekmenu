@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import FormSelect from "@/components/Forms/Elements/FormSelect.vue";
 import { computed, type ComputedRef } from "vue";
-import type { IOption } from "@/types/IOption";
+import type { IOption } from "@/interfaces/IOption";
 import useWeekmenu from "@/composables/useWeekmenu";
 import useRecipes from "@/composables/useRecipes";
 

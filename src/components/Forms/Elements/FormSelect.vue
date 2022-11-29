@@ -6,7 +6,7 @@ export default {
 
 <script lang="ts" setup>
 import FormField from "@/components/Forms/Elements/FormField.vue";
-import type { IOption } from "@/types/IOption";
+import type { IOption } from "@/interfaces/IOption";
 import type { ErrorObject } from "@vuelidate/core";
 
 withDefaults(

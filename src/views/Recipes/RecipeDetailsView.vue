@@ -10,7 +10,7 @@ import { useRouter } from "vue-router";
 import useBreadCrumb from "@/composables/useBreadCrumb";
 import { ROUTES } from "@/enums/routes";
 import useRecipes from "@/composables/useRecipes";
-import type { ITab } from "@/types/ITab";
+import type { ITab } from "@/interfaces/ITab";
 
 const { add: addToBreadCrumb, remove: removeFromBreadCrumb } = useBreadCrumb();
 

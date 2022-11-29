@@ -1,4 +1,4 @@
-import type { IRecipe } from "@/types/IRecipe";
+import type { IRecipe } from "@/interfaces/IRecipe";
 import { ref, type Ref } from "vue";
 import { getAll, remove, upsert } from "@/db/recipes";
 

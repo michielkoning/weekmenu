@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { reactive, computed, onMounted } from "vue";
-import type { IFormData, IIngredient } from "@/types/IRecipe";
+import type { IFormData, IIngredient } from "@/interfaces/IRecipe";
 import { useRouter } from "vue-router";
 import FormFieldset from "@/components/Forms/Elements/FormFieldset.vue";
 import FormInputText from "@/components/Forms/Elements/FormInputText.vue";

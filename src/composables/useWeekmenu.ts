@@ -2,7 +2,7 @@ import { reactive, ref, type Ref } from "vue";
 import useRecipes from "@/composables/useRecipes";
 
 import { getAll, upsert } from "@/db/weekmenu";
-import type { IWeekMenu, IWeekMenuResponse } from "@/types/IWeekMenu";
+import type { IWeekMenu, IWeekMenuResponse } from "@/interfaces/IWeekMenu";
 
 const hasFetched = ref(false);
 const loading = ref(false);

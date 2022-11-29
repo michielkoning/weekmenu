@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { computed } from "vue";
-import type { IRecipe } from "@/types/IRecipe";
+import type { IRecipe } from "@/interfaces/IRecipe";
 import AppIcon from "@/components/Icons/AppIcon.vue";
 
 const props = defineProps<{

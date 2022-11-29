@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { ITab } from "@/types/ITab";
+import type { ITab } from "@/interfaces/ITab";
 
 defineProps<{
   tabs: ITab[];

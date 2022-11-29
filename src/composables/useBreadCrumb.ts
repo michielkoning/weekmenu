@@ -1,4 +1,4 @@
-import type { IRecipeItem } from "@/types/IBreadCrumb";
+import type { IRecipeItem } from "@/interfaces/IBreadCrumb";
 import { ref, type Ref } from "vue";
 import { useRoute } from "vue-router";
 import type { RouteLocationNamedRaw } from "vue-router";
