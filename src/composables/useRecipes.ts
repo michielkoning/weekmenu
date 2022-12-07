@@ -1,18 +1,22 @@
 import type { IRecipe } from "@/interfaces/IRecipe";
-import { ref, type Ref } from "vue";
+import { computed, ref, type ComputedRef, type Ref } from "vue";
 import { getAll, remove, upsert } from "@/db/recipes";
 
-const recipes: Ref<IRecipe[]> = ref([]);
 const hasFetched = ref(false);
 const loading = ref(false);
+const list: Ref<IRecipe[]> = ref([]);
 
 export default () => {
   const error: Ref<null | string> = ref(null);
 
   const recipe: Ref<IRecipe | null> = ref(null);
 
+  const recipes: ComputedRef<IRecipe[]> = computed(() => {
+    return list.value.sort((a, b) => a.title.localeCompare(b.title));
+  });
+
   const reset = () => {
-    recipes.value = [];
+    list.value = [];
     hasFetched.value = false;
   };
 
@@ -24,7 +28,7 @@ export default () => {
     loading.value = true;
     error.value = null;
     try {
-      recipes.value = await getAll();
+      list.value = await getAll();
       hasFetched.value = true;
     } catch (err: Error | unknown) {
       if (err instanceof Error) {
@@ -42,7 +46,7 @@ export default () => {
     }
 
     try {
-      const response = recipes.value.find((r) => {
+      const response = list.value.find((r) => {
         return r.id === Number(id);
       });
       if (!response) {
@@ -61,11 +65,11 @@ export default () => {
     try {
       const response = await upsert(formData);
       recipe.value = response;
-      const index = recipes.value.findIndex((r) => response.id === r.id);
+      const index = list.value.findIndex((r) => response.id === r.id);
       if (index > -1) {
-        recipes.value[index] = response;
+        list.value[index] = response;
       } else {
-        recipes.value.push(response);
+        list.value.push(response);
       }
       return response.id;
     } catch (err) {
@@ -81,7 +85,7 @@ export default () => {
     loading.value = true;
     try {
       await remove(id);
-      recipes.value = recipes.value.filter((r) => r.id !== Number(id));
+      list.value = list.value.filter((r) => r.id !== Number(id));
     } catch (err) {
       if (err instanceof Error) {
         error.value = err.message;

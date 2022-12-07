@@ -11,8 +11,7 @@ export const getAll = async () => {
   const { data, error, status } = await supabase
     .from("recipes")
     .select(`title, id, content, ingredients, preperationTime, persons, source`)
-    .eq("user_id", session.user.id)
-    .order("title");
+    .eq("user_id", session.user.id);
 
   if (error && status !== 406) throw new Error(error.message);
 
