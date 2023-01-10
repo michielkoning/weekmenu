@@ -71,34 +71,35 @@ const router = createRouter({
   ],
 });
 
-router.beforeEach(async (to, _, next) => {
-  const publicRoutes = [
-    ROUTES.auth_login.toString(),
-    ROUTES.auth_register.toString(),
-    ROUTES.auth_resetPassword.toString(),
-  ];
-
-  const protocol = "web+weekmenu://";
-  if (to.fullPath.includes(encodeURIComponent(protocol))) {
-    const decodedUrl = decodeURIComponent(to.fullPath);
-    const url = decodedUrl.replace(`/${protocol}`, "");
-    next(url);
-    return;
-  }
-
+router.beforeEach((to, _, next) => {
   if (!to.name) {
     next();
     return;
   }
-  const routeName = to.name.toString();
-  const session = await getSession();
-  if (!publicRoutes.includes(routeName) && !session) {
-    next({ name: ROUTES.auth_login });
-  } else if (publicRoutes.includes(routeName) && session) {
-    next({ name: ROUTES.recipes_home });
-  } else {
-    next();
-  }
+  document.startViewTransition(async () => {
+    const publicRoutes = [
+      ROUTES.auth_login.toString(),
+      ROUTES.auth_register.toString(),
+      ROUTES.auth_resetPassword.toString(),
+    ];
+
+    // const protocol = "web+weekmenu://";
+    // if (to.fullPath.includes(encodeURIComponent(protocol))) {
+    //   const decodedUrl = decodeURIComponent(to.fullPath);
+    //   const url = decodedUrl.replace(`/${protocol}`, "");
+    //   next(url);
+    //   return;
+    // }
+    const routeName = to.name.toString();
+    const session = await getSession();
+    if (!publicRoutes.includes(routeName) && !session) {
+      next({ name: ROUTES.auth_login });
+    } else if (publicRoutes.includes(routeName) && session) {
+      next({ name: ROUTES.recipes_home });
+    } else {
+      next();
+    }
+  });
 });
 
 export default router;
