@@ -7,7 +7,7 @@ const numberFormats = {
   nl: {
     decimal: {
       style: "decimal",
-      maximumFractionDigits: 2,
+      maximumFractionDigits: 3,
     },
   },
 };

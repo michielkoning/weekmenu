@@ -50,12 +50,13 @@ const createArrayOfInput = (input: string) => {
 const createIngredients = (input: string) => {
   const list = createArrayOfInput(input);
   return list.map((ingredient) => {
-    const matches = ingredient.split(/(\d+ )/).filter(Boolean);
+    const matches = ingredient.split(/([\d.]+)\s/).filter(Boolean);
     if (matches.length > 0 && !isNaN(parseFloat(matches[0]))) {
       const amount = parseFloat(matches[0]) / formData.persons;
+      const title = ingredient.replace(matches[0], "");
       return {
         amount,
-        title: matches[1],
+        title,
       };
     }
     return {
@@ -135,6 +136,7 @@ onMounted(async () => {
     :submitted="false"
     :button-title="title"
     :error="formError"
+    :sticky="true"
     @submit="submit"
   >
     <form-fieldset title="Recept">
