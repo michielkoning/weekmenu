@@ -7,9 +7,10 @@ withDefaults(
     buttonTitle?: string;
     loading?: boolean;
     error?: string | null;
-    sticky: boolean;
+    sticky?: boolean;
   }>(),
   {
+    sticky: false,
     buttonTitle: "Verzenden",
     loading: false,
     error: null,
