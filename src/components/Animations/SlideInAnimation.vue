@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 withDefaults(
   defineProps<{
-    mode?: string | null;
+    mode?: "default" | "in-out" | "out-in";
     direction?: string;
   }>(),
   {
-    mode: null,
+    mode: "default",
     direction: "up",
   }
 );
