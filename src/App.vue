@@ -64,7 +64,7 @@ const install = async () => {
   <pwa-update-alert />
 </template>
 
-<style scoped>
+<style scoped lang="postcss">
 button {
   margin: 1em;
 }
