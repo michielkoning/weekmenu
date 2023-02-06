@@ -73,6 +73,8 @@ const isAccount = computed(() => {
 </template>
 
 <style lang="postcss" scoped>
+@import "@/assets/css/media-queries/media-queries.css";
+
 nav {
   position: fixed;
   inset: auto 0 0;

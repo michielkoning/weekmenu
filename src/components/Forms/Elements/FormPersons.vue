@@ -35,6 +35,8 @@ defineEmits(["update:modelValue"]);
 </template>
 
 <style lang="postcss" scoped>
+@import "@/assets/css/media-queries/media-queries.css";
+
 .eaters {
   margin-bottom: 2em;
   display: flex;

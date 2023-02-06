@@ -5,7 +5,6 @@ module.exports = {
   },
   plugins: {
     "postcss-preset-env": {
-      importFrom: "./src/assets/css/media-queries/media-queries.css",
       disableDeprecationNotice: true,
       features: {
         "nesting-rules": true,

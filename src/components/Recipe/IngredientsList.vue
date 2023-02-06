@@ -23,6 +23,8 @@ const { totalEaters } = useEaters();
 </template>
 
 <style lang="postcss" scoped>
+@import "@/assets/css/media-queries/media-queries.css";
+
 h2 {
   padding-bottom: 0.5em;
   display: none;
