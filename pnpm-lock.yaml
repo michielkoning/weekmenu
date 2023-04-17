@@ -11,10 +11,10 @@ specifiers:
   '@vuelidate/core': ^2.0.2
   '@vuelidate/validators': ^2.0.2
   eslint: ^8.38.0
-  eslint-plugin-vue: ^9.10.0
+  eslint-plugin-vue: ^9.11.0
   npm-run-all: ^4.1.5
   postcss-mixins: ^9.0.4
-  postcss-preset-env: ^8.3.1
+  postcss-preset-env: ^8.3.2
   prettier: ^2.8.7
   register-service-worker: ^1.7.2
   typescript: ~5.0.4
@@ -39,13 +39,13 @@ devDependencies:
   '@types/node': 18.15.11
   '@vitejs/plugin-vue': 4.1.0_vite@4.2.1+vue@3.2.47
   '@vue/eslint-config-prettier': 7.1.0_7bukkzi2qfqwzn63s5moor2wwy
-  '@vue/eslint-config-typescript': 11.0.2_rgcfudgmhctymsulod4keiudc4
+  '@vue/eslint-config-typescript': 11.0.2_6jziu2dm6rkuofcxdskyjn22wy
   '@vue/tsconfig': 0.1.3_@types+node@18.15.11
   eslint: 8.38.0
-  eslint-plugin-vue: 9.10.0_eslint@8.38.0
+  eslint-plugin-vue: 9.11.0_eslint@8.38.0
   npm-run-all: 4.1.5
   postcss-mixins: 9.0.4
-  postcss-preset-env: 8.3.1
+  postcss-preset-env: 8.3.2
   prettier: 2.8.7
   typescript: 5.0.4
   vite: 4.2.1_@types+node@18.15.11
@@ -1324,8 +1324,8 @@ packages:
       postcss-value-parser: 4.2.0
     dev: true
 
-  /@csstools/postcss-gradients-interpolation-method/3.0.3:
-    resolution: {integrity: sha512-0i6HQ8V3jcGEEhhGPAQdMemPjXTOct9qDYLIzjsgKHhrHVwhjwBVcUV70658vJJmrJJvVXgZx2qc4S6okKZJpg==}
+  /@csstools/postcss-gradients-interpolation-method/3.0.4:
+    resolution: {integrity: sha512-GgKoY7OlvL65UPigEdlrvMAUCR5kOQCjtue2/36TPrBNoRS6KM2KOqmjIVsxEwYYwK+L28pdnM8r10m03hhZxA==}
     engines: {node: ^14 || ^16 || >=18}
     peerDependencies:
       postcss: ^8.4
@@ -2287,7 +2287,7 @@ packages:
       prettier: 2.8.7
     dev: true
 
-  /@vue/eslint-config-typescript/11.0.2_rgcfudgmhctymsulod4keiudc4:
+  /@vue/eslint-config-typescript/11.0.2_6jziu2dm6rkuofcxdskyjn22wy:
     resolution: {integrity: sha512-EiKud1NqlWmSapBFkeSrE994qpKx7/27uCGnhdqzllYDpQZroyX/O6bwjEpeuyKamvLbsGdO6PMR2faIf+zFnw==}
     engines: {node: ^14.17.0 || >=16.0.0}
     peerDependencies:
@@ -2301,7 +2301,7 @@ packages:
       '@typescript-eslint/eslint-plugin': 5.58.0_gjoxkwycl3ml7yxlw3iuo7gyna
       '@typescript-eslint/parser': 5.58.0_voubu7prgxjfsfbgx5d4sqnwiy
       eslint: 8.38.0
-      eslint-plugin-vue: 9.10.0_eslint@8.38.0
+      eslint-plugin-vue: 9.11.0_eslint@8.38.0
       typescript: 5.0.4
       vue-eslint-parser: 9.1.1_eslint@8.38.0
     transitivePeerDependencies:
@@ -2964,8 +2964,8 @@ packages:
       prettier-linter-helpers: 1.0.0
     dev: true
 
-  /eslint-plugin-vue/9.10.0_eslint@8.38.0:
-    resolution: {integrity: sha512-2MgP31OBf8YilUvtakdVMc8xVbcMp7z7/iQj8LHVpXrSXHPXSJRUIGSPFI6b6pyCx/buKaFJ45ycqfHvQRiW2g==}
+  /eslint-plugin-vue/9.11.0_eslint@8.38.0:
+    resolution: {integrity: sha512-bBCJAZnkBV7ATH4Z1E7CvN3nmtS4H7QUU3UBxPdo8WohRU+yHjnQRALpTbxMVcz0e4Mx3IyxIdP5HYODMxK9cQ==}
     engines: {node: ^14.17.0 || >=16.0.0}
     peerDependencies:
       eslint: ^6.2.0 || ^7.0.0 || ^8.0.0
@@ -4204,8 +4204,8 @@ packages:
       postcss-value-parser: 4.2.0
     dev: true
 
-  /postcss-preset-env/8.3.1:
-    resolution: {integrity: sha512-k3Y8BXbVLBAufrla3CNmQJhMS1iRuT9LFlysYvzs1rU5E78+ShX2u0EUL6KpMi0pDJO3wZcuVYSR8cgukfoRtg==}
+  /postcss-preset-env/8.3.2:
+    resolution: {integrity: sha512-VSAOsfxTXzO/gX5QljC8x8hN3ABbD9iqqLgqHqohBdNI5FhJptwpl96kpu+kYvvzK7BWwaHYou0IeYrp+NqmcQ==}
     engines: {node: ^14 || ^16 || >=18}
     peerDependencies:
       postcss: ^8.4
@@ -4214,7 +4214,7 @@ packages:
       '@csstools/postcss-color-function': 2.2.1
       '@csstools/postcss-color-mix-function': 1.0.1
       '@csstools/postcss-font-format-keywords': 2.0.2
-      '@csstools/postcss-gradients-interpolation-method': 3.0.3
+      '@csstools/postcss-gradients-interpolation-method': 3.0.4
       '@csstools/postcss-hwb-function': 2.2.1
       '@csstools/postcss-ic-unit': 2.0.2
       '@csstools/postcss-is-pseudo-class': 3.2.0
