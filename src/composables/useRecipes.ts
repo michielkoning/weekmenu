@@ -40,14 +40,14 @@ export default () => {
     }
   };
 
-  const getRecipe = async (id: string | number) => {
+  const getRecipe = async (id: string) => {
     if (!hasFetched.value) {
       await getList();
     }
 
     try {
       const response = list.value.find((r) => {
-        return r.id === Number(id);
+        return r.id === id;
       });
       if (!response) {
         throw new Error("");
@@ -85,7 +85,7 @@ export default () => {
     loading.value = true;
     try {
       await remove(id);
-      list.value = list.value.filter((r) => r.id !== Number(id));
+      list.value = list.value.filter((r) => r.id !== id);
     } catch (err) {
       if (err instanceof Error) {
         error.value = err.message;

@@ -53,22 +53,22 @@ export default () => {
     weekmenu.recipes.push(null);
   };
 
-  const getRecipe = (id: Number) => {
+  const getRecipe = (id: string) => {
     return recipes.value.find((r) => r.id === id);
   };
 
   const update = async (index: number, recipeId: string) => {
     if (recipeId) {
-      weekmenu.recipes[index] = getRecipe(Number(recipeId)) || null;
+      weekmenu.recipes[index] = getRecipe(recipeId) || null;
     } else {
       weekmenu.recipes[index] = null;
     }
 
     const recipes = weekmenu.recipes.map((r) => {
-      if (!r) {
+      if (!r?.id) {
         return null;
       }
-      return Number(r.id);
+      return r.id;
     });
     const formData: IWeekMenuResponse = {
       id: id.value,

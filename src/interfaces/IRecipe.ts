@@ -4,7 +4,7 @@ export interface IIngredient {
 }
 
 export interface IRecipeBase {
-  id?: number;
+  id?: string;
   user_id?: string;
   title: string;
   preperationTime: number;

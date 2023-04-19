@@ -5,7 +5,7 @@ export interface IWeekMenuBase {
   user_id?: string;
 }
 export interface IWeekMenuResponse extends IWeekMenuBase {
-  recipes: (number | null)[];
+  recipes: (string | null)[];
 }
 
 export interface IWeekMenu extends IWeekMenuBase {
