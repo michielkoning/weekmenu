@@ -74,19 +74,16 @@ export interface Database {
         Row: {
           id: string
           inserted_at: string
-          recipes: Json[]
           user_id: string
         }
         Insert: {
           id?: string
           inserted_at?: string
-          recipes?: Json[]
           user_id: string
         }
         Update: {
           id?: string
           inserted_at?: string
-          recipes?: Json[]
           user_id?: string
         }
       }
