@@ -8,7 +8,7 @@
     "dev": "vite",
     "preview": "vite preview",
     "type-check": "vue-tsc --noEmit",
-    "supabase-gen": "supabase gen types typescript --local > src/types/ISupabase.ts"
+    "supabase-gen": "supabase gen types typescript --project-id citvrgpihdclyhkkwfer --schema public > src/interfaces/ISupabase.ts "
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.21.0",
@@ -32,6 +32,7 @@
     "postcss-mixins": "^9.0.4",
     "postcss-preset-env": "^8.3.2",
     "prettier": "^2.8.7",
+    "supabase": "^1.50.9",
     "typescript": "~5.0.4",
     "vite": "^4.2.2",
     "vite-plugin-pwa": "^0.14.7",

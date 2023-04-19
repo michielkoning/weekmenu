@@ -26,7 +26,6 @@ export default () => {
     error.value = null;
     try {
       const response = await getAll();
-      console.log(response);
       id.value = response.id;
       weekmenu.recipes = response.recipes.map((r) => {
         if (!r) {
@@ -57,27 +56,10 @@ export default () => {
     return recipes.value.find((r) => r.id === id);
   };
 
-  const update = async (index: number, recipeId: string) => {
-    if (recipeId) {
-      weekmenu.recipes[index] = getRecipe(recipeId) || null;
-    } else {
-      weekmenu.recipes[index] = null;
-    }
-
-    const recipes = weekmenu.recipes.map((r) => {
-      if (!r?.id) {
-        return null;
-      }
-      return r.id;
-    });
-    const formData: IWeekMenuResponse = {
-      id: id.value,
-      recipes,
-    };
-
+  const update = async (recipeId: string | null) => {
     loading.value = true;
     try {
-      await upsert(formData);
+      await upsert("27b50cb4-cc90-4608-8783-d713eeb9b882", recipeId);
     } catch (err) {
       if (err instanceof Error) {
         error.value = err.message;

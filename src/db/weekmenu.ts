@@ -15,28 +15,28 @@ export const getAll = async () => {
     .single();
 
   if (error && status !== 406) throw new Error(error.message);
-  return data as IWeekMenuResponse;
+  return data;
 };
 
-export const upsert = async (formData: IWeekMenuResponse) => {
+export const upsert = async (weekmenuId: string, recipeId: string | null) => {
   const session = await getSession();
   if (!session) {
     throw "No user";
   }
 
-  const updates: IWeekMenuResponse = {
-    id: formData.id,
+  const updates = {
+    weekmenu: weekmenuId,
     user_id: session.user.id,
-    recipes: formData.recipes,
+    recipe: recipeId,
   };
 
   const { data, error, status } = await supabase
-    .from("weekmenu")
+    .from("weekmenu_recipes")
     .upsert(updates)
     .select()
     .single();
 
   if (error && status !== 406) throw new Error(error.message);
 
-  return data as IWeekMenuResponse;
+  return data;
 };

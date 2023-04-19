@@ -15,7 +15,7 @@ export const getAll = async () => {
 
   if (error && status !== 406) throw new Error(error.message);
 
-  return data as IRecipe[];
+  return data
 };
 
 export const upsert = async (formData: IRecipe) => {
@@ -48,7 +48,7 @@ export const upsert = async (formData: IRecipe) => {
 
   if (error && status !== 406) throw new Error(error.message);
 
-  return data as IRecipe;
+  return data;
 };
 
 export const remove = async (id: string) => {

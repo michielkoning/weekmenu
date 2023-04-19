@@ -98,6 +98,8 @@ watchEffect(() => {
 </template>
 
 <style lang="postcss" scoped>
+@import "@/assets/css/media-queries/media-queries.css";
+
 .details {
   display: grid;
   grid-gap: 2em;

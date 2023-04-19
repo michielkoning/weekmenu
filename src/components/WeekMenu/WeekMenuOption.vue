@@ -42,6 +42,6 @@ const value = computed(() => {
     :title="`Dag ${index + 1}`"
     :model-value="value"
     :options="options"
-    @change="update(index, $event.target.value)"
+    @change="update($event.target.value)"
   />
 </template>
