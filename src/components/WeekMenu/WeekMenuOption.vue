@@ -19,7 +19,7 @@ const options: ComputedRef<IOption[]> = computed(() => {
   };
   const recipeOptions = recipes.value.map((recipe) => {
     return {
-      title: `${recipe.id} - ${recipe.title}`,
+      title: `${recipe.title}`,
       value: recipe.id || "",
     };
   });
