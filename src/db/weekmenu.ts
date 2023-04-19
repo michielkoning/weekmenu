@@ -10,7 +10,7 @@ export const getAll = async () => {
 
   const { data, error, status } = await supabase
     .from("weekmenu")
-    .select(`id, recipes`)
+    .select(`id, weekmenu_recipes(id, recipes(title, id))`)
     .eq("user_id", session.user.id)
     .single();
 
@@ -18,7 +18,7 @@ export const getAll = async () => {
   return data;
 };
 
-export const upsert = async (weekmenuId: string, recipeId: string | null) => {
+export const addDay = async (weekmenuId: string) => {
   const session = await getSession();
   if (!session) {
     throw "No user";
@@ -27,12 +27,49 @@ export const upsert = async (weekmenuId: string, recipeId: string | null) => {
   const updates = {
     weekmenu: weekmenuId,
     user_id: session.user.id,
+  };
+
+  const { data, error, status } = await supabase
+    .from("weekmenu_recipes")
+    .insert(updates)
+    .select()
+    .single();
+
+  if (error && status !== 406) throw new Error(error.message);
+
+  return data;
+};
+
+export const removeDay = async (id: string) => {
+  const session = await getSession();
+  if (!session) {
+    throw "No user";
+  }
+
+  const { data, error, status } = await supabase
+    .from("weekmenu_recipes")
+    .delete()
+    .eq("id", id);
+
+  if (error && status !== 406) throw new Error(error.message);
+
+  return data;
+};
+
+export const updateDay = async (id: string, recipeId: string | null) => {
+  const session = await getSession();
+  if (!session) {
+    throw "No user";
+  }
+
+  const updates = {
     recipe: recipeId,
   };
 
   const { data, error, status } = await supabase
     .from("weekmenu_recipes")
-    .upsert(updates)
+    .update(updates)
+    .eq("id", id)
     .select()
     .single();
 

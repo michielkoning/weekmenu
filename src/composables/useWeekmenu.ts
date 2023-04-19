@@ -1,7 +1,7 @@
 import { reactive, ref, type Ref } from "vue";
 import useRecipes from "@/composables/useRecipes";
 
-import { getAll, upsert } from "@/db/weekmenu";
+import * as db from "@/db/weekmenu";
 import type { IWeekMenu, IWeekMenuResponse } from "@/interfaces/IWeekMenu";
 
 const hasFetched = ref(false);
@@ -25,18 +25,10 @@ export default () => {
     loading.value = true;
     error.value = null;
     try {
-      const response = await getAll();
+      const response = await db.getAll();
       id.value = response.id;
-      weekmenu.recipes = response.recipes.map((r) => {
-        if (!r) {
-          return null;
-        }
-        const recipe = getRecipe(r);
-        if (!recipe) {
-          return null;
-        }
-        return recipe;
-      });
+      weekmenu.id = response.id;
+      weekmenu.recipes = response.weekmenu_recipes;
       hasFetched.value = true;
     } catch (err: Error | unknown) {
       if (err instanceof Error) {
@@ -48,18 +40,17 @@ export default () => {
     }
   };
 
-  const add = () => {
-    weekmenu.recipes.push(null);
+  const addDay = async () => {
+    if (weekmenu.id) {
+      const data = await db.addDay(weekmenu.id);
+      weekmenu.recipes.push(data);
+    }
   };
 
-  const getRecipe = (id: string) => {
-    return recipes.value.find((r) => r.id === id);
-  };
-
-  const update = async (recipeId: string | null) => {
+  const update = async (id: string, recipeId: string | null) => {
     loading.value = true;
     try {
-      await upsert("27b50cb4-cc90-4608-8783-d713eeb9b882", recipeId);
+      await db.updateDay(id, recipeId);
     } catch (err) {
       if (err instanceof Error) {
         error.value = err.message;
@@ -69,10 +60,17 @@ export default () => {
     }
   };
 
+  const removeDay = async (id: string) => {
+    await db.removeDay(id);
+
+    weekmenu.recipes = weekmenu.recipes.filter((r) => r.id !== id);
+  };
+
   return {
     getWeekMenu,
     update,
-    add,
+    addDay,
     weekmenu,
+    removeDay,
   };
 };

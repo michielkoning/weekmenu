@@ -11,3 +11,7 @@ export interface IWeekMenuResponse extends IWeekMenuBase {
 export interface IWeekMenu extends IWeekMenuBase {
   recipes: (IRecipe | null)[];
 }
+
+export type Weekmenu = Database["public"]["Tables"]["recipes"]["Row"] & {
+  weekmenu_recipes: IRecipe[];
+};

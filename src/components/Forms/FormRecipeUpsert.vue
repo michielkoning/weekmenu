@@ -133,7 +133,6 @@ onMounted(async () => {
 
 <template>
   <app-form
-    :submitted="false"
     :button-title="title"
     :error="formError"
     :sticky="true"

@@ -6,8 +6,8 @@ import useRecipes from "@/composables/useRecipes";
 import useWeekmenu from "@/composables/useWeekmenu";
 import { onMounted } from "vue";
 
-const { add, weekmenu } = useWeekmenu();
-const { recipes, getList } = useRecipes();
+const { addDay, weekmenu } = useWeekmenu();
+const { getList } = useRecipes();
 
 onMounted(async () => {
   await getList();
@@ -19,11 +19,15 @@ onMounted(async () => {
   <h1>Weekmenu</h1>
   <ul v-if="weekmenu.recipes.length" class="list">
     <li v-for="(item, index) in weekmenu.recipes" :key="index">
-      <week-menu-option :index="index" :recipes="recipes" />
+      <week-menu-option
+        :id="item.id"
+        :index="index"
+        :recipe-id="item.recipes ? item.recipes.id : null"
+      />
     </li>
   </ul>
 
-  <p><app-button @click="add">Nieuwe dag</app-button></p>
+  <p><app-button @click="addDay()">Nieuwe dag</app-button></p>
 </template>
 
 <style lang="postcss" scoped>

@@ -5,11 +5,13 @@ import type { IOption } from "@/interfaces/IOption";
 import useWeekmenu from "@/composables/useWeekmenu";
 import useRecipes from "@/composables/useRecipes";
 
-const props = defineProps<{
+defineProps<{
+  id: string;
   index: number;
+  recipeId: string | null;
 }>();
 
-const { update, weekmenu } = useWeekmenu();
+const { update, removeDay } = useWeekmenu();
 const { recipes } = useRecipes();
 
 const options: ComputedRef<IOption[]> = computed(() => {
@@ -26,21 +28,17 @@ const options: ComputedRef<IOption[]> = computed(() => {
 
   return [defaultOption, ...recipeOptions];
 });
-
-const value = computed(() => {
-  if (weekmenu.recipes.length && weekmenu.recipes[props.index]) {
-    return weekmenu.recipes[props.index].id || "";
-  }
-  return "";
-});
 </script>
 
 <template>
-  <form-select
-    id="test"
-    :title="`Dag ${index + 1}`"
-    :model-value="value"
-    :options="options"
-    @change="update($event.target.value)"
-  />
+  <div>
+    <form-select
+      id="test"
+      :title="`Dag ${index + 1}`"
+      :model-value="recipeId"
+      :options="options"
+      @change="update(id, $event.target.value)"
+    />
+    <button @click="removeDay(id)">Remove</button>
+  </div>
 </template>

@@ -5,14 +5,13 @@ import { computed } from "vue";
 const { weekmenu } = useWeekmenu();
 
 const filledWeekmenu = computed(() => {
-  return weekmenu.recipes.flatMap((r) => (r ? [r.title] : [])).join(", ");
+  if (!weekmenu.recipes) {
+    return null;
+  }
+  return weekmenu.recipes.map((recipe) => recipe.recipes.title).join(", ");
 });
 </script>
 
 <template>
-  <ul class="list">
-    {{
-      filledWeekmenu
-    }}
-  </ul>
+  <p>{{ filledWeekmenu }}</p>
 </template>
