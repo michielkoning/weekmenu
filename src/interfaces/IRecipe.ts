@@ -1,23 +1,14 @@
+import type { Database } from "./ISupabase";
+
 export interface IIngredient {
   title: string;
   amount?: number;
 }
 
-export interface IRecipeBase {
-  id?: string;
-  user_id?: string;
-  title: string;
-  preperationTime: number;
-  persons: number;
-  source: string;
-}
+export type IRecipe = Database['public']['Tables']["recipes"]['Row']
 
-export interface IRecipe extends IRecipeBase {
-  content: string[];
-  ingredients: IIngredient[];
-}
 
-export interface IFormData extends IRecipeBase {
+export type IFormData = IRecipe & {
   content: string;
   ingredients: string;
 }

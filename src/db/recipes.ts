@@ -1,6 +1,7 @@
 import { supabase } from "@/supabase";
 import type { IRecipe } from "@/interfaces/IRecipe";
 import { getSession } from "@/db/user";
+import { title } from "process";
 
 export const getAll = async () => {
   const session = await getSession();

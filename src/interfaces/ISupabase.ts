@@ -9,6 +9,32 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
+      recipe_ingredients: {
+        Row: {
+          amount: number | null
+          id: string
+          inserted_at: string
+          recipe: string | null
+          title: string
+          user_id: string
+        }
+        Insert: {
+          amount?: number | null
+          id?: string
+          inserted_at?: string
+          recipe?: string | null
+          title: string
+          user_id: string
+        }
+        Update: {
+          amount?: number | null
+          id?: string
+          inserted_at?: string
+          recipe?: string | null
+          title?: string
+          user_id?: string
+        }
+      }
       recipes: {
         Row: {
           content: string[] | null
@@ -18,8 +44,8 @@ export interface Database {
           persons: number
           preperationTime: number
           source: string | null
-          title: string | null
-          user_id: string | null
+          title: string
+          user_id: string
         }
         Insert: {
           content?: string[] | null
@@ -29,8 +55,8 @@ export interface Database {
           persons?: number
           preperationTime?: number
           source?: string | null
-          title?: string | null
-          user_id?: string | null
+          title: string
+          user_id: string
         }
         Update: {
           content?: string[] | null
@@ -40,8 +66,8 @@ export interface Database {
           persons?: number
           preperationTime?: number
           source?: string | null
-          title?: string | null
-          user_id?: string | null
+          title?: string
+          user_id?: string
         }
       }
       weekmenu: {
