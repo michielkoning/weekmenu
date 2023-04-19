@@ -14,6 +14,7 @@ export default defineConfig({
         "/img/icons/apple-touch-icon.png",
         "/img/icons/masked-icon.svg",
       ],
+
       manifest: {
         name: "Weekmenu",
         short_name: "Weekmenu",
