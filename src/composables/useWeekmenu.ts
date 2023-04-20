@@ -1,20 +1,18 @@
 import { reactive, ref, type Ref } from "vue";
-import useRecipes from "@/composables/useRecipes";
 
 import * as db from "@/db/weekmenu";
-import type { IWeekMenu, IWeekMenuResponse } from "@/interfaces/IWeekMenu";
+import type { Weekmenu } from "@/interfaces/IWeekMenu";
 
 const hasFetched = ref(false);
 const loading = ref(false);
 const id: Ref<undefined | string> = ref(undefined);
 
-const weekmenu: IWeekMenu = reactive({
+const weekmenu: Weekmenu = reactive({
   id: undefined,
   recipes: [],
 });
 
 export default () => {
-  const { recipes } = useRecipes();
   const error: Ref<null | string> = ref(null);
 
   const getWeekMenu = async () => {
@@ -26,9 +24,12 @@ export default () => {
     error.value = null;
     try {
       const response = await db.getAll();
+      if (!response) {
+        return;
+      }
       id.value = response.id;
       weekmenu.id = response.id;
-      weekmenu.recipes = response.weekmenu_recipes;
+      weekmenu.recipes = response.recipes;
       hasFetched.value = true;
     } catch (err: Error | unknown) {
       if (err instanceof Error) {
@@ -48,6 +49,7 @@ export default () => {
   };
 
   const update = async (id: string, recipeId: string | null) => {
+    console.log(recipeId);
     loading.value = true;
     try {
       await db.updateDay(id, recipeId);

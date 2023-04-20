@@ -38,7 +38,7 @@ defineEmits(["update:modelValue"]);
     >
       <option
         v-for="option in options"
-        :key="option.value"
+        :key="option.title"
         :value="option.value"
       >
         {{ option.title }}

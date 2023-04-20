@@ -1,6 +1,6 @@
 import { supabase } from "@/supabase";
 import { getSession } from "@/db/user";
-import type { IWeekMenuResponse } from "@/interfaces/IWeekMenu";
+import type { Weekmenu, WeekmenuRecipes } from "@/interfaces/IWeekMenu";
 
 export const getAll = async () => {
   const session = await getSession();
@@ -15,7 +15,33 @@ export const getAll = async () => {
     .single();
 
   if (error && status !== 406) throw new Error(error.message);
-  return data;
+  if (!data) {
+    return null;
+  }
+  let recipes: WeekmenuRecipes[] = [];
+  if (Array.isArray(data.weekmenu_recipes)) {
+    recipes = data.weekmenu_recipes.map((w) => {
+      if (!w.recipes || Array.isArray(w.recipes)) {
+        return {
+          id: w.id,
+          recipe: null,
+        };
+      }
+
+      return {
+        id: w.id,
+        recipe: {
+          id: w.recipes.id,
+          title: w.recipes.title,
+        },
+      };
+    });
+  }
+  const response: Weekmenu = {
+    id: data.id,
+    recipes,
+  };
+  return response;
 };
 
 export const addDay = async (weekmenuId: string) => {

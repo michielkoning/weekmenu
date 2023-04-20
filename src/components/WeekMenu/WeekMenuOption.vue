@@ -16,18 +16,20 @@ const { recipes } = useRecipes();
 
 const options: ComputedRef<IOption[]> = computed(() => {
   const defaultOption: IOption = {
-    value: "",
+    value: null,
     title: "Geen keuze",
   };
   const recipeOptions = recipes.value.map((recipe) => {
     return {
       title: `${recipe.title}`,
-      value: recipe.id || "",
+      value: recipe.id,
     };
   });
 
   return [defaultOption, ...recipeOptions];
 });
+
+}
 </script>
 
 <template>
@@ -35,7 +37,7 @@ const options: ComputedRef<IOption[]> = computed(() => {
     <form-select
       id="test"
       :title="`Dag ${index + 1}`"
-      :model-value="recipeId"
+      :model-value="recipeId || ''"
       :options="options"
       @change="update(id, $event.target.value)"
     />
