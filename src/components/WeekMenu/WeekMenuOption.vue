@@ -29,7 +29,6 @@ const options: ComputedRef<IOption[]> = computed(() => {
   return [defaultOption, ...recipeOptions];
 });
 
-}
 </script>
 
 <template>
