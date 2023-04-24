@@ -15,15 +15,11 @@ onMounted(async () => {
 </script>
 
 <template>
-  <week-menu-details />
   <h1>Weekmenu</h1>
+  <week-menu-details />
   <ul v-if="weekmenu.recipes.length" class="list">
     <li v-for="(item, index) in weekmenu.recipes" :key="index">
-      <week-menu-option
-        :id="item.id"
-        :index="index"
-        :recipe-id="item.recipes ? item.recipes.id : null"
-      />
+      <week-menu-option :index="index" :weekmenu-recipe="item" />
     </li>
   </ul>
 

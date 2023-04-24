@@ -44,12 +44,14 @@ export default () => {
   const addDay = async () => {
     if (weekmenu.id) {
       const data = await db.addDay(weekmenu.id);
-      weekmenu.recipes.push(data);
+      weekmenu.recipes.push({
+        id: data.id,
+        recipe: null,
+      });
     }
   };
 
   const update = async (id: string, recipeId: string | null) => {
-    console.log(recipeId);
     loading.value = true;
     try {
       await db.updateDay(id, recipeId);

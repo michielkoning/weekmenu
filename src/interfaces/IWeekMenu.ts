@@ -14,17 +14,17 @@ export interface IWeekMenu extends IWeekMenuBase {
   recipes: (IRecipe | null)[];
 }
 
-export type WeekmenuRecipe = {
+type Recipe = {
   id: string;
   title: string;
 };
 
-export type WeekmenuRecipes = {
+export type WeekmenuRecipe = {
   id: string;
-  recipe: WeekmenuRecipe | null;
+  recipe: Recipe | null;
 };
 
 export type Weekmenu = {
   id: string | undefined;
-  recipes: WeekmenuRecipes[];
+  recipes: WeekmenuRecipe[];
 };

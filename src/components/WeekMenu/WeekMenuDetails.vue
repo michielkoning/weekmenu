@@ -6,12 +6,17 @@ const { weekmenu } = useWeekmenu();
 
 const filledWeekmenu = computed(() => {
   if (!weekmenu.recipes) {
-    return null;
+    return [];
   }
-  return weekmenu.recipes.map((recipe) => recipe.recipes.title).join(", ");
+  const recipes = weekmenu.recipes.filter((r) => r.recipe !== null);
+  return recipes.map((recipe) => recipe.recipe?.title);
 });
 </script>
 
 <template>
-  <p>{{ filledWeekmenu }}</p>
+  <ul v-if="filledWeekmenu.length">
+    <li v-for="item in filledWeekmenu" :key="item">
+      {{ item }}
+    </li>
+  </ul>
 </template>

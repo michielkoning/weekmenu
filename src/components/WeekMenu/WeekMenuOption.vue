@@ -4,11 +4,11 @@ import { computed, type ComputedRef } from "vue";
 import type { IOption } from "@/interfaces/IOption";
 import useWeekmenu from "@/composables/useWeekmenu";
 import useRecipes from "@/composables/useRecipes";
+import type { WeekmenuRecipe } from "@/interfaces/IWeekMenu";
 
-defineProps<{
-  id: string;
+const props = defineProps<{
+  weekmenuRecipe: WeekmenuRecipe;
   index: number;
-  recipeId: string | null;
 }>();
 
 const { update, removeDay } = useWeekmenu();
@@ -16,7 +16,7 @@ const { recipes } = useRecipes();
 
 const options: ComputedRef<IOption[]> = computed(() => {
   const defaultOption: IOption = {
-    value: null,
+    value: "",
     title: "Geen keuze",
   };
   const recipeOptions = recipes.value.map((recipe) => {
@@ -29,6 +29,12 @@ const options: ComputedRef<IOption[]> = computed(() => {
   return [defaultOption, ...recipeOptions];
 });
 
+const set = (value: string) => {
+  if (!value) {
+    update(props.weekmenuRecipe.id, null);
+  }
+  update(props.weekmenuRecipe.id, value);
+};
 </script>
 
 <template>
@@ -36,10 +42,10 @@ const options: ComputedRef<IOption[]> = computed(() => {
     <form-select
       id="test"
       :title="`Dag ${index + 1}`"
-      :model-value="recipeId || ''"
+      :model-value="weekmenuRecipe.recipe?.id || ''"
       :options="options"
-      @change="update(id, $event.target.value)"
+      @change="set($event.target.value)"
     />
-    <button @click="removeDay(id)">Remove</button>
+    <button @click="removeDay(weekmenuRecipe.id)">Remove</button>
   </div>
 </template>
