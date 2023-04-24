@@ -1,19 +1,27 @@
-import { reactive, ref, type Ref } from "vue";
+import { computed, ComputedRef, reactive, ref, type Ref } from "vue";
 
 import * as db from "@/db/weekmenu";
-import type { Weekmenu } from "@/interfaces/IWeekMenu";
+import type { Weekmenu, WeekmenuDay } from "@/interfaces/IWeekMenu";
+import useRecipes from "./useRecipes";
 
 const hasFetched = ref(false);
 const loading = ref(false);
-const id: Ref<undefined | string> = ref(undefined);
 
-const weekmenu: Weekmenu = reactive({
+const list: Weekmenu = reactive({
   id: undefined,
-  recipes: [],
+  days: [],
 });
 
 export default () => {
   const error: Ref<null | string> = ref(null);
+  const { recipes } = useRecipes();
+
+  const weekmenu: ComputedRef<Weekmenu> = computed(() => {
+    return {
+      id: list.id,
+      days: list.days,
+    };
+  });
 
   const getWeekMenu = async () => {
     if (hasFetched.value) {
@@ -27,9 +35,29 @@ export default () => {
       if (!response) {
         return;
       }
-      id.value = response.id;
-      weekmenu.id = response.id;
-      weekmenu.recipes = response.recipes;
+
+      let days: WeekmenuDay[] = [];
+      if (Array.isArray(response.weekmenu_days)) {
+        days = response.weekmenu_days.map((w) => {
+          if (!w.recipes || Array.isArray(w.recipes)) {
+            return {
+              id: w.id,
+              recipe: null,
+            };
+          }
+
+          return {
+            id: w.id,
+            recipe: {
+              id: w.recipes.id,
+              title: w.recipes.title,
+            },
+          };
+        });
+      }
+
+      list.id = response.id;
+      list.days = days;
       hasFetched.value = true;
     } catch (err: Error | unknown) {
       if (err instanceof Error) {
@@ -42,9 +70,9 @@ export default () => {
   };
 
   const addDay = async () => {
-    if (weekmenu.id) {
-      const data = await db.addDay(weekmenu.id);
-      weekmenu.recipes.push({
+    if (list.id) {
+      const data = await db.addDay(list.id);
+      list.days.push({
         id: data.id,
         recipe: null,
       });
@@ -55,6 +83,18 @@ export default () => {
     loading.value = true;
     try {
       await db.updateDay(id, recipeId);
+      const recipe = recipes.value.find((r) => r.id === recipeId);
+      const index = list.days.findIndex((d) => d.id === id);
+      if (list.days[index]) {
+        if (recipe) {
+          list.days[index].recipe = {
+            id: recipe.id,
+            title: recipe?.title,
+          };
+        } else {
+          list.days[index].recipe = null;
+        }
+      }
     } catch (err) {
       if (err instanceof Error) {
         error.value = err.message;
@@ -67,7 +107,7 @@ export default () => {
   const removeDay = async (id: string) => {
     await db.removeDay(id);
 
-    weekmenu.recipes = weekmenu.recipes.filter((r) => r.id !== id);
+    list.days = list.days.filter((r) => r.id !== id);
   };
 
   return {

@@ -30,10 +30,8 @@ const options: ComputedRef<IOption[]> = computed(() => {
 });
 
 const set = (value: string) => {
-  if (!value) {
-    update(props.weekmenuRecipe.id, null);
-  }
-  update(props.weekmenuRecipe.id, value);
+  const recipeId = value ? value : null;
+  update(props.weekmenuRecipe.id, recipeId);
 };
 </script>
 

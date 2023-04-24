@@ -11,11 +11,12 @@ export const getAll = async () => {
   const { data, error, status } = await supabase
     .from("recipes")
     .select(`title, id, content, ingredients, preperationTime, persons, source`)
-    .eq("user_id", session.user.id);
+    .eq("user_id", session.user.id)
+    .order("title", { ascending: true });
 
   if (error && status !== 406) throw new Error(error.message);
 
-  return data;
+  return data as IRecipe[];
 };
 
 export const upsert = async (formData: IRecipe) => {
@@ -24,8 +25,7 @@ export const upsert = async (formData: IRecipe) => {
     throw "No user";
   }
 
-  let updates: IRecipe = {
-    user_id: session.user.id,
+  const updates: IRecipe = {
     title: formData.title,
     persons: formData.persons,
     preperationTime: formData.preperationTime,
@@ -34,21 +34,23 @@ export const upsert = async (formData: IRecipe) => {
     source: formData.source,
   };
 
-  if (formData.id) {
-    updates = {
-      ...updates,
-      id: formData.id,
-    };
-  }
   const { data, error, status } = await supabase
     .from("recipes")
-    .upsert(updates)
+    .upsert({
+      ...updates,
+      user_id: session.user.id,
+      id: formData.id,
+    })
+    .match({
+      user_id: session.user.id,
+      id: formData.id,
+    })
     .select()
     .single();
 
   if (error && status !== 406) throw new Error(error.message);
 
-  return data;
+  return data as IRecipe;
 };
 
 export const remove = async (id: string) => {
@@ -57,10 +59,9 @@ export const remove = async (id: string) => {
     throw "No user";
   }
 
-  const { error, status } = await supabase
-    .from("recipes")
-    .delete()
-    .match({ id, user_id: session.user.id });
-
+  const { error, status } = await supabase.from("recipes").delete().match({
+    id: id,
+    user_id: session.user.id,
+  });
   if (error && status !== 406) throw new Error(error.message);
 };

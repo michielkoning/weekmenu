@@ -1,6 +1,5 @@
 import { supabase } from "@/supabase";
 import { getSession } from "@/db/user";
-import type { Weekmenu, WeekmenuRecipes } from "@/interfaces/IWeekMenu";
 
 export const getAll = async () => {
   const session = await getSession();
@@ -10,38 +9,13 @@ export const getAll = async () => {
 
   const { data, error, status } = await supabase
     .from("weekmenu")
-    .select(`id, weekmenu_recipes(id, recipes(title, id))`)
+    .select(`id, weekmenu_days(id, recipes(title, id))`)
     .eq("user_id", session.user.id)
+    .order("inserted_at", { foreignTable: "weekmenu_days" })
     .single();
 
   if (error && status !== 406) throw new Error(error.message);
-  if (!data) {
-    return null;
-  }
-  let recipes: WeekmenuRecipes[] = [];
-  if (Array.isArray(data.weekmenu_recipes)) {
-    recipes = data.weekmenu_recipes.map((w) => {
-      if (!w.recipes || Array.isArray(w.recipes)) {
-        return {
-          id: w.id,
-          recipe: null,
-        };
-      }
-
-      return {
-        id: w.id,
-        recipe: {
-          id: w.recipes.id,
-          title: w.recipes.title,
-        },
-      };
-    });
-  }
-  const response: Weekmenu = {
-    id: data.id,
-    recipes,
-  };
-  return response;
+  return data;
 };
 
 export const addDay = async (weekmenuId: string) => {
@@ -56,7 +30,7 @@ export const addDay = async (weekmenuId: string) => {
   };
 
   const { data, error, status } = await supabase
-    .from("weekmenu_recipes")
+    .from("weekmenu_days")
     .insert(updates)
     .select()
     .single();
@@ -73,9 +47,12 @@ export const removeDay = async (id: string) => {
   }
 
   const { data, error, status } = await supabase
-    .from("weekmenu_recipes")
+    .from("weekmenu_days")
     .delete()
-    .eq("id", id);
+    .match({
+      id: id,
+      user_id: session.user.id,
+    });
 
   if (error && status !== 406) throw new Error(error.message);
 
@@ -93,10 +70,12 @@ export const updateDay = async (id: string, recipeId: string | null) => {
   };
 
   const { data, error, status } = await supabase
-    .from("weekmenu_recipes")
+    .from("weekmenu_days")
     .update(updates)
-    .eq("id", id)
-    .select()
+    .match({
+      id: id,
+      user_id: session.user.id,
+    })
     .single();
 
   if (error && status !== 406) throw new Error(error.message);

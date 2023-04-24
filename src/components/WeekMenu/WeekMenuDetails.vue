@@ -4,18 +4,15 @@ import { computed } from "vue";
 
 const { weekmenu } = useWeekmenu();
 
-const filledWeekmenu = computed(() => {
-  if (!weekmenu.recipes) {
-    return [];
-  }
-  const recipes = weekmenu.recipes.filter((r) => r.recipe !== null);
-  return recipes.map((recipe) => recipe.recipe?.title);
+const recipes = computed(() => {
+  const days = weekmenu.value.days.filter((r) => r.recipe !== null);
+  return days.map((recipe) => recipe.recipe?.title);
 });
 </script>
 
 <template>
-  <ul v-if="filledWeekmenu.length">
-    <li v-for="item in filledWeekmenu" :key="item">
+  <ul v-if="recipes.length">
+    <li v-for="item in recipes" :key="item">
       {{ item }}
     </li>
   </ul>

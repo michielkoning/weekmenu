@@ -1,11 +1,10 @@
 import type { IRecipe } from "@/interfaces/IRecipe";
-import { computed, ref, type ComputedRef, type Ref } from "vue";
+import { computed, ComputedRef, ref, type Ref } from "vue";
 import { getAll, remove, upsert } from "@/db/recipes";
-import type { Database } from "@/interfaces/ISupabase";
 
+const list: Ref<IRecipe[]> = ref([]);
 const hasFetched = ref(false);
 const loading = ref(false);
-const list: Ref<Database['public']['Tables']["recipes"]['Row'][]> = ref([]);
 
 export default () => {
   const error: Ref<null | string> = ref(null);

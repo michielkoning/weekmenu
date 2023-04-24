@@ -17,8 +17,8 @@ onMounted(async () => {
 <template>
   <h1>Weekmenu</h1>
   <week-menu-details />
-  <ul v-if="weekmenu.recipes.length" class="list">
-    <li v-for="(item, index) in weekmenu.recipes" :key="index">
+  <ul v-if="weekmenu.days.length" class="list">
+    <li v-for="(item, index) in weekmenu.days" :key="index">
       <week-menu-option :index="index" :weekmenu-recipe="item" />
     </li>
   </ul>

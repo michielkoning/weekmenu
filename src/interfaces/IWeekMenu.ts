@@ -1,6 +1,4 @@
-import type { getAll } from "@/db/weekmenu";
 import type { IRecipe } from "./IRecipe";
-import type { Database } from "./ISupabase";
 
 export interface IWeekMenuBase {
   id?: string;
@@ -19,12 +17,12 @@ type Recipe = {
   title: string;
 };
 
-export type WeekmenuRecipe = {
+export type WeekmenuDay = {
   id: string;
   recipe: Recipe | null;
 };
 
 export type Weekmenu = {
   id: string | undefined;
-  recipes: WeekmenuRecipe[];
+  days: WeekmenuDay[];
 };
