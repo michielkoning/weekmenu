@@ -4,7 +4,6 @@ import * as db from "@/db/weekmenu";
 import type { Weekmenu, WeekmenuDay } from "@/interfaces/IWeekMenu";
 import useRecipes from "./useRecipes";
 
-const hasFetched = ref(false);
 const loading = ref(false);
 
 const list: Weekmenu = reactive({
@@ -24,10 +23,6 @@ export default () => {
   });
 
   const getWeekMenu = async () => {
-    if (hasFetched.value) {
-      return;
-    }
-
     loading.value = true;
     error.value = null;
     try {
@@ -58,7 +53,6 @@ export default () => {
 
       list.id = response.id;
       list.days = days;
-      hasFetched.value = true;
     } catch (err: Error | unknown) {
       if (err instanceof Error) {
         error.value = err.message;

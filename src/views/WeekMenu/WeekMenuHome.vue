@@ -2,15 +2,13 @@
 import AppButton from "@/components/Shared/AppButton.vue";
 import WeekMenuOption from "@/components/WeekMenu/WeekMenuOption.vue";
 import WeekMenuDetails from "@/components/WeekMenu/WeekMenuDetails.vue";
-import useRecipes from "@/composables/useRecipes";
 import useWeekmenu from "@/composables/useWeekmenu";
 import { onMounted } from "vue";
 
-const { addDay, weekmenu } = useWeekmenu();
-const { getList } = useRecipes();
+const { getWeekMenu, addDay, weekmenu } = useWeekmenu();
 
 onMounted(async () => {
-  await getList();
+  await getWeekMenu();
 });
 </script>
 

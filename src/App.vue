@@ -4,16 +4,13 @@ import { onMounted, ref, type Ref } from "vue";
 import useRecipes from "@/composables/useRecipes";
 import PwaUpdateAlert from "@/components/Pwa/PwaUpdateAlert.vue";
 import { supabase } from "./supabase";
-import useWeekmenu from "./composables/useWeekmenu";
 import { useRoute } from "vue-router";
 import type { IBeforeInstallPromptEvent } from "./interfaces/IBeforeInstallPromptEvent";
 
 const { getList, reset } = useRecipes();
-const { getWeekMenu } = useWeekmenu();
 
 const fetchData = async () => {
   await getList();
-  await getWeekMenu();
 };
 const eventPrompt: Ref<IBeforeInstallPromptEvent | null> = ref(null);
 const hasAppInstalled = ref(false);
