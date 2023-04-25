@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import AppButton from "@/components/Shared/AppButton.vue";
-import WeekMenuOption from "@/components/WeekMenu/WeekMenuOption.vue";
 import WeekMenuDetails from "@/components/WeekMenu/WeekMenuDetails.vue";
 import useWeekmenu from "@/composables/useWeekmenu";
 import { onMounted } from "vue";
+import { ROUTES } from "@/enums/routes";
 
-const { getWeekMenu, addDay, weekmenu } = useWeekmenu();
+const { getWeekMenu, weekmenu, archive } = useWeekmenu();
 
 onMounted(async () => {
   await getWeekMenu();
@@ -14,14 +14,10 @@ onMounted(async () => {
 
 <template>
   <h1>Weekmenu</h1>
-  <week-menu-details />
-  <ul v-if="weekmenu.days.length" class="list">
-    <li v-for="(item, index) in weekmenu.days" :key="index">
-      <week-menu-option :index="index" :weekmenu-recipe="item" />
-    </li>
-  </ul>
-
-  <p><app-button @click="addDay()">Nieuwe dag</app-button></p>
+  <week-menu-details :weekmenu="weekmenu" />
+  <p><app-button :to="{ name: ROUTES.weekmenu_edit }">Wijzigen</app-button></p>
+  <p><app-button @click="archive">Archiveer</app-button></p>
+  <h2>Archief</h2>
 </template>
 
 <style lang="postcss" scoped>

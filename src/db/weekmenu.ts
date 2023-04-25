@@ -9,12 +9,51 @@ export const getAll = async () => {
 
   const { data, error, status } = await supabase
     .from("weekmenu")
+    .select(`id, archived, weekmenu_days(id, recipes(title, id))`)
+    .match({ user_id: session.user.id, archived: false })
+    .order("inserted_at", { foreignTable: "weekmenu_days" });
+
+  if (error && status !== 406) throw new Error(error.message);
+  return data;
+};
+
+export const getArchive = async () => {
+  const session = await getSession();
+  if (!session) {
+    throw "No user";
+  }
+
+  const { data, error, status } = await supabase
+    .from("weekmenu")
     .select(`id, weekmenu_days(id, recipes(title, id))`)
-    .eq("user_id", session.user.id)
-    .order("inserted_at", { foreignTable: "weekmenu_days" })
+    .match({ user_id: session.user.id, archived: true })
+    .order("inserted_at", { foreignTable: "weekmenu_days" });
+
+  if (error && status !== 406) throw new Error(error.message);
+  return data;
+};
+
+export const update = async (id: string, archived: boolean) => {
+  const session = await getSession();
+  if (!session) {
+    throw "No user";
+  }
+
+  const updates = {
+    archived,
+  };
+
+  const { data, error, status } = await supabase
+    .from("weekmenu")
+    .update(updates)
+    .match({
+      id: id,
+      user_id: session.user.id,
+    })
     .single();
 
   if (error && status !== 406) throw new Error(error.message);
+
   return data;
 };
 

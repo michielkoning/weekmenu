@@ -25,4 +25,5 @@ export type WeekmenuDay = {
 export type Weekmenu = {
   id: string | undefined;
   days: WeekmenuDay[];
+  archived: boolean;
 };

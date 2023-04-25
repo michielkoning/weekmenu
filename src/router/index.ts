@@ -42,6 +42,11 @@ const router = createRouter({
           component: () => import("../views/WeekMenu/WeekMenuHome.vue"),
         },
         {
+          path: "weekmenu/edit",
+          name: ROUTES.weekmenu_edit,
+          component: () => import("../views/WeekMenu/WeekMenuEdit.vue"),
+        },
+        {
           path: "account",
           name: ROUTES.account_home,
           component: () => import("../views/Account/AccountHomeView.vue"),

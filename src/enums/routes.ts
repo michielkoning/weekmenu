@@ -9,7 +9,8 @@ export enum ROUTES {
   recipes_add = "recipes/add",
   recipes_edit = "recipes/edit",
 
-  weekmenu_home = "weekmenu/home",
+  weekmenu_edit = "weekmenu/home",
+  weekmenu_home = "weekmenu/edit",
 
   account_home = "account/home",
 }

@@ -8,7 +8,7 @@ const props = withDefaults(
     type?: string;
     loading?: boolean;
     color?: string;
-    size?: string | null;
+    size?: "md" | "sm" | null;
   }>(),
   {
     to: null,

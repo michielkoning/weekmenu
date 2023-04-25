@@ -6,19 +6,21 @@ import useRecipes from "./useRecipes";
 
 const loading = ref(false);
 
-const list: Weekmenu = reactive({
-  id: undefined,
-  days: [],
-});
+const list: Ref<Weekmenu[]> = ref([]);
 
 export default () => {
   const error: Ref<null | string> = ref(null);
   const { recipes } = useRecipes();
 
-  const weekmenu: ComputedRef<Weekmenu> = computed(() => {
+  const weekmenu: ComputedRef<Weekmenu | null> = computed(() => {
+    const item = list.value.find((w) => !w.archived);
+    if (!item) {
+      return null;
+    }
     return {
-      id: list.id,
-      days: list.days,
+      id: item.id,
+      days: item.days,
+      archived: false,
     };
   });
 
@@ -28,31 +30,34 @@ export default () => {
     try {
       const response = await db.getAll();
       if (!response) {
-        return;
+        return [];
       }
 
-      let days: WeekmenuDay[] = [];
-      if (Array.isArray(response.weekmenu_days)) {
-        days = response.weekmenu_days.map((w) => {
-          if (!w.recipes || Array.isArray(w.recipes)) {
+      list.value = response.map((w) => {
+        let days: WeekmenuDay[] = [];
+        if (Array.isArray(response.weekmenu_days)) {
+          days = response.weekmenu_days.map((w) => {
+            if (!w.recipes || Array.isArray(w.recipes)) {
+              return {
+                id: w.id,
+                recipe: null,
+              };
+            }
+
             return {
               id: w.id,
-              recipe: null,
+              recipe: {
+                id: w.recipes.id,
+                title: w.recipes.title,
+              },
             };
-          }
-
-          return {
-            id: w.id,
-            recipe: {
-              id: w.recipes.id,
-              title: w.recipes.title,
-            },
-          };
-        });
-      }
-
-      list.id = response.id;
-      list.days = days;
+          });
+        }
+        return {
+          id: w.id,
+          days,
+        };
+      });
     } catch (err: Error | unknown) {
       if (err instanceof Error) {
         error.value = err.message;
@@ -64,9 +69,9 @@ export default () => {
   };
 
   const addDay = async () => {
-    if (list.id) {
-      const data = await db.addDay(list.id);
-      list.days.push({
+    if (list.value.id) {
+      const data = await db.addDay(list.value.id);
+      list.value.days.push({
         id: data.id,
         recipe: null,
       });
@@ -78,15 +83,15 @@ export default () => {
     try {
       await db.updateDay(id, recipeId);
       const recipe = recipes.value.find((r) => r.id === recipeId);
-      const index = list.days.findIndex((d) => d.id === id);
-      if (list.days[index]) {
+      const index = list.value.days.findIndex((d) => d.id === id);
+      if (list.value.days[index]) {
         if (recipe) {
-          list.days[index].recipe = {
+          list.value.days[index].recipe = {
             id: recipe.id,
             title: recipe?.title,
           };
         } else {
-          list.days[index].recipe = null;
+          list.value.days[index].recipe = null;
         }
       }
     } catch (err) {
@@ -101,7 +106,11 @@ export default () => {
   const removeDay = async (id: string) => {
     await db.removeDay(id);
 
-    list.days = list.days.filter((r) => r.id !== id);
+    list.value.days = list.value.days.filter((r) => r.id !== id);
+  };
+
+  const archive = async () => {
+    await db.update(weekmenu.value.id, true);
   };
 
   return {
@@ -110,5 +119,6 @@ export default () => {
     addDay,
     weekmenu,
     removeDay,
+    archive,
   };
 };

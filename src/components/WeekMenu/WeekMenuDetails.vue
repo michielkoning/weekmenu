@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import useWeekmenu from "@/composables/useWeekmenu";
+import { Weekmenu } from "@/interfaces/IWeekMenu";
 import { computed } from "vue";
 
-const { weekmenu } = useWeekmenu();
+const props = defineProps<{
+  weekmenu: Weekmenu;
+}>();
 
 const recipes = computed(() => {
-  const days = weekmenu.value.days.filter((r) => r.recipe !== null);
+  const days = props.weekmenu.days.filter((r) => r.recipe !== null);
   return days.map((recipe) => recipe.recipe?.title);
 });
 </script>
@@ -16,4 +18,5 @@ const recipes = computed(() => {
       {{ item }}
     </li>
   </ul>
+  <p v-else>Er is nog geen weekmenu samengesteld</p>
 </template>
