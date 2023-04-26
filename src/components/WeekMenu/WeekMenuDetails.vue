@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import { Weekmenu } from "@/interfaces/IWeekMenu";
-import { computed } from "vue";
+import type { Weekmenu } from '@/interfaces/IWeekMenu'
+import { computed } from 'vue'
 
 const props = defineProps<{
-  weekmenu: Weekmenu;
-}>();
+  weekmenu: Weekmenu
+}>()
 
 const recipes = computed(() => {
-  const days = props.weekmenu.days.filter((r) => r.recipe !== null);
-  return days.map((recipe) => recipe.recipe?.title);
-});
+  const days = props.weekmenu.days.filter((r) => r.recipe !== null)
+  return days.map((recipe) => recipe.recipe?.title)
+})
 </script>
 
 <template>
