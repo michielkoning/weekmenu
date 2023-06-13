@@ -11,7 +11,7 @@
     "supabase-gen": "supabase gen types typescript --project-id citvrgpihdclyhkkwfer --schema public > src/interfaces/ISupabase.ts "
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.24.0",
+    "@supabase/supabase-js": "^2.25.0",
     "@vuelidate/core": "^2.0.2",
     "@vuelidate/validators": "^2.0.2",
     "register-service-worker": "^1.7.2",
