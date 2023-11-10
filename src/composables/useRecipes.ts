@@ -1,15 +1,15 @@
-import type { IRecipe } from '@/interfaces/IRecipe'
+import type { Tables } from '@/types/Supabase'
 import { computed, ref, type Ref } from 'vue'
 import { getAll, remove, upsert } from '@/db/recipes'
 
-const list: Ref<IRecipe[]> = ref([])
+const list: Ref<Tables<'recipes'>[]> = ref([])
 const hasFetched = ref(false)
 const loading = ref(false)
 
 export default () => {
   const error: Ref<null | string> = ref(null)
 
-  const recipe: Ref<IRecipe | null> = ref(null)
+  const recipe: Ref<Tables<'recipes'> | null> = ref(null)
 
   const recipes = computed(() => {
     return list.value.sort((a, b) => a.title.localeCompare(b.title))
@@ -28,7 +28,10 @@ export default () => {
     loading.value = true
     error.value = null
     try {
-      list.value = await getAll()
+      const result = await getAll()
+      if (result !== null) {
+        list.value = result
+      }
       hasFetched.value = true
     } catch (err: Error | unknown) {
       if (err instanceof Error) {
@@ -60,12 +63,12 @@ export default () => {
     }
   }
 
-  const upsertRecipe = async (formData: IRecipe) => {
+  const upsertRecipe = async (formData: Tables<'recipes'>) => {
     loading.value = true
     try {
       const response = await upsert(formData)
       recipe.value = response
-      const index = list.value.findIndex((r) => response.id === r.id)
+      const index = list.value.findIndex((r) => response?.id === r.id)
       if (index > -1) {
         list.value[index] = response
       } else {

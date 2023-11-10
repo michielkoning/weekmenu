@@ -3,7 +3,7 @@ export type Json =
   | number
   | boolean
   | null
-  | { [key: string]: Json }
+  | { [key: string]: Json | undefined }
   | Json[]
 
 export interface Database {
@@ -34,6 +34,22 @@ export interface Database {
           title?: string
           user_id?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: "recipe_ingredients_recipe_fkey"
+            columns: ["recipe"]
+            isOneToOne: false
+            referencedRelation: "recipes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "recipe_ingredients_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       recipes: {
         Row: {
@@ -69,25 +85,46 @@ export interface Database {
           title?: string
           user_id?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: "recipes_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       weekmenu: {
         Row: {
+          archived: boolean | null
           id: string
           inserted_at: string
           user_id: string
         }
         Insert: {
+          archived?: boolean | null
           id?: string
           inserted_at?: string
           user_id: string
         }
         Update: {
+          archived?: boolean | null
           id?: string
           inserted_at?: string
           user_id?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: "weekmenu_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
       }
-      weekmenu_recipes: {
+      weekmenu_days: {
         Row: {
           id: string
           inserted_at: string
@@ -109,6 +146,29 @@ export interface Database {
           user_id?: string
           weekmenu?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: "weekmenu_days_recipe_fkey"
+            columns: ["recipe"]
+            isOneToOne: false
+            referencedRelation: "recipes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "weekmenu_days_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "weekmenu_days_weekmenu_fkey"
+            columns: ["weekmenu"]
+            isOneToOne: false
+            referencedRelation: "weekmenu"
+            referencedColumns: ["id"]
+          }
+        ]
       }
     }
     Views: {
@@ -122,6 +182,7 @@ export interface Database {
         Update: {
           title?: string | null
         }
+        Relationships: []
       }
     }
     Functions: {
@@ -135,3 +196,5 @@ export interface Database {
     }
   }
 }
+
+export type Tables<T extends keyof Database['public']['Tables']> = Database['public']['Tables'][T]['Row']

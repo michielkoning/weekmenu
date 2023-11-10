@@ -8,7 +8,7 @@
     "dev": "vite",
     "preview": "vite preview",
     "type-check": "vue-tsc --noEmit",
-    "supabase-gen": "supabase gen types typescript --project-id citvrgpihdclyhkkwfer --schema public > src/interfaces/ISupabase.ts "
+    "supabase-gen": "supabase gen types typescript --project-id citvrgpihdclyhkkwfer --schema public > src/types/Supabase.ts "
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.38.4",

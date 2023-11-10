@@ -1,5 +1,5 @@
+import type { Tables } from "@/types/Supabase";
 import { supabase } from "@/supabase";
-import type { IRecipe } from "@/interfaces/IRecipe";
 import { getSession } from "@/db/user";
 
 export const getAll = async () => {
@@ -16,16 +16,16 @@ export const getAll = async () => {
 
   if (error && status !== 406) throw new Error(error.message);
 
-  return data as IRecipe[];
+  return data;
 };
 
-export const upsert = async (formData: IRecipe) => {
+export const upsert = async (formData: Tables<'recipes'>) => {
   const session = await getSession();
   if (!session) {
     throw "No user";
   }
 
-  const updates: IRecipe = {
+  const updates = {
     title: formData.title,
     persons: formData.persons,
     preperationTime: formData.preperationTime,
@@ -50,7 +50,7 @@ export const upsert = async (formData: IRecipe) => {
 
   if (error && status !== 406) throw new Error(error.message);
 
-  return data as IRecipe;
+  return data;
 };
 
 export const remove = async (id: string) => {
