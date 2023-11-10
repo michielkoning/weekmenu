@@ -1,5 +1,5 @@
 [build]
-  command = "pnpm run build"
+  command = "pnpm run build-only"
   publish = "dist"
 
 [[redirects]]
