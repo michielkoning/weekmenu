@@ -35,13 +35,13 @@ export default defineConfig({
             sizes: '512x512',
             type: 'image/png'
           }
-        ],
-        protocol_handlers: [
-          {
-            protocol: 'web+weekmenu',
-            url: '/%s'
-          }
         ]
+        // protocol_handlers: [
+        //   {
+        //     protocol: 'web+weekmenu',
+        //     url: '/%s'
+        //   }
+        // ]
       }
     })
   ],

@@ -2,12 +2,11 @@ import { supabase } from '@/supabase'
 import { PassageUser } from '@passageidentity/passage-elements/passage-user'
 
 export const getSession = async () => {
-  const { data, error } = await supabase.auth.getSession()
-  if (data.session) {
-    return data.session
+  try {
+    return await new PassageUser().userInfo()
+  } catch (error) {
+    console.error(error)
   }
-  if (error) throw error
-  return null
 }
 
 export const login = async (email: string, password: string) => {

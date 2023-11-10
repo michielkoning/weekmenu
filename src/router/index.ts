@@ -2,6 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { getSession } from '@/db/user'
 import DashboardView from '@/views/DashboardView.vue'
 import { ROUTES } from '@/enums/routes'
+import Passage from '@passageidentity/passage-node'
+import { PassageUser } from '@passageidentity/passage-elements/passage-user'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -76,34 +78,27 @@ const router = createRouter({
   ]
 })
 
-// router.beforeEach(async (to, _, next) => {
-//   const publicRoutes = [
-//     ROUTES.auth_login.toString(),
-//     ROUTES.auth_register.toString(),
-//     ROUTES.auth_resetPassword.toString()
-//   ]
+router.beforeEach(async (to, _, next) => {
+  const publicRoutes = [
+    ROUTES.auth_login.toString(),
+    ROUTES.auth_register.toString(),
+    ROUTES.auth_resetPassword.toString()
+  ]
 
-//   const protocol = 'web+weekmenu://'
-//   if (to.fullPath.includes(encodeURIComponent(protocol))) {
-//     const decodedUrl = decodeURIComponent(to.fullPath)
-//     const url = decodedUrl.replace(`/${protocol}`, '')
-//     next(url)
-//     return
-//   }
+  if (!to.name) {
+    next()
+    return
+  }
 
-//   if (!to.name) {
-//     next()
-//     return
-//   }
-//   const routeName = to.name.toString()
-//   const session = await getSession()
-//   if (!publicRoutes.includes(routeName) && !session) {
-//     next({ name: ROUTES.auth_login })
-//   } else if (publicRoutes.includes(routeName) && session) {
-//     next({ name: ROUTES.recipes_home })
-//   } else {
-//     next()
-//   }
-// })
+  const routeName = to.name.toString()
+  const session = await getSession()
+  if (!publicRoutes.includes(routeName) && !session) {
+    next({ name: ROUTES.auth_login })
+  } else if (publicRoutes.includes(routeName) && session) {
+    next({ name: ROUTES.recipes_home })
+  } else {
+    next()
+  }
+})
 
 export default router
