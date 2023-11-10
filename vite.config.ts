@@ -7,7 +7,11 @@ import { VitePWA } from 'vite-plugin-pwa'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    vue(),
+    vue({
+      compilerOptions: {
+        isCustomElement: (tag) => ['passage-'].includes(tag)
+      }
+    }),
     VitePWA({
       includeAssets: [
         '/img/icons/favicon.ico',
