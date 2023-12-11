@@ -1,22 +1,22 @@
 export type IIngredient = {
-  title: string;
-  amount?: number;
-};
+  title: string
+  amount?: number
+}
 
 export type IRecipeBase = {
-  id?: string;
-  title: string;
-  preperationTime: number;
-  persons: number;
-  source: string;
-};
+  id?: string
+  title: string
+  preperationTime: number
+  persons: number
+  source: string
+}
 
 export type IRecipe = IRecipeBase & {
-  content: string[];
-  ingredients: IIngredient[];
-};
+  content: string[]
+  ingredients: IIngredient[]
+}
 
 export type IFormData = IRecipeBase & {
-  content: string;
-  ingredients: string;
-};
+  content: string
+  ingredients: string
+}

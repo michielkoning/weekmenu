@@ -1,33 +1,27 @@
 <script lang="ts" setup>
-import AppButton from "@/components/Shared/AppButton.vue";
-import FormErrorMessage from "@/components/Forms/Elements/FormErrorMessage.vue";
+import AppButton from '@/components/Shared/AppButton.vue'
+import FormErrorMessage from '@/components/Forms/Elements/FormErrorMessage.vue'
 
 withDefaults(
   defineProps<{
-    buttonTitle?: string;
-    loading?: boolean;
-    error?: string | null;
-    sticky?: boolean;
+    buttonTitle?: string
+    loading?: boolean
+    error?: string | null
+    sticky?: boolean
   }>(),
   {
     sticky: false,
-    buttonTitle: "Verzenden",
+    buttonTitle: 'Verzenden',
     loading: false,
-    error: null,
+    error: null
   }
-);
+)
 
-defineEmits(["submit"]);
+defineEmits(['submit'])
 </script>
 
 <template>
-  <form
-    action=""
-    method="post"
-    novalidate
-    class="form"
-    @submit.prevent="$emit('submit')"
-  >
+  <form action="" method="post" novalidate class="form" @submit.prevent="$emit('submit')">
     <slot />
     <form-error-message :error="error" />
     <div class="footer" :class="{ sticky }">

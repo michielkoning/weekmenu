@@ -1,14 +1,14 @@
 <script lang="ts" setup>
 withDefaults(
   defineProps<{
-    mode?: "default" | "in-out" | "out-in";
-    direction?: string;
+    mode?: 'default' | 'in-out' | 'out-in'
+    direction?: string
   }>(),
   {
-    mode: "default",
-    direction: "up",
+    mode: 'default',
+    direction: 'up'
   }
-);
+)
 </script>
 
 <template>
@@ -22,7 +22,9 @@ withDefaults(
 .slide-in-up-leave-active,
 .slide-in-down-enter-active,
 .slide-in-down-leave-active {
-  transition: opacity var(--animation), transform var(--animation);
+  transition:
+    opacity var(--animation),
+    transform var(--animation);
 }
 
 .slide-in-up-enter-from,

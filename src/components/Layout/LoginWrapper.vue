@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import CenterWrapper from "@/components/Layout/CenterWrapper.vue";
+import CenterWrapper from '@/components/Layout/CenterWrapper.vue'
 
 defineProps<{
-  title: string;
-}>();
+  title: string
+}>()
 </script>
 
 <template>

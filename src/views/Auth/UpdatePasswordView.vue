@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import FormUpdatePassword from "@/components/Forms/FormUpdatePassword.vue";
+import FormUpdatePassword from '@/components/Forms/FormUpdatePassword.vue'
 </script>
 
 <template>

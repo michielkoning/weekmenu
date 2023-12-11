@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { useRegisterSW } from "virtual:pwa-register/vue";
-import AppAlert from "@/components/Shared/AppAlert.vue";
-import AppButton from "@/components/Shared/AppButton.vue";
+import { useRegisterSW } from 'virtual:pwa-register/vue'
+import AppAlert from '@/components/Shared/AppAlert.vue'
+import AppButton from '@/components/Shared/AppButton.vue'
 
-const { needRefresh, updateServiceWorker } = useRegisterSW();
+const { needRefresh, updateServiceWorker } = useRegisterSW()
 </script>
 
 <template>

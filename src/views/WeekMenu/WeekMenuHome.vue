@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import AppButton from "@/components/Shared/AppButton.vue";
-import WeekMenuDetails from "@/components/WeekMenu/WeekMenuDetails.vue";
-import useWeekmenu from "@/composables/useWeekmenu";
-import { onMounted } from "vue";
-import { ROUTES } from "@/enums/routes";
+import AppButton from '@/components/Shared/AppButton.vue'
+import WeekMenuDetails from '@/components/WeekMenu/WeekMenuDetails.vue'
+import useWeekmenu from '@/composables/useWeekmenu'
+import { onMounted } from 'vue'
+import { ROUTES } from '@/enums/routes'
 
-const { getWeekMenu, weekmenu, archive } = useWeekmenu();
+const { getWeekMenu, weekmenu, archive } = useWeekmenu()
 
 onMounted(async () => {
-  await getWeekMenu();
-});
+  await getWeekMenu()
+})
 </script>
 
 <template>

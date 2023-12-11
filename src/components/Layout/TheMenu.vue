@@ -1,36 +1,36 @@
 <script setup lang="ts">
-import { ROUTES } from "@/enums/routes";
-import CenterWrapper from "@/components/Layout/CenterWrapper.vue";
-import AppIcon from "@/components/Icons/AppIcon.vue";
-import { useRoute } from "vue-router";
-import { computed } from "vue";
+import { ROUTES } from '@/enums/routes'
+import CenterWrapper from '@/components/Layout/CenterWrapper.vue'
+import AppIcon from '@/components/Icons/AppIcon.vue'
+import { useRoute } from 'vue-router'
+import { computed } from 'vue'
 
-const route = useRoute();
+const route = useRoute()
 
 const checkRoutes = (routes: ROUTES[]) => {
-  const check = routes.map((r) => r.toString());
+  const check = routes.map((r) => r.toString())
   if (!route.name) {
-    return false;
+    return false
   }
-  return check.includes(route.name.toString());
-};
+  return check.includes(route.name.toString())
+}
 
 const isRecipe = computed(() => {
   return checkRoutes([
     ROUTES.recipes_add,
     ROUTES.recipes_details,
     ROUTES.recipes_edit,
-    ROUTES.recipes_home,
-  ]);
-});
+    ROUTES.recipes_home
+  ])
+})
 
 const isWeekmenu = computed(() => {
-  return checkRoutes([ROUTES.weekmenu_home]);
-});
+  return checkRoutes([ROUTES.weekmenu_home])
+})
 
 const isAccount = computed(() => {
-  return checkRoutes([ROUTES.account_home]);
-});
+  return checkRoutes([ROUTES.account_home])
+})
 </script>
 
 <template>
@@ -73,7 +73,7 @@ const isAccount = computed(() => {
 </template>
 
 <style lang="postcss" scoped>
-@import "@/assets/css/media-queries/media-queries.css";
+@import '@/assets/css/media-queries/media-queries.css';
 
 nav {
   position: fixed;

@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import useBreadCrumb from "@/composables/useBreadCrumb";
-import CenterWrapper from "@/components/Layout/CenterWrapper.vue";
+import useBreadCrumb from '@/composables/useBreadCrumb'
+import CenterWrapper from '@/components/Layout/CenterWrapper.vue'
 
-const { breadcrumb } = useBreadCrumb();
+const { breadcrumb } = useBreadCrumb()
 </script>
 
 <template>
@@ -29,7 +29,7 @@ const { breadcrumb } = useBreadCrumb();
   display: flex;
   gap: 0.5em;
   &::after {
-    content: "/";
+    content: '/';
   }
 }
 </style>

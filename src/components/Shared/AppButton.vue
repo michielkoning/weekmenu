@@ -1,47 +1,47 @@
 <script lang="ts" setup>
-import { computed } from "vue";
-import type { RouteLocationNamedRaw } from "vue-router";
+import { computed } from 'vue'
+import type { RouteLocationNamedRaw } from 'vue-router'
 const props = withDefaults(
   defineProps<{
-    to?: RouteLocationNamedRaw | null;
-    buttonTag?: string;
-    type?: string;
-    loading?: boolean;
-    color?: string;
-    size?: "md" | "sm" | null;
+    to?: RouteLocationNamedRaw | null
+    buttonTag?: string
+    type?: string
+    loading?: boolean
+    color?: string
+    size?: 'md' | 'sm' | null
   }>(),
   {
     to: null,
-    buttonTag: "button",
-    type: "button",
+    buttonTag: 'button',
+    type: 'button',
     loading: false,
-    color: "primary",
-    size: null,
+    color: 'primary',
+    size: null
   }
-);
+)
 
 const tag = computed(() => {
   if (props.to) {
-    return "router-link";
+    return 'router-link'
   }
-  return props.buttonTag;
-});
+  return props.buttonTag
+})
 
 const generatedType = computed(() => {
-  if (tag.value === "button") {
-    return props.type;
+  if (tag.value === 'button') {
+    return props.type
   }
-  return null;
-});
+  return null
+})
 
 const sizeClass = computed(() => {
   if (props.size) {
-    return `btn-${props.size}`;
+    return `btn-${props.size}`
   }
-  return null;
-});
+  return null
+})
 
-defineEmits(["click"]);
+defineEmits(['click'])
 </script>
 
 <template>

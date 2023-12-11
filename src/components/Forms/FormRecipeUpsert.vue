@@ -1,143 +1,138 @@
 <script setup lang="ts">
-import { reactive, computed, onMounted } from "vue";
-import type { IFormData, IIngredient } from "@/interfaces/IRecipe";
-import { useRouter } from "vue-router";
-import FormFieldset from "@/components/Forms/Elements/FormFieldset.vue";
-import FormInputText from "@/components/Forms/Elements/FormInputText.vue";
-import FormTextarea from "@/components/Forms/Elements/FormTextarea.vue";
-import AppForm from "@/components/Forms/Elements/AppForm.vue";
-import { ROUTES } from "@/enums/routes";
-import { required, numeric } from "@/i18n/validators";
-import useVuelidate from "@vuelidate/core";
-import useValidate from "@/composables/useValidate";
-import FormPersons from "@/components/Forms/Elements/FormPersons.vue";
-import useRecipes from "@/composables/useRecipes";
+import { reactive, computed, onMounted } from 'vue'
+import type { IFormData, IIngredient } from '@/interfaces/IRecipe'
+import { useRouter } from 'vue-router'
+import FormFieldset from '@/components/Forms/Elements/FormFieldset.vue'
+import FormInputText from '@/components/Forms/Elements/FormInputText.vue'
+import FormTextarea from '@/components/Forms/Elements/FormTextarea.vue'
+import AppForm from '@/components/Forms/Elements/AppForm.vue'
+import { ROUTES } from '@/enums/routes'
+import { required, numeric } from '@/i18n/validators'
+import useVuelidate from '@vuelidate/core'
+import useValidate from '@/composables/useValidate'
+import FormPersons from '@/components/Forms/Elements/FormPersons.vue'
+import useRecipes from '@/composables/useRecipes'
 
-const { error, upsertRecipe, recipe, getRecipe } = useRecipes();
+const { error, upsertRecipe, recipe, getRecipe } = useRecipes()
 
 const formData = reactive<IFormData>({
   id: undefined,
-  title: "",
-  content: "",
-  ingredients: "",
+  title: '',
+  content: '',
+  ingredients: '',
   preperationTime: 0,
   persons: 2,
-  source: "",
-});
+  source: ''
+})
 
 const rules = computed(() => ({
   title: {
-    required,
+    required
   },
   preperationTime: {
-    numeric,
+    numeric
   },
   persons: {
-    numeric,
-  },
-}));
-const v$ = useVuelidate(rules, formData, { $lazy: true });
+    numeric
+  }
+}))
+const v$ = useVuelidate(rules, formData, { $lazy: true })
 
-const { formError } = useValidate(v$, error);
+const { formError } = useValidate(v$, error)
 
-const router = useRouter();
+const router = useRouter()
 
 const createArrayOfInput = (input: string) => {
-  const list = input.split("\n");
-  return list.filter((item) => item !== "");
-};
+  const list = input.split('\n')
+  return list.filter((item) => item !== '')
+}
 
 const createIngredients = (input: string) => {
-  const list = createArrayOfInput(input);
+  const list = createArrayOfInput(input)
   return list.map((ingredient) => {
-    const matches = ingredient.split(/([\d.]+)\s/).filter(Boolean);
+    const matches = ingredient.split(/([\d.]+)\s/).filter(Boolean)
     if (matches.length > 0 && !isNaN(parseFloat(matches[0]))) {
-      const amount = parseFloat(matches[0]) / formData.persons;
-      const title = ingredient.replace(matches[0], "");
+      const amount = parseFloat(matches[0]) / formData.persons
+      const title = ingredient.replace(matches[0], '')
       return {
         amount,
-        title,
-      };
+        title
+      }
     }
     return {
-      title: ingredient,
-    };
-  });
-};
+      title: ingredient
+    }
+  })
+}
 
 const props = defineProps<{
-  title: string;
-  id?: string;
-}>();
+  title: string
+  id?: string
+}>()
 
 const submit = async () => {
-  const isFormCorrect = await v$.value.$validate();
+  const isFormCorrect = await v$.value.$validate()
   if (!isFormCorrect) {
-    return;
+    return
   }
 
-  const content = createArrayOfInput(formData.content);
-  const ingredients = createIngredients(formData.ingredients);
+  const content = createArrayOfInput(formData.content)
+  const ingredients = createIngredients(formData.ingredients)
 
   const response = await upsertRecipe({
     ...formData,
     ingredients,
-    content,
-  });
+    content
+  })
 
   if (!response) {
-    return;
+    return
   }
 
   router.push({
     name: ROUTES.recipes_details,
     params: {
-      id: response,
-    },
-  });
-};
+      id: response
+    }
+  })
+}
 
 const setFormData = async () => {
   if (!props.id) {
-    return;
+    return
   }
-  await getRecipe(props.id);
+  await getRecipe(props.id)
   if (!recipe.value) {
-    return;
+    return
   }
-  formData.id = recipe.value.id;
-  formData.title = recipe.value.title;
-  formData.preperationTime = recipe.value.preperationTime;
+  formData.id = recipe.value.id
+  formData.title = recipe.value.title
+  formData.preperationTime = recipe.value.preperationTime
   if (recipe.value.content) {
-    formData.content = recipe.value.content.join("\n\n");
+    formData.content = recipe.value.content.join('\n\n')
   }
   if (recipe.value.persons) {
-    formData.persons = recipe.value.persons;
+    formData.persons = recipe.value.persons
   }
-  formData.source = recipe.value.source;
+  formData.source = recipe.value.source
   formData.ingredients = recipe.value.ingredients
     .map((ingredient: IIngredient) => {
       if (ingredient.amount) {
-        const amount = ingredient.amount * formData.persons;
-        return `${amount} ${ingredient.title}`;
+        const amount = ingredient.amount * formData.persons
+        return `${amount} ${ingredient.title}`
       }
-      return ingredient.title;
+      return ingredient.title
     })
-    .join("\n");
-};
+    .join('\n')
+}
 
 onMounted(async () => {
-  await setFormData();
-});
+  await setFormData()
+})
 </script>
 
 <template>
-  <app-form
-    :button-title="title"
-    :error="formError"
-    :sticky="true"
-    @submit="submit"
-  >
+  <app-form :button-title="title" :error="formError" :sticky="true" @submit="submit">
     <form-fieldset title="Recept">
       <form-input-text
         id="title"
@@ -146,12 +141,7 @@ onMounted(async () => {
         title="Title"
         @blur="v$.title.$touch"
       />
-      <form-textarea
-        id="content"
-        v-model="formData.content"
-        :rows="8"
-        title="Content"
-      />
+      <form-textarea id="content" v-model="formData.content" :rows="8" title="Content" />
 
       <form-textarea
         id="ingredients"

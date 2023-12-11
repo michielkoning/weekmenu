@@ -1,36 +1,36 @@
 <script setup lang="ts">
-import FormFieldset from "@/components/Forms/Elements/FormFieldset.vue";
-import FormInputText from "@/components/Forms/Elements/FormInputText.vue";
-import AppForm from "@/components/Forms/Elements/AppForm.vue";
-import { reactive, computed } from "vue";
-import { useVuelidate } from "@vuelidate/core";
-import { required, minLength } from "@/i18n/validators";
-import useValidate from "@/composables/useValidate";
-import useUser from "@/composables/useUser";
+import FormFieldset from '@/components/Forms/Elements/FormFieldset.vue'
+import FormInputText from '@/components/Forms/Elements/FormInputText.vue'
+import AppForm from '@/components/Forms/Elements/AppForm.vue'
+import { reactive, computed } from 'vue'
+import { useVuelidate } from '@vuelidate/core'
+import { required, minLength } from '@/i18n/validators'
+import useValidate from '@/composables/useValidate'
+import useUser from '@/composables/useUser'
 
-const { updatePassword, loading, error, success } = useUser();
+const { updatePassword, loading, error, success } = useUser()
 const formData = reactive({
-  password: "",
-});
+  password: ''
+})
 
 const rules = computed(() => ({
   password: {
     required,
-    minLength: minLength(6),
-  },
-}));
+    minLength: minLength(6)
+  }
+}))
 
-const v$ = useVuelidate(rules, formData, { $lazy: true });
+const v$ = useVuelidate(rules, formData, { $lazy: true })
 
-const { formError } = useValidate(v$, error);
+const { formError } = useValidate(v$, error)
 
 const submit = async () => {
-  const isFormCorrect = await v$.value.$validate();
+  const isFormCorrect = await v$.value.$validate()
   if (!isFormCorrect) {
-    return;
+    return
   }
-  await updatePassword(formData.password);
-};
+  await updatePassword(formData.password)
+}
 </script>
 
 <template>

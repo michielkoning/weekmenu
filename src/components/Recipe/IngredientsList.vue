@@ -1,20 +1,20 @@
 <script lang="ts" setup>
-import type { IIngredient } from "@/interfaces/IRecipe";
-import useEaters from "@/composables/useEaters";
+import type { IIngredient } from '@/interfaces/IRecipe'
+import useEaters from '@/composables/useEaters'
 
 defineProps<{
-  ingredients: IIngredient[];
-}>();
-const { totalEaters } = useEaters();
+  ingredients: IIngredient[]
+}>()
+const { totalEaters } = useEaters()
 </script>
 
 <template>
   <section :aria-labelled="$t('details.ingredients')" class="ingredients">
-    <h2>{{ $t("details.ingredients") }}</h2>
+    <h2>{{ $t('details.ingredients') }}</h2>
     <ul>
       <li v-for="ingredient in ingredients" :key="ingredient.title">
         <span v-if="ingredient.amount">
-          {{ $n(ingredient.amount * totalEaters, "decimal") }}
+          {{ $n(ingredient.amount * totalEaters, 'decimal') }}
         </span>
         {{ ingredient.title }}
       </li>
@@ -23,7 +23,7 @@ const { totalEaters } = useEaters();
 </template>
 
 <style lang="postcss" scoped>
-@import "@/assets/css/media-queries/media-queries.css";
+@import '@/assets/css/media-queries/media-queries.css';
 
 h2 {
   padding-bottom: 0.5em;

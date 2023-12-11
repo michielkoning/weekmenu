@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import useEaters from "@/composables/useEaters";
-import FormPersons from "@/components/Forms/Elements/FormPersons.vue";
+import useEaters from '@/composables/useEaters'
+import FormPersons from '@/components/Forms/Elements/FormPersons.vue'
 
-const { totalEaters } = useEaters();
+const { totalEaters } = useEaters()
 </script>
 
 <template>

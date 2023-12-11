@@ -1,6 +1,6 @@
-import type { RouteLocationNamedRaw } from "vue-router";
+import type { RouteLocationNamedRaw } from 'vue-router'
 
 export interface IRecipeItem {
-  title: string;
-  link: string | RouteLocationNamedRaw;
+  title: string
+  link: string | RouteLocationNamedRaw
 }

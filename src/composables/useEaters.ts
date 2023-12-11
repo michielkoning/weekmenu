@@ -1,14 +1,14 @@
-import { ref } from "vue";
+import { ref } from 'vue'
 
-const totalEaters = ref(2);
+const totalEaters = ref(2)
 
 export default () => {
   const changeAmountofEaters = (value: number) => {
-    totalEaters.value = value;
-  };
+    totalEaters.value = value
+  }
 
   return {
     totalEaters,
-    changeAmountofEaters,
-  };
-};
+    changeAmountofEaters
+  }
+}

@@ -1,29 +1,22 @@
 <script lang="ts" setup>
-import type { ITab } from "@/interfaces/ITab";
+import type { ITab } from '@/interfaces/ITab'
 
 defineProps<{
-  tabs: ITab[];
-  modelValue: string;
-}>();
+  tabs: ITab[]
+  modelValue: string
+}>()
 
-const emit = defineEmits(["update:modelValue", "blur"]);
+const emit = defineEmits(['update:modelValue', 'blur'])
 
 const updateTab = (item: ITab) => {
-  emit("update:modelValue", item.key);
-};
+  emit('update:modelValue', item.key)
+}
 </script>
 
 <template>
-  <ul
-    v-if="tabs.length > 1"
-    class="list"
-    :style="{ 'grid-template-columns': `repeat(2, 1fr)` }"
-  >
+  <ul v-if="tabs.length > 1" class="list" :style="{ 'grid-template-columns': `repeat(2, 1fr)` }">
     <li v-for="item in tabs" :key="item.key">
-      <button
-        :class="{ active: modelValue === item.key }"
-        @click="updateTab(item)"
-      >
+      <button :class="{ active: modelValue === item.key }" @click="updateTab(item)">
         {{ item.title }}
       </button>
     </li>

@@ -1,4 +1,4 @@
 export interface IOption {
-  value: string | number | null;
-  title: string;
+  value: string | number | null
+  title: string
 }

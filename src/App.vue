@@ -1,55 +1,55 @@
 <script setup lang="ts">
-import AppButton from "@/components/Shared/AppButton.vue";
-import { onMounted, ref, type Ref } from "vue";
-import useRecipes from "@/composables/useRecipes";
-import PwaUpdateAlert from "@/components/Pwa/PwaUpdateAlert.vue";
-import { supabase } from "./supabase";
-import { useRoute } from "vue-router";
-import type { IBeforeInstallPromptEvent } from "./interfaces/IBeforeInstallPromptEvent";
+import AppButton from '@/components/Shared/AppButton.vue'
+import { onMounted, ref, type Ref } from 'vue'
+import useRecipes from '@/composables/useRecipes'
+import PwaUpdateAlert from '@/components/Pwa/PwaUpdateAlert.vue'
+import { supabase } from './supabase'
+import { useRoute } from 'vue-router'
+import type { IBeforeInstallPromptEvent } from './interfaces/IBeforeInstallPromptEvent'
 
-const { getList, reset } = useRecipes();
+const { getList, reset } = useRecipes()
 
 const fetchData = async () => {
-  await getList();
-};
-const eventPrompt: Ref<IBeforeInstallPromptEvent | null> = ref(null);
-const hasAppInstalled = ref(false);
-const route = useRoute();
+  await getList()
+}
+const eventPrompt: Ref<IBeforeInstallPromptEvent | null> = ref(null)
+const hasAppInstalled = ref(false)
+const route = useRoute()
 onMounted(async () => {
-  await fetchData();
+  await fetchData()
 
   supabase.auth.onAuthStateChange(async (_, session) => {
     if (session) {
-      await fetchData();
+      await fetchData()
     } else {
-      reset();
+      reset()
     }
-  });
+  })
 
-  if (localStorage.getItem("pwa") === "1") {
-    hasAppInstalled.value = true;
+  if (localStorage.getItem('pwa') === '1') {
+    hasAppInstalled.value = true
   }
 
-  window.addEventListener("beforeinstallprompt", (event) => {
-    const beforeInstallPromptEvent = event as IBeforeInstallPromptEvent;
-    localStorage.removeItem("pwa");
+  window.addEventListener('beforeinstallprompt', (event) => {
+    const beforeInstallPromptEvent = event as IBeforeInstallPromptEvent
+    localStorage.removeItem('pwa')
     // Prevent Chrome 67 and earlier from automatically showing the prompt
-    event.preventDefault();
+    event.preventDefault()
     // Stash the event so it can be triggered later.
-    eventPrompt.value = beforeInstallPromptEvent;
-  });
-});
+    eventPrompt.value = beforeInstallPromptEvent
+  })
+})
 const install = async () => {
   if (!eventPrompt.value) {
-    return;
+    return
   }
-  eventPrompt.value.prompt();
-  const choiceResult = await eventPrompt.value.userChoice;
-  if (choiceResult.outcome === "accepted") {
-    localStorage.setItem("pwa", "1");
+  eventPrompt.value.prompt()
+  const choiceResult = await eventPrompt.value.userChoice
+  if (choiceResult.outcome === 'accepted') {
+    localStorage.setItem('pwa', '1')
   }
-  eventPrompt.value = null;
-};
+  eventPrompt.value = null
+}
 </script>
 
 <template>

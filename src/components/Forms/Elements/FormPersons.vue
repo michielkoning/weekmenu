@@ -1,14 +1,14 @@
 <script lang="ts">
 export default {
-  inheritAttrs: false,
-};
+  inheritAttrs: false
+}
 </script>
 
 <script lang="ts" setup>
 defineProps<{
-  modelValue: number;
-}>();
-defineEmits(["update:modelValue"]);
+  modelValue: number
+}>()
+defineEmits(['update:modelValue'])
 </script>
 
 <template>
@@ -21,21 +21,15 @@ defineEmits(["update:modelValue"]);
     >
       -
     </button>
-    <div class="amount">
-      {{ modelValue }} {{ $t("details.persons", modelValue) }}
-    </div>
-    <button
-      type="button"
-      class="substract"
-      @click="$emit('update:modelValue', modelValue + 1)"
-    >
+    <div class="amount">{{ modelValue }} {{ $t('details.persons', modelValue) }}</div>
+    <button type="button" class="substract" @click="$emit('update:modelValue', modelValue + 1)">
       +
     </button>
   </div>
 </template>
 
 <style lang="postcss" scoped>
-@import "@/assets/css/media-queries/media-queries.css";
+@import '@/assets/css/media-queries/media-queries.css';
 
 .eaters {
   margin-bottom: 2em;

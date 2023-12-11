@@ -1,65 +1,65 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, watchEffect, ref, type Ref } from "vue";
-import IngredientsList from "@/components/Recipe/IngredientsList.vue";
-import RecipePreperation from "@/components/Recipe/RecipePreperation.vue";
-import RecipeMetaData from "@/components/Recipe/RecipeMetaData.vue";
-import TotalEaters from "@/components/Recipe/TotalEaters.vue";
-import AppTabs from "@/components/Layout/AppTabs.vue";
-import AppButton from "@/components/Shared/AppButton.vue";
-import { useRouter } from "vue-router";
-import useBreadCrumb from "@/composables/useBreadCrumb";
-import { ROUTES } from "@/enums/routes";
-import useRecipes from "@/composables/useRecipes";
-import type { ITab } from "@/interfaces/ITab";
+import { onMounted, onUnmounted, watchEffect, ref, type Ref } from 'vue'
+import IngredientsList from '@/components/Recipe/IngredientsList.vue'
+import RecipePreperation from '@/components/Recipe/RecipePreperation.vue'
+import RecipeMetaData from '@/components/Recipe/RecipeMetaData.vue'
+import TotalEaters from '@/components/Recipe/TotalEaters.vue'
+import AppTabs from '@/components/Layout/AppTabs.vue'
+import AppButton from '@/components/Shared/AppButton.vue'
+import { useRouter } from 'vue-router'
+import useBreadCrumb from '@/composables/useBreadCrumb'
+import { ROUTES } from '@/enums/routes'
+import useRecipes from '@/composables/useRecipes'
+import type { ITab } from '@/interfaces/ITab'
 
-const { add: addToBreadCrumb, remove: removeFromBreadCrumb } = useBreadCrumb();
+const { add: addToBreadCrumb, remove: removeFromBreadCrumb } = useBreadCrumb()
 
-const router = useRouter();
+const router = useRouter()
 const props = defineProps<{
-  id: string;
-}>();
+  id: string
+}>()
 
-const { loading, getRecipe, recipe, deleteRecipe } = useRecipes();
+const { loading, getRecipe, recipe, deleteRecipe } = useRecipes()
 
-const tabs: Ref<ITab[]> = ref([]);
-const activeTab: Ref<string> = ref("");
+const tabs: Ref<ITab[]> = ref([])
+const activeTab: Ref<string> = ref('')
 
 onMounted(async () => {
-  await getRecipe(props.id);
+  await getRecipe(props.id)
 
   if (recipe.value?.content.length) {
     tabs.value.push({
-      title: "Bereiding",
-      key: "preperation",
-    });
+      title: 'Bereiding',
+      key: 'preperation'
+    })
   }
   if (recipe.value?.ingredients.length) {
     tabs.value.push({
-      title: "Ingredienten",
-      key: "ingredients",
-    });
+      title: 'Ingredienten',
+      key: 'ingredients'
+    })
   }
   if (tabs.value.length) {
-    activeTab.value = tabs.value[0].key;
+    activeTab.value = tabs.value[0].key
   }
-});
+})
 
 onUnmounted(() => {
   if (recipe.value) {
-    removeFromBreadCrumb(recipe.value.title);
+    removeFromBreadCrumb(recipe.value.title)
   }
-});
+})
 
 const remove = async () => {
-  await deleteRecipe(props.id);
-  router.push({ name: ROUTES.recipes_home });
-};
+  await deleteRecipe(props.id)
+  router.push({ name: ROUTES.recipes_home })
+}
 
 watchEffect(() => {
   if (recipe.value) {
-    addToBreadCrumb(recipe.value.title);
+    addToBreadCrumb(recipe.value.title)
   }
-});
+})
 </script>
 
 <template>
@@ -79,9 +79,7 @@ watchEffect(() => {
           :preperation="recipe.content"
         />
         <div class="buttons">
-          <app-button :to="{ name: ROUTES.recipes_edit, params: { id } }">
-            Edit
-          </app-button>
+          <app-button :to="{ name: ROUTES.recipes_edit, params: { id } }"> Edit </app-button>
           <app-button @click="remove">Delete</app-button>
         </div>
       </div>
@@ -98,7 +96,7 @@ watchEffect(() => {
 </template>
 
 <style lang="postcss" scoped>
-@import "@/assets/css/media-queries/media-queries.css";
+@import '@/assets/css/media-queries/media-queries.css';
 
 .details {
   display: grid;

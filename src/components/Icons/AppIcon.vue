@@ -1,13 +1,13 @@
 <script lang="ts" setup>
-import { computed, defineAsyncComponent } from "vue";
+import { computed, defineAsyncComponent } from 'vue'
 
 const props = defineProps<{
-  name: string;
-}>();
+  name: string
+}>()
 
 const dynamicComponent = computed(() => {
-  return defineAsyncComponent(() => import(`./Icon${props.name}.vue`));
-});
+  return defineAsyncComponent(() => import(`./Icon${props.name}.vue`))
+})
 </script>
 
 <template>

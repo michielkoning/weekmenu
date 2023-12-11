@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import BtnLogout from "@/components/Account/BtnLogout.vue";
+import BtnLogout from '@/components/Account/BtnLogout.vue'
 </script>
 
 <template>

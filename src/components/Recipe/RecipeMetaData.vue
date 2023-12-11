@@ -1,30 +1,30 @@
 <script lang="ts" setup>
-import { computed } from "vue";
-import type { IRecipe } from "@/interfaces/IRecipe";
-import AppIcon from "@/components/Icons/AppIcon.vue";
+import { computed } from 'vue'
+import type { IRecipe } from '@/interfaces/IRecipe'
+import AppIcon from '@/components/Icons/AppIcon.vue'
 
 const props = defineProps<{
-  recipe: IRecipe;
-}>();
+  recipe: IRecipe
+}>()
 
 const host = computed(() => {
   if (props.recipe.source) {
     try {
-      const url = new URL(props.recipe.source);
+      const url = new URL(props.recipe.source)
       if (url) {
-        return url.hostname.replace("www.", "");
+        return url.hostname.replace('www.', '')
       }
     } catch (error) {
-      return null;
+      return null
     }
-    return props.recipe.source;
+    return props.recipe.source
   }
-  return null;
-});
+  return null
+})
 
 const hasMeta = computed(() => {
-  return props.recipe.preperationTime || props.recipe.source;
-});
+  return props.recipe.preperationTime || props.recipe.source
+})
 </script>
 
 <template>
@@ -35,7 +35,7 @@ const hasMeta = computed(() => {
       </dt>
       <dd>
         {{ recipe.preperationTime }}
-        {{ $t("details.minutes") }}
+        {{ $t('details.minutes') }}
       </dd>
     </template>
     <template v-if="recipe.source">
@@ -71,7 +71,7 @@ dd {
   &:not(:last-child)::after {
     display: inline-block;
     margin-inline: 0.75em;
-    content: "|";
+    content: '|';
   }
 }
 

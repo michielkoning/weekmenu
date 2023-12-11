@@ -1,22 +1,22 @@
 <script setup lang="ts">
-import AppButton from "@/components/Shared/AppButton.vue";
-import WeekMenuOption from "@/components/WeekMenu/WeekMenuOption.vue";
-import useBreadCrumb from "@/composables/useBreadCrumb";
-import useWeekmenu from "@/composables/useWeekmenu";
-import { onMounted, onUnmounted } from "vue";
+import AppButton from '@/components/Shared/AppButton.vue'
+import WeekMenuOption from '@/components/WeekMenu/WeekMenuOption.vue'
+import useBreadCrumb from '@/composables/useBreadCrumb'
+import useWeekmenu from '@/composables/useWeekmenu'
+import { onMounted, onUnmounted } from 'vue'
 
-const { getWeekMenu, addDay, weekmenu } = useWeekmenu();
-const { add: addToBreadCrumb, remove: removeFromBreadCrumb } = useBreadCrumb();
+const { getWeekMenu, addDay, weekmenu } = useWeekmenu()
+const { add: addToBreadCrumb, remove: removeFromBreadCrumb } = useBreadCrumb()
 
-const title = "Weekmenu wijzigen";
+const title = 'Weekmenu wijzigen'
 onMounted(async () => {
-  await getWeekMenu();
-  addToBreadCrumb(title);
-});
+  await getWeekMenu()
+  addToBreadCrumb(title)
+})
 
 onUnmounted(() => {
-  removeFromBreadCrumb(title);
-});
+  removeFromBreadCrumb(title)
+})
 </script>
 
 <template>

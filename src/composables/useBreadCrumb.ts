@@ -1,36 +1,34 @@
-import type { IRecipeItem } from "@/interfaces/IBreadCrumb";
-import { ref, type Ref } from "vue";
-import { useRoute } from "vue-router";
-import type { RouteLocationNamedRaw } from "vue-router";
+import type { IRecipeItem } from '@/interfaces/IBreadCrumb'
+import { ref, type Ref } from 'vue'
+import { useRoute } from 'vue-router'
+import type { RouteLocationNamedRaw } from 'vue-router'
 
 const breadcrumb: Ref<IRecipeItem[]> = ref([
   {
-    title: "Home",
-    link: "/",
-  },
-]);
+    title: 'Home',
+    link: '/'
+  }
+])
 
 export default () => {
-  const route = useRoute();
+  const route = useRoute()
   const add = (title: string, link?: RouteLocationNamedRaw) => {
-    const isAlreadyInBreadCrumb = breadcrumb.value.find(
-      (item) => item.title === title
-    );
+    const isAlreadyInBreadCrumb = breadcrumb.value.find((item) => item.title === title)
     if (isAlreadyInBreadCrumb) {
-      return;
+      return
     }
     breadcrumb.value.push({
       title,
-      link: link || route.fullPath,
-    });
-  };
+      link: link || route.fullPath
+    })
+  }
 
   const remove = (title: string) => {
-    breadcrumb.value = breadcrumb.value.filter((item) => item.title !== title);
-  };
+    breadcrumb.value = breadcrumb.value.filter((item) => item.title !== title)
+  }
   return {
     remove,
     add,
-    breadcrumb,
-  };
-};
+    breadcrumb
+  }
+}

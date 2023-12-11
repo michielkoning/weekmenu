@@ -1,12 +1,12 @@
 <script lang="ts" setup>
 withDefaults(
   defineProps<{
-    error?: string | null;
+    error?: string | null
   }>(),
   {
-    error: null,
+    error: null
   }
-);
+)
 </script>
 
 <template>

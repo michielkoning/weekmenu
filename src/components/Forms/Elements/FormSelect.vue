@@ -1,28 +1,28 @@
 <script lang="ts">
 export default {
-  inheritAttrs: false,
-};
+  inheritAttrs: false
+}
 </script>
 
 <script lang="ts" setup>
-import FormField from "@/components/Forms/Elements/FormField.vue";
-import type { IOption } from "@/interfaces/IOption";
-import type { ErrorObject } from "@vuelidate/core";
+import FormField from '@/components/Forms/Elements/FormField.vue'
+import type { IOption } from '@/interfaces/IOption'
+import type { ErrorObject } from '@vuelidate/core'
 
 withDefaults(
   defineProps<{
-    title: string;
-    id: string;
-    modelValue: string | number;
-    options: IOption[];
-    errors?: ErrorObject[];
+    title: string
+    id: string
+    modelValue: string | number
+    options: IOption[]
+    errors?: ErrorObject[]
   }>(),
   {
-    errors: undefined,
+    errors: undefined
   }
-);
+)
 
-defineEmits(["update:modelValue"]);
+defineEmits(['update:modelValue'])
 </script>
 
 <template>
@@ -32,15 +32,9 @@ defineEmits(["update:modelValue"]);
       class="select"
       v-bind="$attrs"
       :value="modelValue"
-      @input="
-        $emit('update:modelValue', ($event.target as HTMLTextAreaElement).value)
-      "
+      @input="$emit('update:modelValue', ($event.target as HTMLTextAreaElement).value)"
     >
-      <option
-        v-for="option in options"
-        :key="option.title"
-        :value="option.value"
-      >
+      <option v-for="option in options" :key="option.title" :value="option.value">
         {{ option.title }}
       </option>
     </select>

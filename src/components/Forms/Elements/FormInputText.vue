@@ -1,30 +1,30 @@
 <script lang="ts">
 export default {
-  inheritAttrs: false,
-};
+  inheritAttrs: false
+}
 </script>
 
 <script lang="ts" setup>
-import FormField from "@/components/Forms/Elements/FormField.vue";
-import type { ErrorObject } from "@vuelidate/core";
+import FormField from '@/components/Forms/Elements/FormField.vue'
+import type { ErrorObject } from '@vuelidate/core'
 
 withDefaults(
   defineProps<{
-    title: string;
-    id: string;
-    modelValue: string | number;
-    type?: string;
-    maxlength?: number;
-    errors?: ErrorObject[];
+    title: string
+    id: string
+    modelValue: string | number
+    type?: string
+    maxlength?: number
+    errors?: ErrorObject[]
   }>(),
   {
-    type: "text",
+    type: 'text',
     maxlength: 250,
-    errors: undefined,
+    errors: undefined
   }
-);
+)
 
-defineEmits(["update:modelValue", "blur"]);
+defineEmits(['update:modelValue', 'blur'])
 </script>
 
 <template>
@@ -36,9 +36,7 @@ defineEmits(["update:modelValue", "blur"]);
       :type="type"
       class="input"
       :maxlength="maxlength"
-      @input="
-        $emit('update:modelValue', ($event.target as HTMLInputElement).value)
-      "
+      @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
       @blur="$emit('blur')"
     />
   </form-field>

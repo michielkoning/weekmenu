@@ -1,52 +1,46 @@
 <script setup lang="ts">
-import FormFieldset from "@/components/Forms/Elements/FormFieldset.vue";
-import FormInputText from "@/components/Forms/Elements/FormInputText.vue";
-import AppForm from "@/components/Forms/Elements/AppForm.vue";
-import { reactive, computed } from "vue";
-import { useVuelidate } from "@vuelidate/core";
-import { email, required, minLength } from "@/i18n/validators";
-import useValidate from "@/composables/useValidate";
-import useUser from "@/composables/useUser";
-const { register, loading, error, success } = useUser();
+import FormFieldset from '@/components/Forms/Elements/FormFieldset.vue'
+import FormInputText from '@/components/Forms/Elements/FormInputText.vue'
+import AppForm from '@/components/Forms/Elements/AppForm.vue'
+import { reactive, computed } from 'vue'
+import { useVuelidate } from '@vuelidate/core'
+import { email, required, minLength } from '@/i18n/validators'
+import useValidate from '@/composables/useValidate'
+import useUser from '@/composables/useUser'
+const { register, loading, error, success } = useUser()
 
 const formData = reactive({
-  email: "",
-  password: "",
-});
+  email: '',
+  password: ''
+})
 
 const rules = computed(() => ({
   email: {
     required,
-    email,
+    email
   },
   password: {
     required,
-    minLength: minLength(6),
-  },
-}));
+    minLength: minLength(6)
+  }
+}))
 
-const v$ = useVuelidate(rules, formData, { $lazy: true });
+const v$ = useVuelidate(rules, formData, { $lazy: true })
 
-const { formError } = useValidate(v$, error);
+const { formError } = useValidate(v$, error)
 
 const submit = async () => {
-  const isFormCorrect = await v$.value.$validate();
+  const isFormCorrect = await v$.value.$validate()
   if (!isFormCorrect) {
-    return;
+    return
   }
-  await register(formData.email, formData.password);
-};
+  await register(formData.email, formData.password)
+}
 </script>
 
 <template>
   <p v-if="success">Success</p>
-  <app-form
-    v-else
-    :loading="loading"
-    button-title="Registeren"
-    :error="formError"
-    @submit="submit"
-  >
+  <app-form v-else :loading="loading" button-title="Registeren" :error="formError" @submit="submit">
     <form-fieldset title="Registeren">
       <form-input-text
         id="email"

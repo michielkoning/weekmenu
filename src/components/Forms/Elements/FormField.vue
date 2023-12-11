@@ -1,26 +1,26 @@
 <script lang="ts" setup>
-import FormErrorMessage from "@/components/Forms/Elements/FormErrorMessage.vue";
-import type { ErrorObject } from "@vuelidate/core";
-import { computed } from "vue";
+import FormErrorMessage from '@/components/Forms/Elements/FormErrorMessage.vue'
+import type { ErrorObject } from '@vuelidate/core'
+import { computed } from 'vue'
 
 const props = withDefaults(
   defineProps<{
-    title: string;
-    id: string;
-    errors?: ErrorObject[];
+    title: string
+    id: string
+    errors?: ErrorObject[]
   }>(),
   {
-    errors: undefined,
+    errors: undefined
   }
-);
+)
 
 const error = computed(() => {
   if (props.errors === undefined) {
-    return null;
+    return null
   }
-  const messages = props.errors.map((err) => err.$message);
-  return messages.join(", ");
-});
+  const messages = props.errors.map((err) => err.$message)
+  return messages.join(', ')
+})
 </script>
 
 <template>

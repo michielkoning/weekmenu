@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import TheMenu from "@/components/Layout/TheMenu.vue";
-import BreadCrumb from "@/components/Layout/BreadCrumb.vue";
+import TheMenu from '@/components/Layout/TheMenu.vue'
+import BreadCrumb from '@/components/Layout/BreadCrumb.vue'
 </script>
 
 <template>

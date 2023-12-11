@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-import SlideInAnimation from "@/components/Animations/SlideInAnimation.vue";
-import CenterWrapper from "@/components/Layout/CenterWrapper.vue";
+import SlideInAnimation from '@/components/Animations/SlideInAnimation.vue'
+import CenterWrapper from '@/components/Layout/CenterWrapper.vue'
 
 defineProps<{
-  show: boolean;
-  text: string;
-}>();
+  show: boolean
+  text: string
+}>()
 </script>
 
 <template>
