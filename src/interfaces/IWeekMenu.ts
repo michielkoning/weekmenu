@@ -1,29 +1,29 @@
-import type { IRecipe } from "./IRecipe";
+import type { IRecipe } from './IRecipe'
 
 export interface IWeekMenuBase {
-  id?: string;
-  user_id?: string;
+  id?: string
+  user_id?: string
 }
 export interface IWeekMenuResponse extends IWeekMenuBase {
-  recipes: (string | null)[];
+  recipes: (string | null)[]
 }
 
 export interface IWeekMenu extends IWeekMenuBase {
-  recipes: (IRecipe | null)[];
+  recipes: (IRecipe | null)[]
 }
 
 type Recipe = {
-  id: string;
-  title: string;
-};
+  id: string
+  title: string
+}
 
 export type WeekmenuDay = {
-  id: string;
-  recipe: Recipe | null;
-};
+  id: string
+  recipe: Recipe | null
+}
 
 export type Weekmenu = {
-  id: string | undefined;
-  days: WeekmenuDay[];
-  archived: boolean;
-};
+  id: string | undefined
+  days: WeekmenuDay[]
+  archived: boolean
+}

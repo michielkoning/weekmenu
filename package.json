@@ -11,32 +11,32 @@
     "supabase-gen": "supabase gen types typescript --project-id citvrgpihdclyhkkwfer --schema public > src/types/Supabase.ts "
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.38.4",
+    "@supabase/supabase-js": "^2.39.0",
     "@vuelidate/core": "^2.0.3",
     "@vuelidate/validators": "^2.0.4",
     "register-service-worker": "^1.7.2",
-    "vue": "^3.3.8",
-    "vue-i18n": "^9.6.5",
+    "vue": "^3.3.11",
+    "vue-i18n": "^9.8.0",
     "vue-router": "^4.2.5"
   },
   "devDependencies": {
-    "@rushstack/eslint-patch": "^1.5.1",
+    "@rushstack/eslint-patch": "^1.6.0",
     "@tsconfig/node18": "^18.2.2",
-    "@types/node": "^20.9.0",
-    "@vitejs/plugin-vue": "^4.4.1",
+    "@types/node": "^20.10.4",
+    "@vitejs/plugin-vue": "^4.5.2",
     "@vue/eslint-config-prettier": "^8.0.0",
     "@vue/eslint-config-typescript": "^12.0.0",
     "@vue/tsconfig": "^0.4.0",
-    "eslint": "^8.53.0",
-    "eslint-plugin-vue": "^9.18.1",
+    "eslint": "^8.55.0",
+    "eslint-plugin-vue": "^9.19.2",
     "npm-run-all": "^4.1.5",
     "postcss-mixins": "^9.0.4",
     "postcss-preset-env": "^9.3.0",
-    "prettier": "^3.0.3",
-    "supabase": "^1.110.1",
-    "typescript": "~5.2.2",
-    "vite": "^4.5.0",
-    "vite-plugin-pwa": "^0.16.7",
-    "vue-tsc": "^1.8.22"
+    "prettier": "^3.1.1",
+    "supabase": "^1.123.0",
+    "typescript": "~5.3.3",
+    "vite": "^5.0.7",
+    "vite-plugin-pwa": "^0.17.4",
+    "vue-tsc": "^1.8.25"
   }
 }
